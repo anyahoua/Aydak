@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Client;
 use Illuminate\Database\Eloquent\Model;
 
-class client_preference_achat extends Model
+class DocUser extends Model
 {
     
-    protected $table        = 'client_preference_achats';
+    protected $table        = 'doc_users';
     //protected $primaryKey   = 'id';
     //public $incrementing    = false;
     //protected $keyType      = 'string';
@@ -24,21 +23,19 @@ class client_preference_achat extends Model
      * @var array
      */
     protected $fillable = [
-        'quantite_produit', 'etat', 'client_id', 'produit_id', 
+        'doc', 'etat', 'user_id', 
     ];
 
-
+    
     /** 
      * Relationship : 
      * 
      * */
 
-    public function Client()
+    public function user()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(User::class);
     }
-
-
 
 
 

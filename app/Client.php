@@ -2,6 +2,11 @@
 
 namespace App;
 
+use App\Models\ClientInfo;
+use App\Models\ClientCompte;
+use App\Models\ClientPreferenceAchat;
+use App\Models\Commande;
+
 use Laravel\Passport\HasApiTokens;
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -44,13 +49,31 @@ class Client extends Authenticatable
     */
 
 
-        /** 
+    /** 
      * Relationship : 
      * 
      * */
 
+    public function clientInfo()
+    {
+        return $this->hasOne(ClientInfo::class);
+    }
+
     public function clientCompte()
     {
-        return $this->hasOne(client_compte::class);
+        return $this->hasOne(ClientCompte::class);
     }
+
+    public function clientPpreferenceAchat()
+    {
+        return $this->hasOne(ClientPreferenceAchat::class);
+    }
+
+    public function commandes()
+    {
+        return $this->hasMany(Commande::class);
+    }
+
+
+    
 }

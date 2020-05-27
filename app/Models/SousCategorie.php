@@ -4,14 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class doc_user extends Model
+class SousCategorie extends Model
 {
-    
-    protected $table        = 'doc_users';
+    protected $table        = 'sous_categories';
     //protected $primaryKey   = 'id';
     //public $incrementing    = false;
     //protected $keyType      = 'string';
-    //public $timestamps      = false;
+    public $timestamps      = false;
     //protected $dateFormat   = 'U';
     //const CREATED_AT        = 'creation_date';
     //const UPDATED_AT        = 'last_update';
@@ -23,17 +22,6 @@ class doc_user extends Model
      * @var array
      */
     protected $fillable = [
-        'doc', 'etat', 'user_id', 
+        'libely', 'categorie_id', 'etat', 'icon',
     ];
-
-    
-    /** 
-     * Relationship : 
-     * 
-     * */
-
-
-
-
-
 }

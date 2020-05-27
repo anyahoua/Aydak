@@ -31,7 +31,7 @@ class ClientController extends Controller
         if(auth::guard('client')->attempt(array('username' => $input['username'], 'password' => $input['password'])))
         { 
             
-            
+            /*
             //$user = $this->guard()->user();
             //$client = auth::guard('client');
             $client = auth::guard('client')->user();
@@ -47,7 +47,37 @@ class ClientController extends Controller
                 'data'      => $client
                 
             ], 200);
+            */
             
+            $client = auth::guard('client')->user();
+            
+            if($client->ClientInfo->etat==1)
+            {
+                $token =  $client->createToken('AydakClients')->accessToken;
+                
+                $client->apitoken = $token;
+                $client->ClientInfo;
+                
+                //--
+                $client->clientCompte;
+                $client->clientPpreferenceAchat;
+                $client->commandes;
+                //--
+                
+                return response()->json([
+                    'code'      => '200',
+                    'message'   => 'Authentification client réussie.',
+                    //'data'      => new UserLoginResource($user)
+                    //'apiToken'  => $token,
+                    'data'      => $client
+                    
+                ], 200);
+
+            } else {
+                return response()->json(['error'=>'Unauthorised status'], 401); 
+            }
+
+
         } else{ 
             return response()->json(['error'=>'Unauthorised'], 401); 
         } 

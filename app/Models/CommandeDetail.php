@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Client;
 use Illuminate\Database\Eloquent\Model;
 
-class client_compte extends Model
+class CommandeDetail extends Model
 {
-
-    protected $table        = 'client_comptes';
+    
+    protected $table        = 'commande_details';
     //protected $primaryKey   = 'id';
     //public $incrementing    = false;
     //protected $keyType      = 'string';
@@ -24,17 +23,19 @@ class client_compte extends Model
      * @var array
      */
     protected $fillable = [
-        'debit', 'credit', 'ancien_solde', 'nouveau_solde', 'etat', 'client_id', 'groupe_id',
+        'quantite_commande', 'quantite_achat', 'prix_u_commande', 'prix_u_achat', 'etat', 'commande_id', 'produit_id', 
     ];
 
+    
     /** 
      * Relationship : 
      * 
      * */
 
-    public function Client()
+    public function commande()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Commande::class);
     }
+
 
 }

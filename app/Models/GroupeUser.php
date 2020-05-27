@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class commande_commentaire extends Model
+class GroupeUser extends Model
 {
     
-    protected $table        = 'commande_commentaires';
+    protected $table        = 'groupe_users';
     //protected $primaryKey   = 'id';
     //public $incrementing    = false;
     //protected $keyType      = 'string';
@@ -23,7 +23,7 @@ class commande_commentaire extends Model
      * @var array
      */
     protected $fillable = [
-        'nom', 'commentaire', 'etat', 'user_id', 'groupe_id', 'commande_id', 'profil_id', 
+        'date_annulation', 'etat', 'user_id', 'groupe_id', 
     ];
 
     
@@ -32,7 +32,9 @@ class commande_commentaire extends Model
      * 
      * */
 
-
-
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+     
 }

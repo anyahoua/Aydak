@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class categorie extends Model
+class Categorie extends Model
 {
     protected $table        = 'categories';
     //protected $primaryKey   = 'id';
@@ -24,4 +24,12 @@ class categorie extends Model
     protected $fillable = [
         'libely', 'etat', 'icon',
     ];
+
+    /** 
+     * Relationship : 
+     * 
+     * */
+
+
+     
 }

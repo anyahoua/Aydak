@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class invitation_shopper extends Model
+class CommandeCommentaire extends Model
 {
     
-    protected $table        = 'invitation_shoppers';
+    protected $table        = 'commande_commentaires';
     //protected $primaryKey   = 'id';
     //public $incrementing    = false;
     //protected $keyType      = 'string';
@@ -23,7 +23,7 @@ class invitation_shopper extends Model
      * @var array
      */
     protected $fillable = [
-        'mobile', 'code', 'date_envoie', 'date_activation', 'etat', 'user_id', 'groupe_id', 
+        'nom', 'commentaire', 'etat', 'user_id', 'groupe_id', 'commande_id', 'profil_id', 
     ];
 
     
@@ -31,7 +31,6 @@ class invitation_shopper extends Model
      * Relationship : 
      * 
      * */
-
 
 
 

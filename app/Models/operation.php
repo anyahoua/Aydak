@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class operation extends Model
+class Operation extends Model
 {
-    protected $table        = 'operation';
+    protected $table        = 'operations';
     //protected $primaryKey   = 'id';
     //public $incrementing    = false;
     //protected $keyType      = 'string';

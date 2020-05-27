@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class commande extends Model
+class Commande extends Model
 {
     
     protected $table        = 'commandes';
@@ -32,7 +32,10 @@ class commande extends Model
      * 
      * */
 
-
+    public function Client()
+    {
+        return $this->belongsTo(Client::class);
+    }
 
 
 }

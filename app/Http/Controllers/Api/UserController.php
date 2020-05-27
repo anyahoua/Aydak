@@ -29,24 +29,53 @@ class UserController extends Controller
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
         { 
-            //$user = $this->guard()->user();
-            $user = Auth::user();
-            $token =  $user->createToken('AydakUsers')->accessToken;
-            
-            $user->apitoken = $token;
-            $user->UserInfo;
-            $user->UserInfo->Profil;
-            //$user->Profil;
-
-            return response()->json([
-                'code'      => '200',
-                'message'   => 'Authentification réussie.',
-                //'data'      => new UserLoginResource($user)
-                //'apiToken'  => $token,
-                'data'      => $user,
+            /*
+                //$user = $this->guard()->user();
+                $user = Auth::user();
+                $token =  $user->createToken('AydakUsers')->accessToken;
                 
-            ], 200);
+                $user->apitoken = $token;
+                $user->UserInfo;
+                $user->UserInfo->Profil;
+                //$user->Profil;
 
+                return response()->json([
+                    'code'      => '200',
+                    'message'   => 'Authentification réussie.',
+                    //'data'      => new UserLoginResource($user)
+                    //'apiToken'  => $token,
+                    'data'      => $user,
+                    
+                ], 200);
+            */
+
+            $user = Auth::user();
+            
+            if($user->UserInfo->etat==1)
+            {
+                $token =  $user->createToken('AydakUsers')->accessToken;
+                
+                $user->apitoken = $token;
+                $user->UserInfo;
+                $user->UserInfo->Profil;
+                //$user->Profil;
+
+                return response()->json([
+                    'code'      => '200',
+                    'message'   => 'Authentification réussie.',
+                    //'data'      => new UserLoginResource($user)
+                    //'apiToken'  => $token,
+                    'data'      => $user,
+                    
+                ], 200);
+
+            } else {
+                return response()->json(['error'=>'Unauthorised status'], 401); 
+            }
+
+
+
+            
         } else{ 
             return response()->json(['error'=>'Unauthorised'], 401); 
         } 

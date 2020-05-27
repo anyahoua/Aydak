@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
+use App\Client;
 use Illuminate\Database\Eloquent\Model;
 
-class sous_categorie extends Model
+class ClientPreferenceAchat extends Model
 {
-    protected $table        = 'sous_categories';
+    
+    protected $table        = 'client_preference_achats';
     //protected $primaryKey   = 'id';
     //public $incrementing    = false;
     //protected $keyType      = 'string';
-    public $timestamps      = false;
+    //public $timestamps      = false;
     //protected $dateFormat   = 'U';
     //const CREATED_AT        = 'creation_date';
     //const UPDATED_AT        = 'last_update';
@@ -22,6 +24,22 @@ class sous_categorie extends Model
      * @var array
      */
     protected $fillable = [
-        'libely', 'categorie_id', 'etat', 'icon',
+        'quantite_produit', 'etat', 'client_id', 'produit_id', 
     ];
+
+
+    /** 
+     * Relationship : 
+     * 
+     * */
+
+    public function Client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+
+
+
+
 }

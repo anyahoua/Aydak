@@ -25,7 +25,7 @@ class ClientInfo extends Model
         'mobile', 'quartier', 'latitude', 'longitude', 'deg2rad_longitude', 'deg2rad_latitude', 'ville_id', 'daira_id', 'wilaya_id', 'pays_id', 'client_id', 'etat', 
     ];
     
-    public function pays()
+    public function client()
     {
         return $this->belongsTo(Client::class);
     }

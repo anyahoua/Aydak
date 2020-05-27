@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class groupe_user extends Model
+class SousFamille extends Model
 {
     
-    protected $table        = 'groupe_users';
+    protected $table        = 'sous_familles';
     //protected $primaryKey   = 'id';
     //public $incrementing    = false;
     //protected $keyType      = 'string';
-    //public $timestamps      = false;
+    public $timestamps      = false;
     //protected $dateFormat   = 'U';
     //const CREATED_AT        = 'creation_date';
     //const UPDATED_AT        = 'last_update';
@@ -23,7 +23,7 @@ class groupe_user extends Model
      * @var array
      */
     protected $fillable = [
-        'date_annulation', 'etat', 'user_id', 'groupe_id', 
+        'famille_id', 'libely', 
     ];
 
     
@@ -32,5 +32,4 @@ class groupe_user extends Model
      * 
      * */
 
-     
 }
