@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class sous_famille extends Model
+class commande_detail extends Model
 {
     
-    protected $table        = 'sous_familles';
+    protected $table        = 'commande_details';
     //protected $primaryKey   = 'id';
     //public $incrementing    = false;
     //protected $keyType      = 'string';
-    public $timestamps      = false;
+    //public $timestamps      = false;
     //protected $dateFormat   = 'U';
     //const CREATED_AT        = 'creation_date';
     //const UPDATED_AT        = 'last_update';
@@ -23,7 +23,7 @@ class sous_famille extends Model
      * @var array
      */
     protected $fillable = [
-        'famille_id', 'libely', 
+        'quantite_commande', 'quantite_achat', 'prix_u_commande', 'prix_u_achat', 'etat', 'commande_id', 'produit_id', 
     ];
 
     
@@ -31,5 +31,8 @@ class sous_famille extends Model
      * Relationship : 
      * 
      * */
+
+
+
 
 }

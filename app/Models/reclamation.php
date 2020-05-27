@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class sous_famille extends Model
+class reclamation extends Model
 {
     
-    protected $table        = 'sous_familles';
+    protected $table        = 'reclamations';
     //protected $primaryKey   = 'id';
     //public $incrementing    = false;
     //protected $keyType      = 'string';
-    public $timestamps      = false;
+    //public $timestamps      = false;
     //protected $dateFormat   = 'U';
     //const CREATED_AT        = 'creation_date';
     //const UPDATED_AT        = 'last_update';
@@ -23,7 +23,7 @@ class sous_famille extends Model
      * @var array
      */
     protected $fillable = [
-        'famille_id', 'libely', 
+        'nom', 'message', 'etat', 'client_id', 
     ];
 
     
@@ -31,5 +31,10 @@ class sous_famille extends Model
      * Relationship : 
      * 
      * */
+
+
+
+
+
 
 }

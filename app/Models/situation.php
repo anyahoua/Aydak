@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class sous_famille extends Model
+class situation extends Model
 {
     
-    protected $table        = 'sous_familles';
+    protected $table        = 'situations';
     //protected $primaryKey   = 'id';
     //public $incrementing    = false;
     //protected $keyType      = 'string';
@@ -23,7 +23,7 @@ class sous_famille extends Model
      * @var array
      */
     protected $fillable = [
-        'famille_id', 'libely', 
+        'libely', 'description', 
     ];
 
     
@@ -31,5 +31,8 @@ class sous_famille extends Model
      * Relationship : 
      * 
      * */
+
+
+
 
 }

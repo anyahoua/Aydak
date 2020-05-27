@@ -9,9 +9,9 @@ class produit extends Model
     
     protected $table        = 'produits';
     //protected $primaryKey   = 'id';
-    public $incrementing    = false;
+    //public $incrementing    = false;
     //protected $keyType      = 'string';
-    //public $timestamps      = false;
+    public $timestamps      = false;
     //protected $dateFormat   = 'U';
     //const CREATED_AT        = 'creation_date';
     //const UPDATED_AT        = 'last_update';
@@ -37,5 +37,5 @@ class produit extends Model
 
 
 
-     
+
 }
