@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserInfo extends Model
+class profil extends Model
 {
-    protected $table        = 'User_infos';
+    
+    protected $table        = 'profils';
     //protected $primaryKey   = 'id';
     //public $incrementing    = false;
     //protected $keyType      = 'string';
@@ -22,20 +23,12 @@ class UserInfo extends Model
      * @var array
      */
     protected $fillable = [
-        'mobile', 'quartier', 'latitude', 'longitude', 'deg2rad_longitude', 'deg2rad_latitude', 'quartier_livraison', 'ville_livraison', 'daira_livraison', 'wilaya_livraison', 'pays_livraison', 
-'quartier_residence', 'ville_residence', 'daira_residence', 'wilaya_residence', 'pays_residence', 'user_id', 'profil_id', 'etat', 
+        'nom', 'etat',
     ];
-
-
 
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function Profil()
-    {
-        return $this->belongsTo(Profil::class);
     }
 
 

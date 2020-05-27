@@ -34,13 +34,16 @@ class UserController extends Controller
             $token =  $user->createToken('AydakUsers')->accessToken;
             
             $user->apitoken = $token;
+            $user->UserInfo;
+            $user->UserInfo->Profil;
+            //$user->Profil;
 
             return response()->json([
                 'code'      => '200',
                 'message'   => 'Authentification réussie.',
                 //'data'      => new UserLoginResource($user)
                 //'apiToken'  => $token,
-                'data'      => $user
+                'data'      => $user,
                 
             ], 200);
 

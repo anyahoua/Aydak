@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClientInfosTable extends Migration
+class CreateGroupesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,15 @@ class CreateClientInfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('client_infos', function (Blueprint $table) {
+        Schema::create('groupes', function (Blueprint $table) {
             $table->id();
-            $table->string('mobile', 50);
-            $table->string('quartier');
+            $table->string('nom');
+            $table->string('photo');
             $table->string('latitude');
             $table->string('longitude');
             $table->string('deg2rad_longitude');
-            $table->string('deg2rad_latitude');
+            $table->string('deg2rad_latitude');            
             $table->integer('etat');
-            $table->foreignId('client_id');
-            $table->string('ville')->nullable();
-            $table->string('daira')->nullable();
-            $table->string('wilaya')->nullable();
-            $table->string('pays')->nullable();
             $table->timestamps();
         });
     }
@@ -38,6 +33,6 @@ class CreateClientInfosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('client_infos');
+        Schema::dropIfExists('groupes');
     }
 }

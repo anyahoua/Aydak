@@ -42,4 +42,15 @@ class Client extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     */
+
+
+        /** 
+     * Relationship : 
+     * 
+     * */
+
+    public function clientCompte()
+    {
+        return $this->hasOne(client_compte::class);
+    }
 }

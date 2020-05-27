@@ -26,11 +26,11 @@ class CreateUserInfosTable extends Migration
             $table->string('daira_livraison');
             $table->string('wilaya_livraison');
             $table->string('pays_livraison');
-            $table->integer('quartier_residence');
-            $table->integer('ville_residence');
-            $table->integer('daira_residence');
-            $table->integer('wilaya_residence');
-            $table->integer('pays_residence');
+            $table->string('quartier_residence');
+            $table->string('ville_residence');
+            $table->string('daira_residence');
+            $table->string('wilaya_residence');
+            $table->string('pays_residence');
             $table->foreignId('user_id');
             $table->foreignId('profil_id');
             $table->integer('etat');
