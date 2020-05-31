@@ -44,8 +44,10 @@ Route::prefix('v1')->group(function(){
         
         Route::post('login', 'Api\UserController@login');
         Route::post('register', 'Api\UserController@register');
+        Route::post('nextregister', 'Api\UserController@registerNext');
         
         Route::middleware('auth:api')->post('userdetails', 'Api\UserController@details');
+        Route::middleware('auth:api')->post('profile', 'Api\UserController@profile');
 
     });
 
