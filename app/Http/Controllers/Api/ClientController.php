@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use Keygen;
 
 class ClientController extends Controller
 {
@@ -70,7 +71,6 @@ class ClientController extends Controller
                     //'data'      => new UserLoginResource($user)
                     //'apiToken'  => $token,
                     'data'      => $client
-                    
                 ], 200);
 
             } else {
@@ -94,7 +94,7 @@ class ClientController extends Controller
         $validator = Validator::make($request->all(), [ 
             'nom'           => 'required', 
             'prenom'        => 'required', 
-            'username'      => 'required', 
+            'username'      => 'required | unique:clients', 
             'password'      => 'required', 
             'c_password'    => 'required|same:password', 
             'groupe_id'     => 'required', 
@@ -119,11 +119,14 @@ class ClientController extends Controller
 
         $client->apitoken = $token;
 
+
+        
+        
+
         return response()->json([
             'code'      => '201',
             'message'   => 'Inscription client réussie.',
-            'data'      => $client
-            
+            'data'      => $client,
         ], 201);
     }
 
@@ -136,6 +139,7 @@ class ClientController extends Controller
     { 
         $user = Auth::user(); 
         //return response()->json(['success' => $user], $this->successStatus); 
+
         return response()->json([
             'code'      => '200',
             'message'   => 'Success.',

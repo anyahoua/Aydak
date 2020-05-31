@@ -94,7 +94,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [ 
             'nom'           => 'required', 
             'prenom'        => 'required', 
-            'username'      => 'required', 
+            'username'      => 'required | unique:users', 
             'password'      => 'required', 
             'c_password'    => 'required|same:password', 
         ]);
@@ -102,6 +102,7 @@ class UserController extends Controller
         if ($validator->fails()) { 
             return response()->json(['error'=>$validator->errors()], 401);            
         }
+
 
         $input = $request->all(); 
         $input['password'] = bcrypt($input['password']);
