@@ -31,6 +31,11 @@ class InvitationShopper extends Model
      * Relationship : 
      * 
      * */
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 
 

@@ -3,6 +3,11 @@
 namespace App;
 
 use App\Models\UserInfo;
+use App\Models\GroupeUser;
+use App\Models\Groupe;
+use App\Models\InvitationShopper;
+use App\Models\DocUser;
+
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -45,11 +50,37 @@ class User extends Authenticatable
      * 
      * */
 
-    public function UserInfo()
+    public function userInfo()
     {
         return $this->hasOne(UserInfo::class);
     }
     
+    public function groupeUser()
+    {
+        return $this->hasOne(GroupeUser::class);
+    }
+
+    public function groupe()
+    {
+        return $this->hasOneThrough(
+            Groupe::class, 
+            GroupeUser::class,
+            'id',
+            'id',
+            'id',
+            'groupe_id'
+        );
+    }
+
+    public function invitations()
+    {
+        return $this->hasMany(InvitationShopper::class);
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(DocUser::class);
+    }
 
 
 
