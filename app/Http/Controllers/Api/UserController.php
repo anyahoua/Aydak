@@ -232,7 +232,7 @@ class UserController extends Controller
 
         return response()->json([
             'code'      => '201',
-            'message'   => 'Inscription réussie.',
+            'message'   => 'Inscription (etape 1) réussie.',
             'data'      => $user
 
         ], 201);
@@ -341,10 +341,10 @@ class UserController extends Controller
         //-----------------------------------------
         $GroupeUser                     = new GroupeUser;
 
-        $GroupeUser->date_annulation    = '';
+        //$GroupeUser->date_annulation    = '';
         $GroupeUser->etat               = '1';
         $GroupeUser->user_id            = $request->userId;
-        $GroupeUser->groupe_id          = $request->groupeId;
+        $GroupeUser->groupe_id          = $Groupe->id;
 
         $GroupeUser->save();
         //-----------------------------------------
@@ -354,20 +354,12 @@ class UserController extends Controller
         //-----------------------------------------
         // UPDATE in User Info
         //-----------------------------------------
-        $UserInfo = UserInfo::where('user_id', $request->userId);
+        $userInformations               = UserInfo::where('user_id', $request->userId)->first();
 
-        //$UserInfo->mobile               = '';
+        $UserInfo                       = UserInfo::find($userInformations->id);
+
         $UserInfo->latitude             = $request->latitude;
         $UserInfo->longitude            = $request->longitude;
-        //$UserInfo->deg2rad_longitude    = '';
-        //$UserInfo->deg2rad_latitude     = '';
-
-        //$UserInfo->quartier_livraison   = '';
-        //$UserInfo->ville_livraison      = '';
-        //$UserInfo->daira_livraison      = '';
-        //$UserInfo->wilaya_livraison     = '';
-        //$UserInfo->pays_livraison       = '';
-
         $UserInfo->quartier_residence   = $request->district;
         $UserInfo->ville_residence      = $request->commune;
         $UserInfo->daira_residence      = $request->daira;
@@ -375,6 +367,14 @@ class UserController extends Controller
 
         $UserInfo->save();
         //-----------------------------------------
+
+
+        return response()->json([
+            'code'      => '201',
+            'message'   => 'Inscription (etape 2) réussie.',
+            'data'      => $UserInfo
+
+        ], 201);
 
     }
 
@@ -465,7 +465,7 @@ class UserController extends Controller
         //-----------------------------------------
         $GroupeUser                     = new GroupeUser;
 
-        $GroupeUser->date_annulation    = '';
+        //$GroupeUser->date_annulation    = '';
         $GroupeUser->etat               = '1';
         $GroupeUser->user_id            = $request->userId;
         $GroupeUser->groupe_id          = $request->groupeId;
@@ -477,20 +477,12 @@ class UserController extends Controller
         //-----------------------------------------
         // UPDATE in User Info
         //-----------------------------------------
-        $UserInfo = UserInfo::where('user_id', $request->userId);
+        $userInformations               = UserInfo::where('user_id', $request->userId)->first();
 
-        //$UserInfo->mobile               = '';
+        $UserInfo                       = UserInfo::find($userInformations->id);
+
         $UserInfo->latitude             = $request->latitude;
         $UserInfo->longitude            = $request->longitude;
-        //$UserInfo->deg2rad_longitude    = '';
-        //$UserInfo->deg2rad_latitude     = '';
-
-        //$UserInfo->quartier_livraison   = '';
-        //$UserInfo->ville_livraison      = '';
-        //$UserInfo->daira_livraison      = '';
-        //$UserInfo->wilaya_livraison     = '';
-        //$UserInfo->pays_livraison       = '';
-
         $UserInfo->quartier_residence   = $request->district;
         $UserInfo->ville_residence      = $request->commune;
         $UserInfo->daira_residence      = $request->daira;
@@ -499,8 +491,12 @@ class UserController extends Controller
         $UserInfo->save();
         //-----------------------------------------
 
+        return response()->json([
+            'code'      => '201',
+            'message'   => 'Inscription (etape 2) réussie.',
+            'data'      => $UserInfo
 
-
+        ], 201);
 
     }
 
