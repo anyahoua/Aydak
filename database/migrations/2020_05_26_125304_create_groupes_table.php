@@ -16,11 +16,11 @@ class CreateGroupesTable extends Migration
         Schema::create('groupes', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
-            $table->string('photo');
+            $table->string('photo')->nullable();
             $table->string('latitude');
             $table->string('longitude');
-            $table->string('deg2rad_longitude');
-            $table->string('deg2rad_latitude');            
+            $table->string('deg2rad_longitude')->nullable();
+            $table->string('deg2rad_latitude')->nullable();
             $table->integer('etat');
             $table->timestamps();
         });

@@ -45,7 +45,7 @@ Route::prefix('v1')->group(function(){
         Route::post('login', 'Api\UserController@login');
         Route::post('register', 'Api\UserController@register');
         Route::post('tm/nextregister', 'Api\UserController@registerNextTeamleader');
-        Route::post('tm/invitation', 'Api\UserController@InvitationShopper');
+        Route::middleware('auth:api')->post('tm/invitation', 'Api\UserController@InvitationShopper');
         Route::post('shopper/code', 'Api\UserController@validateCode');
         Route::post('shopper/nextregister', 'Api\UserController@registerNextShopper');
         
@@ -53,6 +53,16 @@ Route::prefix('v1')->group(function(){
         Route::middleware('auth:api')->post('profile', 'Api\UserController@profile');
 
     });
+
+    // Groupes
+    Route::prefix('groupes')->group(function(){
+        Route::get('show/{id}', 'Api\GroupeController@show');
+        Route::get('findnearest', 'Api\GroupeController@findNearestGroupes');
+        
+    });
+
+
+
 
     // Clients:
 

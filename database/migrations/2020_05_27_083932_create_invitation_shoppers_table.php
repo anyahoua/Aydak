@@ -17,8 +17,9 @@ class CreateInvitationShoppersTable extends Migration
             $table->id();
             $table->string('mobile', 30);
             $table->string('code');
-            $table->dateTime('date_envoie');
-            $table->dateTime('date_activation');
+            //$table->dateTime('date_envoie');
+            //$table->dateTime('date_activation');
+            $table->timestamp("date_activation");
             $table->integer('etat');
             $table->foreignId('user_id');
             $table->foreignId('groupe_id');

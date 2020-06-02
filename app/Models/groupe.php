@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\User;
+
 use Illuminate\Database\Eloquent\Model;
 
-class groupe extends Model
+class Groupe extends Model
 {
     
     protected $table        = 'groupes';
@@ -31,6 +33,25 @@ class groupe extends Model
      * Relationship : 
      * 
      * */
+    /*
+    public function groupes()
+    {
+        return $this->belongsToMany(GroupeUser::class);
+    }
+    */
+
+    public function usersGroupe()
+    {
+        return $this->hasManyThrough(
+            User::class, 
+            GroupeUser::class,
+            'groupe_id',
+            'id',
+            'id',
+            'user_id'
+        );
+    }
+
 
 
 

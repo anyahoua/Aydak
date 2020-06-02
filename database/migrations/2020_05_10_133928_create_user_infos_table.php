@@ -16,7 +16,7 @@ class CreateUserInfosTable extends Migration
         Schema::create('user_infos', function (Blueprint $table) {
             $table->id();
             $table->string('mobile', 50);
-            $table->string('quartier');
+            //$table->string('quartier');
             $table->string('latitude');
             $table->string('longitude');
             $table->string('deg2rad_longitude');

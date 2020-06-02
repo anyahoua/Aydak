@@ -22,7 +22,7 @@ class UserInfo extends Model
      * @var array
      */
     protected $fillable = [
-        'mobile', 'quartier', 'latitude', 'longitude', 'deg2rad_longitude', 'deg2rad_latitude', 
+        'mobile', 'latitude', 'longitude', 'deg2rad_longitude', 'deg2rad_latitude', 
         'quartier_livraison', 'ville_livraison', 'daira_livraison', 'wilaya_livraison', 'pays_livraison', 
         'adresse_residence', 'quartier_residence', 'ville_residence', 'daira_residence', 'wilaya_residence', 'pays_residence', 
         'user_id', 'profil_id', 'etat', 'etape', 
@@ -35,7 +35,7 @@ class UserInfo extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function Profil()
+    public function profil()
     {
         return $this->belongsTo(Profil::class);
     }

@@ -6,11 +6,12 @@ use App\User;
 use App\Models\UserInfo;
 use App\Models\DocUser;
 use App\Models\GroupeUser;
+use App\Models\Groupe;
 use App\Models\InvitationShopper;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use Keygen;
 use App\Traits\UploadTrait;
@@ -23,9 +24,9 @@ class UserController extends Controller
      * Login API
      * 
      * @return \Illuminate\Http\Response 
-     */ 
+     */
     public function login(Request $request)
-    { 
+    {
 
         $input = $request->all();
 
@@ -35,8 +36,7 @@ class UserController extends Controller
         ]);
 
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
-        { 
+        if (auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password']))) {
             /*
                 //$user = $this->guard()->user();
                 $user = Auth::user();
@@ -44,8 +44,8 @@ class UserController extends Controller
                 
                 $user->apitoken = $token;
                 $user->userInfo;
-                $user->userInfo->Profil;
-                //$user->Profil;
+                $user->userInfo->profil;
+                //$user->profil;
 
                 return response()->json([
                     'code'      => '200',
@@ -58,15 +58,14 @@ class UserController extends Controller
             */
 
             $user = Auth::user();
-            
-            if($user->userInfo->etat==1)
-            {
+
+            if ($user->userInfo->etat == 1) {
                 $token =  $user->createToken('AydakUsers')->accessToken;
-                
+
                 $user->apitoken = $token;
                 $user->userInfo;
-                $user->userInfo->Profil;
-                //$user->Profil;
+                $user->userInfo->profil;
+                //$user->profil;
 
                 return response()->json([
                     'code'      => '200',
@@ -74,106 +73,108 @@ class UserController extends Controller
                     //'data'      => new UserLoginResource($user)
                     //'apiToken'  => $token,
                     'data'      => $user,
-                    
+
                 ], 200);
-
             } else {
-                return response()->json(['error'=>'Unauthorised status'], 401); 
+                return response()->json(['error' => 'Unauthorised status'], 401);
             }
-
-
-
-            
-        } else{ 
-            return response()->json(['error'=>'Unauthorised'], 401); 
-        } 
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
     }
 
     /** 
      * Invitation Shopper API
      * 
      * @return \Illuminate\Http\Response 
-     */ 
-    public function InvitationShopper(Request $request) 
+     */
+    public function InvitationShopper(Request $request)
     {
 
-        $data = $request->validate([
-            'userId'            => 'required| integer ',
-            'mobile'            => ['required', 'regex:/^(05|06|07)[0-9]{8}$/'],
-        ],
-        [
-            'userId.required'   => 'Le champ userId est obligatoire.',
-            'userId.integer'    => 'userId doite être un entier.',
-            'mobile.required'   => 'Le champ mobile est obligatoire.',
-            'regex.required'    => 'Le champ mobile est invalide.',
-        ]);
+        $data = $request->validate(
+            [
+                'userId'            => 'required| integer ',
+                'mobile'            => ['required', 'regex:/^(05|06|07)[0-9]{8}$/'],
+            ],
+            [
+                'userId.required'   => 'Le champ userId est obligatoire.',
+                'userId.integer'    => 'userId doite être un entier.',
+                'mobile.required'   => 'Le champ mobile est obligatoire.',
+                'regex.required'    => 'Le champ mobile est invalide.',
+            ]
+        );
 
-        
-
+        // Get Teamleader :
+        //-----------------------------
         $Teamleader = User::find($request->userId);
         $Teamleader->groupeUser;
         $Teamleader->groupe;
         $Teamleader->invitations;
         $Teamleader->documents;
 
-        //return $Teamleader;
-
         // Generate code : 
+        //-----------------------------
         $code = $this->generateCode();
 
         // Add Invitation Shopper :
+        //-----------------------------
         $Invitation                     = new InvitationShopper;
 
         $Invitation->mobile             = $request->mobile;
         $Invitation->code               = $code;
-        $Invitation->date_envoie        = '';
-        $Invitation->date_activation    = '';
+        //$Invitation->date_activation    = '';
         $Invitation->etat               = '0';
         $Invitation->user_id            = $Teamleader->id;
         $Invitation->groupe_id          = $Teamleader->groupeUser->groupe_id;
 
         $Invitation->save();
 
-        
+
         return response()->json([
             'code'      => '200',
             'message'   => 'Invitation à bien été envoyée.',
             'data'      => $Invitation
-            
+
         ], 200);
-        
     }
 
     /** 
      * Validate Code For Shopper API
      * 
      * @return \Illuminate\Http\Response 
-     */ 
-    public function validateCode(Request $request) 
+     */
+    public function validateCode(Request $request)
     {
-        $data = $request->validate([
-            'code'              => 'required| integer ',
-            'mobile'            => ['required', 'regex:/^(05|06|07)[0-9]{8}$/'],
-        ],
-        [
-            'code.required'     => 'Le champ code est obligatoire.',
-            'mobile.required'   => 'Le champ mobile est obligatoire.',
-            'regex.required'    => 'Le champ mobile est invalide.',
-        ]);
+        $data = $request->validate(
+            [
+                'code'              => 'required| integer ',
+                'mobile'            => ['required', 'regex:/^(05|06|07)[0-9]{8}$/'],
+            ],
+            [
+                'code.required'     => 'Le champ code est obligatoire.',
+                'mobile.required'   => 'Le champ mobile est obligatoire.',
+                'regex.required'    => 'Le champ mobile est invalide.',
+            ]
+        );
 
-        $Invitation = InvitationShopper::where('code', $request->code)->where('mobile', $request->mobile)->where('etat', '0')->first();
-        
-        if($Invitation->count()==1)
-        {
+        $query = InvitationShopper::where('code', $request->code)->where('mobile', $request->mobile)->where('etat', '0');
+
+        $Invitation = $query->first();
+        $Invitation->user;
+        $Invitation->groupe;
+
+        $count = $Invitation ? $query->count() : 0;
+
+        if ($count == 1) {
             return response()->json([
                 'code'      => '200',
                 'message'   => 'Le coursier à bien été invité.',
                 'data'      => $Invitation
-                
+
             ], 200);
         }
 
-        return response()->json(['error'=>'unauthorized code'], 401);
+        return response()->json(['error' => 'unauthorized code'], 401);
     }
 
 
@@ -181,21 +182,21 @@ class UserController extends Controller
      * Register First Step Teamleader And Shopper API
      * 
      * @return \Illuminate\Http\Response 
-     */ 
-    public function register(Request $request) 
-    { 
-        $validator = Validator::make($request->all(), [ 
+     */
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'lastname'      => 'required',  // nom
             'firstname'     => 'required',  // prenom
-            'address'       => 'required | string', 
-            'profil'        => 'required | integer', 
+            'address'       => 'required | string',
+            'profil'        => 'required | integer',
             'username'      => ['required', 'regex:/^(05|06|07)[0-9]{8}$/', 'unique:users'], // Mobile
-            'password'      => 'required', 
-            'c_password'    => 'required|same:password', 
+            'password'      => 'required',
+            'c_password'    => 'required|same:password',
         ]);
-        
-        if ($validator->fails()) { 
-            return response()->json(['error'=>$validator->errors()], 401);            
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
         }
 
         // Add User :
@@ -222,6 +223,7 @@ class UserController extends Controller
         $userInfos->profil_id           = $request->profil;
         $userInfos->etat                = '1';
         $userInfos->etape               = '1';
+        $UserInfo->pays_residence       = 'Algérie';
 
         $userInfos->save();
 
@@ -232,7 +234,7 @@ class UserController extends Controller
             'code'      => '201',
             'message'   => 'Inscription réussie.',
             'data'      => $user
-            
+
         ], 201);
     }
 
@@ -240,34 +242,61 @@ class UserController extends Controller
      * Register Next Step Teamleader API
      * 
      * @return \Illuminate\Http\Response 
-     */ 
-    public function registerNextTeamleader(Request $request) 
+     */
+    public function registerNextTeamleader(Request $request)
     {
-        $data = $request->validate([
-            'userId'            => 'required| integer ',
-            'groupeId'          => 'required| integer ',
-            'district'          => 'required| string ',
-            'cardId'            => 'required| image | mimes:jpeg,png,jpg |max:2048',
-            'rapSheet'          => 'required| image | mimes:jpeg,png,jpg |max:2048',
-        ],
-        [
-            'userId.required'   => 'Le champ userId est obligatoire.',
-            'userId.integer'    => 'userId doite être un entier.',
-            'groupeId.required'   => 'Le champ groupeId est obligatoire.',
-            'groupeId.integer'    => 'groupeId doite être un entier.',
-            'district.required'   => 'Le champ district est obligatoire.',
-            'cardId.required'   => 'L\'image cardId est obligatoire.',
-            'rapSheet.required' => 'L\'image rapSheet est obligatoire.',
-        ]);
-        
+        $data = $request->validate(
+            [
+                'userId'            => 'required| integer',
+                'groupeName'        => 'required| string',
+                'district'          => 'required| string',
+                'commune'           => 'required| string',
+                'daira'             => 'required| string',
+                'wilaya'            => 'required| string',
+                'latitude'          => 'required| string',
+                'longitude'         => 'required| string',
+                'cardId'            => 'required| image | mimes:jpeg,png,jpg |max:2048',
+                'rapSheet'          => 'required| image | mimes:jpeg,png,jpg |max:2048',
+            ],
+            [
+                'userId.required'       => 'Le champ userId est obligatoire.',
+                'userId.integer'        => 'userId doite être un entier.',
+                'groupeName.required'   => 'Le champ groupeId est obligatoire.',
+                'district.required'     => 'Le champ district est obligatoire.',
+                'commune'               => 'Le champ commune est obligatoire.',
+                'daira'                 => 'Le champ daira est obligatoire.',
+                'wilaya'                => 'Le champ wilaya est obligatoire.',
+                'latitude'              => 'Le champ latitude est obligatoire.',
+                'longitude'             => 'Le champ longitude est obligatoire.',
+                'cardId.required'       => 'L\'image cardId est obligatoire.',
+                'rapSheet.required'     => 'L\'image rapSheet est obligatoire.',
+            ]
+        );
+
+
+        //-----------------------------------------
+        // Add New Groupe
+        //-----------------------------------------
+        $Groupe                 = new Groupe;
+
+        $Groupe->nom            = $request->groupeName;
+        $Groupe->photo          = '';
+        $Groupe->latitude       = $request->latitude;
+        $Groupe->longitude      = $request->longitude;
+        $Groupe->etat           = '1';
+
+        $Groupe->save();
+        //-----------------------------------------
+
+
+
         // Card ID
-        if($request->hasFile('cardId'))
-        {
+        if ($request->hasFile('cardId')) {
             $CardID                 = $request->file('cardId');
             //$CardID_Name    = $request->userId.'_'.$this->generateCode().'.'.$CardID->getClientOriginalExtension();
-            $CardID_Name            = $this->generateDocName().'.'.$CardID->getClientOriginalExtension();
+            $CardID_Name            = $this->generateDocName() . '.' . $CardID->getClientOriginalExtension();
             $folder                 = '/users/cardid';  // Define folder path
-            
+
             // Upload image
             $this->uploadOne($CardID, $folder, 'public', $CardID_Name);
 
@@ -285,13 +314,12 @@ class UserController extends Controller
         }
 
         // Rap Sheet
-        if($request->hasFile('rapSheet'))
-        {
+        if ($request->hasFile('rapSheet')) {
             $RapSheet               = $request->file('rapSheet');
             //$RapSheet_Name  = $request->userId.'_'.$this->generateCode().'.'.$RapSheet->getClientOriginalExtension();
-            $RapSheet_Name          = $this->generateDocName().'.'.$RapSheet->getClientOriginalExtension();
+            $RapSheet_Name          = $this->generateDocName() . '.' . $RapSheet->getClientOriginalExtension();
             $folder                 = '/users/rapSheet';  // Define folder path
-            
+
             // Upload image
             $this->uploadOne($RapSheet, $folder, 'public', $RapSheet_Name);
 
@@ -322,38 +350,31 @@ class UserController extends Controller
         //-----------------------------------------
 
 
-        /*
-        //-----------------------------------------
-        // User Info
-        //-----------------------------------------
-        $UserInfo                       = new UserInfo;
-        
-        $UserInfo->mobile               = '';
-        $UserInfo->quartier             = '';
-        $UserInfo->latitude             = '';
-        $UserInfo->longitude            = '';
-        $UserInfo->deg2rad_longitude    = '';
-        $UserInfo->deg2rad_latitude     = '';
-        $UserInfo->quartier_livraison   = '';
-        $UserInfo->ville_livraison      = '';
-        $UserInfo->daira_livraison      = '';
-        $UserInfo->wilaya_livraison     = '';
-        $UserInfo->pays_livraison       = '';
-        $UserInfo->adresse_residence    = '';
-        $UserInfo->quartier_residence   = '';
-        $UserInfo->ville_residence      = '';
-        $UserInfo->daira_residence      = '';
-        $UserInfo->wilaya_residence     = '';
-        $UserInfo->pays_residence       = '';
-        $UserInfo->user_id              = $request->userId;
-        $UserInfo->profil_id            = '';
-        $UserInfo->etat                 = '1';
-        $UserInfo->etape                = '2';
-        //-----------------------------------------
-        */
 
+        //-----------------------------------------
+        // UPDATE in User Info
+        //-----------------------------------------
+        $UserInfo = UserInfo::where('user_id', $request->userId);
 
+        //$UserInfo->mobile               = '';
+        $UserInfo->latitude             = $request->latitude;
+        $UserInfo->longitude            = $request->longitude;
+        //$UserInfo->deg2rad_longitude    = '';
+        //$UserInfo->deg2rad_latitude     = '';
 
+        //$UserInfo->quartier_livraison   = '';
+        //$UserInfo->ville_livraison      = '';
+        //$UserInfo->daira_livraison      = '';
+        //$UserInfo->wilaya_livraison     = '';
+        //$UserInfo->pays_livraison       = '';
+
+        $UserInfo->quartier_residence   = $request->district;
+        $UserInfo->ville_residence      = $request->commune;
+        $UserInfo->daira_residence      = $request->daira;
+        $UserInfo->wilaya_residence     = $request->wilaya;
+
+        $UserInfo->save();
+        //-----------------------------------------
 
     }
 
@@ -361,34 +382,45 @@ class UserController extends Controller
      * Register Next Step Shopper API
      * 
      * @return \Illuminate\Http\Response 
-     */ 
-    public function registerNextShopper(Request $request) 
+     */
+    public function registerNextShopper(Request $request)
     {
-        $data = $request->validate([
-            'userId'            => 'required| integer ',
-            'groupeId'          => 'required| integer ',
-            'district'          => 'required| string ',
-            'cardId'            => 'required| image | mimes:jpeg,png,jpg |max:2048',
-            'rapSheet'          => 'required| image | mimes:jpeg,png,jpg |max:2048',
-        ],
-        [
-            'userId.required'   => 'Le champ userId est obligatoire.',
-            'userId.integer'    => 'userId doite être un entier.',
-            'groupeId.required'   => 'Le champ groupeId est obligatoire.',
-            'groupeId.integer'    => 'groupeId doite être un entier.',
-            'district.required'   => 'Le champ district est obligatoire.',
-            'cardId.required'   => 'L\'image cardId est obligatoire.',
-            'rapSheet.required' => 'L\'image rapSheet est obligatoire.',
-        ]);
-        
+        $data = $request->validate(
+            [
+                'userId'            => 'required| integer',
+                'groupeId'          => 'required| integer',
+                'district'          => 'required| string',
+                'commune'           => 'required| string',
+                'daira'             => 'required| string',
+                'wilaya'            => 'required| string',
+                'latitude'          => 'required| string',
+                'longitude'         => 'required| string',
+                'cardId'            => 'required| image | mimes:jpeg,png,jpg |max:2048',
+                'rapSheet'          => 'required| image | mimes:jpeg,png,jpg |max:2048',
+            ],
+            [
+                'userId.required'       => 'Le champ userId est obligatoire.',
+                'userId.integer'        => 'userId doite être un entier.',
+                'groupeId.required'     => 'Le champ groupeId est obligatoire.',
+                'groupeId.integer'      => 'groupeId doite être un entier.',
+                'district.required'     => 'Le champ district est obligatoire.',
+                'commune'               => 'Le champ commune est obligatoire.',
+                'daira'                 => 'Le champ daira est obligatoire.',
+                'wilaya'                => 'Le champ wilaya est obligatoire.',
+                'latitude'              => 'Le champ latitude est obligatoire.',
+                'longitude'             => 'Le champ longitude est obligatoire.',
+                'cardId.required'       => 'L\'image cardId est obligatoire.',
+                'rapSheet.required'     => 'L\'image rapSheet est obligatoire.',
+            ]
+        );
+
         // Card ID
-        if($request->hasFile('cardId'))
-        {
+        if ($request->hasFile('cardId')) {
             $CardID                 = $request->file('cardId');
             //$CardID_Name    = $request->userId.'_'.$this->generateCode().'.'.$CardID->getClientOriginalExtension();
-            $CardID_Name            = $this->generateDocName().'.'.$CardID->getClientOriginalExtension();
+            $CardID_Name            = $this->generateDocName() . '.' . $CardID->getClientOriginalExtension();
             $folder                 = '/users/cardid';  // Define folder path
-            
+
             // Upload image
             $this->uploadOne($CardID, $folder, 'public', $CardID_Name);
 
@@ -406,13 +438,12 @@ class UserController extends Controller
         }
 
         // Rap Sheet
-        if($request->hasFile('rapSheet'))
-        {
+        if ($request->hasFile('rapSheet')) {
             $RapSheet               = $request->file('rapSheet');
             //$RapSheet_Name  = $request->userId.'_'.$this->generateCode().'.'.$RapSheet->getClientOriginalExtension();
-            $RapSheet_Name          = $this->generateDocName().'.'.$RapSheet->getClientOriginalExtension();
+            $RapSheet_Name          = $this->generateDocName() . '.' . $RapSheet->getClientOriginalExtension();
             $folder                 = '/users/rapSheet';  // Define folder path
-            
+
             // Upload image
             $this->uploadOne($RapSheet, $folder, 'public', $RapSheet_Name);
 
@@ -443,34 +474,30 @@ class UserController extends Controller
         //-----------------------------------------
 
 
-        /*
         //-----------------------------------------
-        // User Info
+        // UPDATE in User Info
         //-----------------------------------------
-        $UserInfo                       = new UserInfo;
-        
-        $UserInfo->mobile               = '';
-        $UserInfo->quartier             = '';
-        $UserInfo->latitude             = '';
-        $UserInfo->longitude            = '';
-        $UserInfo->deg2rad_longitude    = '';
-        $UserInfo->deg2rad_latitude     = '';
-        $UserInfo->quartier_livraison   = '';
-        $UserInfo->ville_livraison      = '';
-        $UserInfo->daira_livraison      = '';
-        $UserInfo->wilaya_livraison     = '';
-        $UserInfo->pays_livraison       = '';
-        $UserInfo->quartier_residence   = '';
-        $UserInfo->ville_residence      = '';
-        $UserInfo->daira_residence      = '';
-        $UserInfo->wilaya_residence     = '';
-        $UserInfo->pays_residence       = '';
-        $UserInfo->user_id              = $request->userId;
-        $UserInfo->profil_id            = '';
-        $UserInfo->etat                 = '1';
-        $UserInfo->etape                = '2';
+        $UserInfo = UserInfo::where('user_id', $request->userId);
+
+        //$UserInfo->mobile               = '';
+        $UserInfo->latitude             = $request->latitude;
+        $UserInfo->longitude            = $request->longitude;
+        //$UserInfo->deg2rad_longitude    = '';
+        //$UserInfo->deg2rad_latitude     = '';
+
+        //$UserInfo->quartier_livraison   = '';
+        //$UserInfo->ville_livraison      = '';
+        //$UserInfo->daira_livraison      = '';
+        //$UserInfo->wilaya_livraison     = '';
+        //$UserInfo->pays_livraison       = '';
+
+        $UserInfo->quartier_residence   = $request->district;
+        $UserInfo->ville_residence      = $request->commune;
+        $UserInfo->daira_residence      = $request->daira;
+        $UserInfo->wilaya_residence     = $request->wilaya;
+
+        $UserInfo->save();
         //-----------------------------------------
-        */
 
 
 
@@ -481,10 +508,10 @@ class UserController extends Controller
      * Profile api 
      * 
      * @return \Illuminate\Http\Response 
-     */ 
-    public function profile(Request $request) 
+     */
+    public function profile(Request $request)
     {
-/*
+        /*
         $validator = Validator::make($request->all(), [ 
             //'nom'           => 'required', 
             //'prenom'        => 'required', 
@@ -500,7 +527,7 @@ class UserController extends Controller
 
 //public_path().'/images/'
 */
-/*
+        /*
         $data = $request->validate([
             'avatarImage'              => 'required| image | mimes:jpeg,png,jpg |max:2048',
         ],
@@ -514,29 +541,26 @@ class UserController extends Controller
         //-------------------------------//
         $folder             = '/ecgs';  // Define folder path
 
-        if($request->hasFile('avatarImage'))
-        {
-            
+        if ($request->hasFile('avatarImage')) {
+
             //return $request->file('avatarImage');
-            
-            foreach($request->file('avatarImage') as $avatar)
-            {
-                $New_Image_Name[]     = time().'.'.$avatar->getClientOriginalExtension();
+
+            foreach ($request->file('avatarImage') as $avatar) {
+                $New_Image_Name[]     = time() . '.' . $avatar->getClientOriginalExtension();
                 $name = $avatar->getClientOriginalName();
 
                 //$avatar->move(public_path().'images/', $name);
                 $this->uploadOne($avatar, $folder, 'public', $name);
 
                 $data_name[] = $name;
-                
+
                 //$this->uploadOne($avatar, $folder, 'public', $New_Image_Name);
             }
-            
-            return $data_name;
 
+            return $data_name;
         }
 
-/*
+        /*
         if($request->hasFile('avatarImage'))
         {
 
@@ -557,28 +581,27 @@ class UserController extends Controller
             'code'      => '201',
             'message'   => 'Profile updated successfully.',
             //'data'      => $filePath
-            
-        ], 201);
 
+        ], 201);
     }
-    
+
 
     /** 
      * details api 
      * 
      * @return \Illuminate\Http\Response 
-     */ 
-    public function details() 
-    { 
-        $user = Auth::user(); 
-        
+     */
+    public function details()
+    {
+        $user = Auth::user();
+
         return response()->json([
             'code'      => '200',
             'message'   => 'Success.',
             'data'      => $user
         ], 200);
     }
-    
+
 
     protected function generateNumericKey()
     {
@@ -595,12 +618,12 @@ class UserController extends Controller
     protected function generateCode__OLD()
     {
         return Keygen::bytes()->generate(
-            function($key) {
+            function ($key) {
                 // Generate a random numeric key
                 $random = Keygen::numeric()->generate();
 
                 // Manipulate the random bytes with the numeric key
-                return substr(md5($key . $random . strrev($key)), mt_rand(0,8), 6);
+                return substr(md5($key . $random . strrev($key)), mt_rand(0, 8), 6);
             }
         );
     }
@@ -609,19 +632,17 @@ class UserController extends Controller
      * generate Document Name api 
      * 
      * @return \Illuminate\Http\Response 
-     */ 
+     */
     protected function generateDocName()
     {
         $documentName = $this->generateNumericKey();
-    
+
         // Ensure ID does not exist
         // Generate new one if ID already exists
         while (DocUser::where('doc', $documentName)->count() > 0) {
             $documentName = $this->generateNumericKey();
         }
-    
+
         return $documentName;
     }
-
-
 }

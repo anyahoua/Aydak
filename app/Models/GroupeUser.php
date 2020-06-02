@@ -36,5 +36,11 @@ class GroupeUser extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function groupe()
+    {
+        return $this->belongsTo(Groupe::class);
+    }
+    
      
 }

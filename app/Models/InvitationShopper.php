@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\User;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,7 +24,7 @@ class InvitationShopper extends Model
      * @var array
      */
     protected $fillable = [
-        'mobile', 'code', 'date_envoie', 'date_activation', 'etat', 'user_id', 'groupe_id', 
+        'mobile', 'code', 'date_activation', 'etat', 'user_id', 'groupe_id', 
     ];
 
     
@@ -37,6 +38,10 @@ class InvitationShopper extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function groupe()
+    {
+        return $this->belongsTo(Groupe::class);
+    }
 
 
 
