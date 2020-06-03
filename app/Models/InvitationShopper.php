@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\User;
+//use App\Models\Groupe;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -42,6 +43,8 @@ class InvitationShopper extends Model
     {
         return $this->belongsTo(Groupe::class);
     }
+
+
 
 
 

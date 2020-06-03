@@ -15,7 +15,7 @@ class CreateGroupesTable extends Migration
     {
         Schema::create('groupes', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
+            $table->string('nom')->unique();
             $table->string('photo')->nullable();
             $table->string('latitude');
             $table->string('longitude');

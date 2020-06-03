@@ -31,7 +31,7 @@ Route::prefix('v1')->group(function(){
     Route::get('wilayas/{pays_id}', 'Api\WilayaController@index');
 
 
-    // Users :
+    // Users (TEAMLEADER/SHOPPER) :
 /*
     Route::post('login', 'Api\UserController@login');
     Route::post('register', 'Api\UserController@register');
@@ -44,11 +44,16 @@ Route::prefix('v1')->group(function(){
         
         Route::post('login', 'Api\UserController@login');
         Route::post('register', 'Api\UserController@register');
+        
+        // TEAMLEADER :
         Route::post('tm/nextregister', 'Api\UserController@registerNextTeamleader');
         Route::middleware('auth:api')->post('tm/invitation', 'Api\UserController@InvitationShopper');
+
+        // SHOPPER :
         Route::post('shopper/code', 'Api\UserController@validateCode');
         Route::post('shopper/nextregister', 'Api\UserController@registerNextShopper');
         
+        //
         Route::middleware('auth:api')->post('userdetails', 'Api\UserController@details');
         Route::middleware('auth:api')->post('profile', 'Api\UserController@profile');
 

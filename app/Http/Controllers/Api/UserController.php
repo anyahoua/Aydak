@@ -177,6 +177,26 @@ class UserController extends Controller
         return response()->json(['error' => 'unauthorized code'], 401);
     }
 
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $request)
+    {
+        return Validator::make($request, [
+            'lastName'      => ['required', 'string', 'max:255'],
+            'firstName'     => ['required', 'string', 'max:255'],
+            'address'       => ['required', 'string', 'max:255'],
+            'profil'        => ['required', 'integer'],
+            'username'      => ['required', 'regex:/^(05|06|07)[0-9]{8}$/', 'unique:users'], // Mobile
+            //'password'      => ['required', 'string', 'min:8', 'confirmed'], //---> password_confirmation = 'le mot de passe'
+            'password'      => ['required', 'string', 'min:8'],
+            'c_password'    => ['required', 'same:password'],
+        ]);
+
+    }
 
     /** 
      * Register First Step Teamleader And Shopper API
@@ -185,6 +205,7 @@ class UserController extends Controller
      */
     public function register(Request $request)
     {
+/*
         $validator = Validator::make($request->all(), [
             'lastname'      => 'required',  // nom
             'firstname'     => 'required',  // prenom
@@ -196,10 +217,13 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
+            return response()->json(['error' => $validator->errors()], 422);
         }
+*/
+        // Validate input request.
+        $this->validator($request->all())->validate();
 
-        // Add User :
+        // Input data user :
         $data = [
             'nom'       => $request->lastname,
             'prenom'    => $request->firstname,
@@ -207,6 +231,7 @@ class UserController extends Controller
             'password'  => bcrypt($request->password)
         ];
 
+        // Add User :
         $user   = User::create($data);
         //--
 
@@ -248,13 +273,13 @@ class UserController extends Controller
         $data = $request->validate(
             [
                 'userId'            => 'required| integer',
-                'groupeName'        => 'required| string',
+                'groupeName'        => 'required| string | unique:groupes,nom',
                 'district'          => 'required| string',
                 'commune'           => 'required| string',
                 'daira'             => 'required| string',
                 'wilaya'            => 'required| string',
-                'latitude'          => 'required| string',
-                'longitude'         => 'required| string',
+                'latitude'          => 'required| numeric',
+                'longitude'         => 'required| numeric',
                 'cardId'            => 'required| image | mimes:jpeg,png,jpg |max:2048',
                 'rapSheet'          => 'required| image | mimes:jpeg,png,jpg |max:2048',
             ],
@@ -273,6 +298,7 @@ class UserController extends Controller
             ]
         );
 
+        //return Groupe::where('nom', $request->groupeName)->count();
 
         //-----------------------------------------
         // Add New Groupe

@@ -33,14 +33,20 @@ class Groupe extends Model
      * Relationship : 
      * 
      * */
+
     /*
-    public function groupes()
-    {
-        return $this->belongsToMany(GroupeUser::class);
-    }
+        public function users()
+        {
+            return $this->hasMany(User::class);
+        }
+
+        public function invitations()
+        {
+            return $this->hasMany(InvitationShopper::class);
+        }
     */
 
-    public function usersGroupe()
+    public function usersInGroupe()
     {
         return $this->hasManyThrough(
             User::class, 
@@ -49,8 +55,28 @@ class Groupe extends Model
             'id',
             'id',
             'user_id'
-        );
+        )->with('UserInfo');
     }
+
+    /*
+    public function usersInfo()
+    {
+        return $this->hasManyThrough(
+            UserInfo::class, 
+            GroupeUser::class,
+            'groupe_id',
+            'id',
+            'id',
+            'user_id'
+        )->with('profil');
+    }
+
+    public function usersInGroupe()
+    {
+        return $this->belongsToMany(User::class, 'groupe_users', 'groupe_id', 'user_id');
+                                    //->withPivot('distance', 'duration', 'duration_secondes');
+    }
+    */
 
 
 

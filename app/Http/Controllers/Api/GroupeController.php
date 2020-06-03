@@ -35,7 +35,7 @@ class GroupeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [ 
-            'lastname'      => 'required',  // nom
+            'groupeName'      => 'required',  // nom
             'avatar'        => 'required',
             //'latitude'      => 'required | string',
             //'longitude'     => 'required | string', 
@@ -47,11 +47,11 @@ class GroupeController extends Controller
             return response()->json(['error'=>$validator->errors()], 401);            
         }
 
-        if(Groupe::where('nom', $request->lastname)->count()==0)
+        if(Groupe::where('nom', $request->groupeName)->count()==0)
         {
             // Add New Groupe :
             $data = [
-                'nom'               => $request->lastname,
+                'nom'               => $request->groupeName,
                 'photo'             => $request->avatar,
                 'latitude'          => $request->latitude,
                 'longitude'         => $request->longitude,
@@ -84,8 +84,9 @@ class GroupeController extends Controller
     {
         
         $groupe = Groupe::find($id);
-        $groupe->usersGroupe;
-        
+        //$groupe->usersInGroupe;
+        $groupe->usersInGroupe;
+        //$groupe->usersInfo;
         //$groupe->groupes;
         //$groupe->users->userInfo->profil;
         
@@ -140,11 +141,17 @@ class GroupeController extends Controller
             ->where('etat', '=', 1)
             ->having("distance", "<", $radius)
             ->orderBy("distance",'asc')
-            ->offset(0)
+            //->offset(0)
             //->limit(20)
             ->get();
 
-        return $groupes;
+        return response()->json([
+            'code'      => '200',
+            'message'   => 'Successfully.',
+            'total'      => $groupes->count(),
+            'data'      => $groupes
+            
+        ], 200);
     }
 
 
