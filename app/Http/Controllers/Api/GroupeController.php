@@ -16,7 +16,14 @@ class GroupeController extends Controller
      */
     public function index()
     {
-        //
+        $Groupes = Groupe::all();
+
+        return response()->json([
+            'code'      => '200',
+            'message'   => 'Successfully.',
+            'data'      => $Groupes
+            
+        ], 200);
     }
 
     /**
@@ -56,11 +63,11 @@ class GroupeController extends Controller
             $groupe   = Groupe::create($data);
 
             return response()->json([
-                'code'      => '200',
+                'code'      => '201',
                 'message'   => 'Groupe ajouté avec succès.',
                 'data'      => $groupe
                 
-            ], 200);
+            ], 201);
         }
 
         return response()->json(['error'=>'Ce nom de groupe existe déjà.'], 401);
