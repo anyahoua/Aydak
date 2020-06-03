@@ -58,7 +58,7 @@ class Groupe extends Model
         )->with('UserInfo');
     }
 
-    /*
+/*
     public function usersInfo()
     {
         return $this->hasManyThrough(
@@ -76,7 +76,7 @@ class Groupe extends Model
         return $this->belongsToMany(User::class, 'groupe_users', 'groupe_id', 'user_id');
                                     //->withPivot('distance', 'duration', 'duration_secondes');
     }
-    */
+*/
 
 
 

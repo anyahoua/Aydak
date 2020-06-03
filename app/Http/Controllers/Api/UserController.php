@@ -12,9 +12,10 @@ use App\Models\InvitationShopper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\UploadTrait;
 use Validator;
 use Keygen;
-use App\Traits\UploadTrait;
+
 
 class UserController extends Controller
 {
