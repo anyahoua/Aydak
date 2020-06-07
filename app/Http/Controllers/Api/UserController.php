@@ -307,11 +307,11 @@ class UserController extends Controller
         $Groupe                 = new Groupe;
 
         $Groupe->nom            = $request->groupeName;
-        $Groupe->photo          = '';
+        //$Groupe->photo          = '';
         $Groupe->latitude       = $request->latitude;
         $Groupe->longitude      = $request->longitude;
         $Groupe->etat           = '1';
-
+        
         $Groupe->save();
         //-----------------------------------------
 
