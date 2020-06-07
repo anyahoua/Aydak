@@ -104,6 +104,13 @@ class ClientController extends Controller
             //'password'      => ['required', 'string', 'min:8', 'confirmed'], //---> password_confirmation = 'le mot de passe'
             'password'      => ['required', 'string', 'min:8'],
             'c_password'    => ['required', 'same:password'],
+
+            'district'          => ['required', 'string'],
+            'commune'           => ['required', 'string'],
+            'daira'             => ['required', 'string'],
+            'wilaya'            => ['required', 'string'],
+            'latitude'          => ['required', 'numeric'],
+            'longitude'         => ['required', 'numeric'],
         ]);
 
     }
@@ -157,6 +164,27 @@ class ClientController extends Controller
         $token  =  $client->createToken('AydakClients')->accessToken;
 
         $client->apitoken = $token;
+
+
+
+        // Add Client infos :
+        $clientInfos                    = new ClientInfo;
+
+        $clientInfos->mobile            = $request->username;
+        $clientInfos->quartier          = $request->district;   //quartier
+        $clientInfos->latitude          = $request->latitude;
+        $clientInfos->longitude         = $request->longitude;
+        $clientInfos->ville             = $request->commune;
+        $clientInfos->daira             = $request->daira;
+        $clientInfos->wilaya            = $request->wilaya;
+        $clientInfos->pays              = 'Algérie';
+        $clientInfos->client_id         = $client->id;
+        $clientInfos->etat              = '0';
+
+        $clientInfos->save();
+        
+        //
+        $client->clientInfos;
 
 
         return response()->json([

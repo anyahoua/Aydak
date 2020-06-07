@@ -5,6 +5,7 @@ namespace App\Models;
 use App\User;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Groupe extends Model
 {
@@ -25,7 +26,7 @@ class Groupe extends Model
      * @var array
      */
     protected $fillable = [
-        'nom', 'photo', 'latitude', 'longitude', 'deg2rad_longitude', 'deg2rad_latitude', 'etat',
+        'nom', 'photo', 'daira', 'latitude', 'longitude', 'deg2rad_longitude', 'deg2rad_latitude', 'etat',
     ];
 
     
@@ -45,6 +46,11 @@ class Groupe extends Model
             return $this->hasMany(InvitationShopper::class);
         }
     */
+    
+    public function groupeUsers()
+    {
+        return $this->hasMany(GroupeUser::class);
+    }
 
     public function usersInGroupe()
     {
@@ -57,6 +63,79 @@ class Groupe extends Model
             'user_id'
         )->with('UserInfo');
     }
+
+    public function TeamleaderInGroupe()
+    {
+        return $this->hasOneThrough(
+            User::class, 
+            GroupeUser::class,
+            'groupe_id',
+            'id',
+            'id',
+            'user_id'
+        )
+        //->withCount('coursiers')
+        ->with(['UserInfo' => function ($query) {
+                $query->where('profil_id', '1');
+        }]);
+    }
+
+/*
+    public function countCoursiersInGroupe()
+    {
+        return $this->hasManyThrough(
+            User::class, 
+            GroupeUser::class,
+            'groupe_id',
+            'id',
+            'id',
+            'user_id'
+        )
+        //->with(['UserInfo' => function ($query) {
+        //    $query->where('profil_id', '2');
+        //}])
+
+        ->withCount(['UserInfo' => function ($query) {
+            $query->where('profil_id', '2');
+        }]);
+
+
+    }
+*/
+
+
+
+
+
+
+
+
+    public function CoursiersInGroupe()
+    {
+
+        return $this->hasManyThrough(
+            User::class, 
+            GroupeUser::class,
+            'groupe_id',
+            'id',
+            'id',
+            'user_id'
+        )
+        ->whereHas('UserInfo', function ($query) {
+            $query->where('profil_id', '=','2');
+        });
+
+
+    }
+
+
+/*
+
+    $users = App\User::with(['posts' => function ($query) {
+        $query->where('title', 'like', '%first%');
+    }])->get();
+
+*/
 
 /*
     public function usersInfo()

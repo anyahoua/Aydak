@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $this->hasOne(UserInfo::class)->with('Profil');
     }
     
+    public function coursiers()
+    {
+        return $this->hasMany(UserInfo::class)->where('profil_id', '2');
+    }
+
     public function groupeUser()
     {
         return $this->hasOne(GroupeUser::class);

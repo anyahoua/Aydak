@@ -138,12 +138,20 @@ class GroupeController extends Controller
                         ) + sin( radians(?) ) *
                         sin( radians( latitude ) ) )
                         ) AS distance", [$latitude, $longitude, $latitude])
+                        //->Join('groupes', 'groupes.id', '=', 'groupe_users.groupe_id')
             ->where('etat', '=', 1)
+            ->with('TeamleaderInGroupe')
+            
+            //->with('CoursiersInGroupe')
+            ->withCount('CoursiersInGroupe')
+            
             ->having("distance", "<", $radius)
             ->orderBy("distance",'asc')
             //->offset(0)
             //->limit(20)
             ->get();
+        
+
 
         return response()->json([
             'code'      => '200',
