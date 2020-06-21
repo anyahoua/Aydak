@@ -150,8 +150,8 @@ class ClientController extends Controller
 
         // Input data user :
         $data = [
-            'nom'       => $request->lastname,
-            'prenom'    => $request->firstname,
+            'nom'       => $request->lastName,
+            'prenom'    => $request->firstName,
             'username'  => $request->username,
             'password'  => bcrypt($request->password),
             'groupe_id' => $request->groupeId,
@@ -189,7 +189,7 @@ class ClientController extends Controller
 
         return response()->json([
             'code'      => '201',
-            'message'   => 'Inscription client réussie.',
+            'message'   => 'Inscription réussie. Un Team-Leader va vous contacter bientot afin de recueillir votre prépaiement.',
             'data'      => $client,
         ], 201);
     }

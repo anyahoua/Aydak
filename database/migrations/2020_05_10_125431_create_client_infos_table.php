@@ -19,8 +19,8 @@ class CreateClientInfosTable extends Migration
             $table->string('quartier');
             $table->string('latitude');
             $table->string('longitude');
-            $table->string('deg2rad_longitude');
-            $table->string('deg2rad_latitude');
+            $table->string('deg2rad_longitude')->nullable();
+            $table->string('deg2rad_latitude')->nullable();
             $table->integer('etat');
             $table->foreignId('client_id');
             $table->string('ville')->nullable();

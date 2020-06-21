@@ -105,31 +105,58 @@ class UserController extends Controller
             ]
         );
 
+
+        // If Mobile exist
+        $coursier = User::where('username', $request->mobile)->first();
+        if(!empty($coursier)){
+            return response()->json(['error' => 'Unauthorised!. This mobile exist.'], 401);
+        }
+
+
         // Get Teamleader :
         //-----------------------------
         $Teamleader = User::find($request->userId);
-        $Teamleader->groupeUser;
-        $Teamleader->groupe;
-        $Teamleader->invitations;
-        $Teamleader->documents;
+        //$Teamleader = User::findOrFail($request->userId);
+        if(!empty($Teamleader)){
+        
+            $Teamleader->groupeUser;
+            $Teamleader->userInfo;
+            $Teamleader->groupe;
+            $Teamleader->invitations;
+            $Teamleader->documents;
 
-        // Generate code : 
-        //-----------------------------
-        $code = $this->generateCode();
+            if($Teamleader->userInfo->profil->id == '1'){
 
-        // Add Invitation Shopper :
-        //-----------------------------
-        $Invitation                     = new InvitationShopper;
+                //$firstInvitations = InvitationShopper::where('mobile', $request->mobile)->where('etat', '0')->get();
+                
 
-        $Invitation->mobile             = $request->mobile;
-        $Invitation->code               = $code;
-        //$Invitation->date_activation    = '';
-        $Invitation->etat               = '0';
-        $Invitation->user_id            = $Teamleader->id;
-        $Invitation->groupe_id          = $Teamleader->groupeUser->groupe_id;
+                // Generate code : 
+                //-----------------------------
+                $code = $this->generateCode();
+                
+                // Disable All Old Invitations Shopper :
+                //-----------------------------
+                InvitationShopper::where('mobile', $request->mobile)->where('etat', '0')->update(['etat' => '1']);
 
-        $Invitation->save();
+                // Add Invitation Shopper :
+                //-----------------------------
+                $Invitation                     = new InvitationShopper;
 
+                $Invitation->mobile             = $request->mobile;
+                $Invitation->code               = $code;
+                //$Invitation->date_activation    = '';
+                $Invitation->etat               = '0';
+                $Invitation->user_id            = $Teamleader->id;
+                $Invitation->groupe_id          = $Teamleader->groupeUser->groupe_id;
+
+                $Invitation->save();
+            } else {
+                return response()->json(['error' => 'Unauthorised for this action.'], 401);
+            }
+
+        } else {
+            return response()->json(['error' => 'User not found.'], 404);
+        }
 
         return response()->json([
             'code'      => '200',
@@ -161,12 +188,12 @@ class UserController extends Controller
         $query = InvitationShopper::where('code', $request->code)->where('mobile', $request->mobile)->where('etat', '0');
 
         $Invitation = $query->first();
-        $Invitation->user;
-        $Invitation->groupe;
 
-        $count = $Invitation ? $query->count() : 0;
+        if(!empty($Invitation)){
 
-        if ($count == 1) {
+            $Invitation->user;
+            $Invitation->groupe;
+
             return response()->json([
                 'code'      => '200',
                 'message'   => 'Le coursier à bien été invité.',
@@ -174,7 +201,7 @@ class UserController extends Controller
 
             ], 200);
         }
-
+        
         return response()->json(['error' => 'unauthorized code'], 401);
     }
 
@@ -226,8 +253,8 @@ class UserController extends Controller
 
         // Input data user :
         $data = [
-            'nom'       => $request->lastname,
-            'prenom'    => $request->firstname,
+            'nom'       => $request->lastName,
+            'prenom'    => $request->firstName,
             'username'  => $request->username,
             'password'  => bcrypt($request->password)
         ];
@@ -249,7 +276,7 @@ class UserController extends Controller
         $userInfos->profil_id           = $request->profil;
         $userInfos->etat                = '1';
         $userInfos->etape               = '1';
-        $UserInfo->pays_residence       = 'Algérie';
+        $userInfos->pays_residence       = 'Algérie';
 
         $userInfos->save();
 
@@ -618,6 +645,9 @@ class UserController extends Controller
     public function details()
     {
         $user = Auth::user();
+        $user->userInfo;
+        $user->groupe;
+        $user->documents;
 
         return response()->json([
             'code'      => '200',
