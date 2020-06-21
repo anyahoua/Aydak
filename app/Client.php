@@ -54,17 +54,25 @@ class Client extends Authenticatable
      * 
      * */
 
+    // Client informations detail
     public function clientInfo()
     {
         return $this->hasOne(ClientInfo::class);
     }
-
+    
+    // Client Compte
     public function clientCompte()
     {
-        return $this->hasOne(ClientCompte::class);
+        return $this->hasOne(ClientCompte::class)->where('etat','1');
     }
 
-    public function clientPpreferenceAchat()
+    // Client Compte History
+    public function clientCompteHistory()
+    {
+        return $this->hasMany(ClientCompte::class)->orderBy('id', 'DESC');
+    }
+
+    public function clientPreferenceAchat()
     {
         return $this->hasOne(ClientPreferenceAchat::class);
     }

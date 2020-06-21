@@ -65,7 +65,7 @@ class ClientController extends Controller
                 
                 //--
                 $client->clientCompte;
-                $client->clientPpreferenceAchat;
+                $client->clientPreferenceAchat;
                 $client->commandes;
                 //--
                 
@@ -195,27 +195,83 @@ class ClientController extends Controller
     }
 
     /** 
-     * details api 
+     * Connected Client Details API 
      * 
      * @return \Illuminate\Http\Response 
      */ 
     public function details() 
     { 
-        $user = Auth::user(); 
-        //return response()->json(['success' => $user], $this->successStatus); 
+        $client = Auth::user(); 
+        $client->ClientInfo;
+        
+        //--
+        /*
+        $client->clientCompte;
+        $client->clientPreferenceAchat;
+        $client->commandes;
+        */
+        //--
 
         return response()->json([
             'code'      => '200',
             'message'   => 'Success.',
-            'data'      => $user
+            'data'      => $client
         ], 200);
     }
 
+    /** 
+     * Connected Client Account API 
+     * 
+     * @return \Illuminate\Http\Response 
+     */ 
+    public function myAccount() 
+    { 
+        $compte = Auth::user(); 
+        $compte->clientCompte;
+        
 
+        return response()->json([
+            'code'      => '200',
+            'message'   => 'Success.',
+            'data'      => $compte
+        ], 200);
+    }
 
+    /** 
+     * Connected Client Account tHistory API 
+     * 
+     * @return \Illuminate\Http\Response 
+     */ 
+    public function myAccountHistory() 
+    { 
+        $accountHistory = Auth::user(); 
+        $accountHistory->clientCompteHistory;
+        
 
+        return response()->json([
+            'code'      => '200',
+            'message'   => 'Success.',
+            'data'      => $accountHistory
+        ], 200);
+    }
 
+    /** 
+     * Connected Client Account tHistory API 
+     * 
+     * @return \Illuminate\Http\Response 
+     */ 
+    public function myShoppingCart() 
+    { 
+        $shoppingCart = Auth::user(); 
+        $shoppingCart->commandes;
+        
 
+        return response()->json([
+            'code'      => '200',
+            'message'   => 'Success.',
+            'data'      => $shoppingCart
+        ], 200);
+    }
 
 
 }

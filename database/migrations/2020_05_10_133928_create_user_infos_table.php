@@ -14,7 +14,7 @@ class CreateUserInfosTable extends Migration
     public function up()
     {
         Schema::create('user_infos', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('mobile', 50);
             //$table->string('quartier');
             $table->string('latitude');
@@ -31,8 +31,8 @@ class CreateUserInfosTable extends Migration
             $table->string('daira_residence');
             $table->string('wilaya_residence');
             $table->string('pays_residence');
-            $table->foreignId('user_id');
-            $table->foreignId('profil_id');
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('profil_id')->references('id')->on('profils');
             $table->integer('etat');
             $table->timestamps();
         });

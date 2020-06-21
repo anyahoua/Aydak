@@ -88,6 +88,11 @@ Route::prefix('v1')->group(function(){
         Route::post('register', 'Api\ClientController@register');
 
         Route::middleware('auth:client-api')->post('clientdetails', 'Api\ClientController@details');
+        Route::middleware('auth:client-api')->post('moncompte', 'Api\ClientController@myAccount');
+        Route::middleware('auth:client-api')->post('historiquecompte', 'Api\ClientController@myAccountHistory');
+        
+        Route::middleware('auth:client-api')->post('commandes', 'Api\ClientController@myShoppingCart');
+        
     });
 
     /*

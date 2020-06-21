@@ -638,7 +638,7 @@ class UserController extends Controller
 
 
     /** 
-     * details api 
+     * Connected User Details api 
      * 
      * @return \Illuminate\Http\Response 
      */
@@ -655,8 +655,8 @@ class UserController extends Controller
             'data'      => $user
         ], 200);
     }
-
-
+    
+    //
     protected function generateNumericKey()
     {
         // prefixes the key with a random integer between 1 - 9 (inclusive)

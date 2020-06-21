@@ -14,14 +14,14 @@ class CreateCommandeCommentairesTable extends Migration
     public function up()
     {
         Schema::create('commande_commentaires', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('nom');
             $table->text('commentaire');
             $table->integer('etat');
-            $table->foreignId('user_id');
-            $table->foreignId('groupe_id');
-            $table->foreignId('commande_id');
-            $table->foreignId('profil_id');
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('groupe_id')->references('id')->on('groupes');
+            $table->foreignId('commande_id')->references('id')->on('commandes');
+            $table->foreignId('profil_id')->references('id')->on('profils');
             $table->timestamps();
         });
     }

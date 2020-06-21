@@ -14,14 +14,14 @@ class CreateCommandeDetailsTable extends Migration
     public function up()
     {
         Schema::create('commande_details', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->bigInteger('quantite_commande');
-            $table->bigInteger('quantite_achat');
+            $table->bigInteger('quantite_achat')->nullable();
             $table->double('prix_u_commande');
-            $table->double('prix_u_achat');
+            $table->double('prix_u_achat')->nullable();
             $table->integer('etat');
-            $table->foreignId('commande_id');
-            $table->foreignId('produit_id');
+            $table->foreignId('commande_id')->references('id')->on('commandes');
+            $table->foreignId('produit_id')->references('id')->on('produits');
             //$table->timestamps();
         });
     }
