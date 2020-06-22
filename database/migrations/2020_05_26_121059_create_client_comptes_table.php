@@ -14,14 +14,14 @@ class CreateClientComptesTable extends Migration
     public function up()
     {
         Schema::create('client_comptes', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->double('debit');
             $table->double('credit');
             $table->double('ancien_solde');
             $table->double('nouveau_solde');
             $table->integer('etat');
-            $table->foreignId('client_id');
-            $table->foreignId('groupe_id');
+            $table->foreignId('client_id')->references('id')->on('clients');
+            $table->foreignId('groupe_id')->references('id')->on('groupes');
             $table->timestamps();
         });
     }

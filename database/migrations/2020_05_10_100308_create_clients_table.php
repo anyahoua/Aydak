@@ -19,7 +19,7 @@ class CreateClientsTable extends Migration
             $table->string('prenom');
             $table->string('username')->unique();
             $table->string('password');
-            $table->foreignId('groupe_id');
+            $table->foreignId('groupe_id')->references('id')->on('groupes');
             $table->rememberToken();
             $table->timestamps();
         });

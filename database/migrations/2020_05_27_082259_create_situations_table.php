@@ -14,7 +14,7 @@ class CreateSituationsTable extends Migration
     public function up()
     {
         Schema::create('situations', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('libely', 100);
             $table->text('description');
         });

@@ -14,8 +14,8 @@ class CreateSousFamillesTable extends Migration
     public function up()
     {
         Schema::create('sous_familles', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('famille_id');
+            $table->bigIncrements('id');
+            $table->foreignId('famille_id')->references('id')->on('familles');
             $table->string('libely');
         });
     }

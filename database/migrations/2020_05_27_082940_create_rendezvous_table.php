@@ -14,11 +14,11 @@ class CreateRendezvousTable extends Migration
     public function up()
     {
         Schema::create('rendezvous', function (Blueprint $table) {
-            $table->id();
-            $table->dateTime('date_prevue');
+            $table->bigIncrements('id');
+            $table->timestamp('date_prevue');
             $table->integer('etat');
-            $table->foreignId('groupe_id');
-            $table->foreignId('client_id');
+            $table->foreignId('groupe_id')->references('id')->on('groupes');
+            $table->foreignId('client_id')->references('id')->on('clients');
             $table->timestamps();
         });
     }

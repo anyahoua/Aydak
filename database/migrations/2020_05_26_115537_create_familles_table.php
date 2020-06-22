@@ -14,8 +14,8 @@ class CreateFamillesTable extends Migration
     public function up()
     {
         Schema::create('familles', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('sous_categorie_id');
+            $table->bigIncrements('id');
+            $table->foreignId('sous_categorie_id')->references('id')->on('sous_categories');
             $table->string('libely', 100);
             $table->integer('etat');
             $table->string('icon', 100)->nullable();

@@ -14,7 +14,7 @@ class CreateOperationsTable extends Migration
     public function up()
     {
         Schema::create('operations', function (Blueprint $table) {
-            $table->id()->comment = '1 : Verssment, 2 : Retour, 3 : Erreur, 4 : Commision, 5 : Achat';
+            $table->bigIncrements('id')->comment = '1 : Verssment, 2 : Retour, 3 : Erreur, 4 : Commision, 5 : Achat';
             $table->string('nom');
             //$table->timestamps();
         });

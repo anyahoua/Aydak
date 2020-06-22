@@ -14,9 +14,9 @@ class CreateSousCategoriesTable extends Migration
     public function up()
     {
         Schema::create('sous_categories', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('libely', 100);
-            $table->foreignId('categorie_id');
+            $table->foreignId('categorie_id')->references('id')->on('categories');
             $table->integer('etat');
             $table->string('icon', 100)->nullable();
             //$table->timestamps();

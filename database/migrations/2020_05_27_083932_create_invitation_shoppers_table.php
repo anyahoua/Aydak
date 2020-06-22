@@ -14,15 +14,13 @@ class CreateInvitationShoppersTable extends Migration
     public function up()
     {
         Schema::create('invitation_shoppers', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('mobile', 30);
             $table->string('code');
-            //$table->dateTime('date_envoie');
-            //$table->dateTime('date_activation');
             $table->timestamp("date_activation");
             $table->integer('etat');
-            $table->foreignId('user_id');
-            $table->foreignId('groupe_id');
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('groupe_id')->references('id')->on('groupes');
             $table->timestamps();
         });
     }

@@ -14,11 +14,11 @@ class CreateReclamationsTable extends Migration
     public function up()
     {
         Schema::create('reclamations', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('nom');
             $table->text('message');
             $table->integer('etat');
-            $table->foreignId('client_id');
+            $table->foreignId('client_id')->references('id')->on('clients');
             $table->timestamps();
         });
     }

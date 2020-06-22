@@ -14,11 +14,11 @@ class CreateClientPreferenceAchatsTable extends Migration
     public function up()
     {
         Schema::create('client_preference_achats', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->bigInteger('quantite_produit');
             $table->integer('etat');
-            $table->foreignId('client_id');
-            $table->foreignId('produit_id');
+            $table->foreignId('client_id')->references('id')->on('clients');
+            $table->foreignId('produit_id')->references('id')->on('produits');
             //$table->timestamps();
         });
     }

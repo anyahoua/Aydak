@@ -14,11 +14,11 @@ class CreateGroupeUsersTable extends Migration
     public function up()
     {
         Schema::create('groupe_users', function (Blueprint $table) {
-            $table->id();
-            $table->dateTime('date_annulation');
+            $table->bigIncrements('id');
+            $table->timestamp('date_annulation');
             $table->integer('etat');
-            $table->foreignId('user_id');
-            $table->foreignId('groupe_id');
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('groupe_id')->references('id')->on('groupes');
             $table->timestamps();
         });
     }
