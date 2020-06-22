@@ -50,7 +50,12 @@ class User extends Authenticatable
      * 
      * */
 
-    public function userInfo()
+    public function userInformation()
+    {
+        return $this->hasOne(UserInfo::class);
+    }
+
+     public function userInfo()
     {
         return $this->hasOne(UserInfo::class)->with('Profil');
     }
