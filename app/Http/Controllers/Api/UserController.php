@@ -555,6 +555,29 @@ class UserController extends Controller
         ], 200);
     }
     
+    /** 
+     * Connected Teamleader Details Odrers API 
+     * 
+     * @return \Illuminate\Http\Response 
+     */
+    public function ordersDetails()
+    {
+        $user = Auth::user();
+        //$user->userInfo;
+        //$user->groupe;
+        //$user->documents;
+
+        return response()->json([
+            'code'      => '200',
+            'message'   => 'Success.',
+            'data'      => new UserRessource($user),
+        ], 200);
+    }
+
+
+
+
+//------------------------------------------------------------------------------------------------//
     //
     protected function generateNumericKey()
     {

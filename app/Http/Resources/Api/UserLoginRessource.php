@@ -30,10 +30,8 @@ class UserLoginRessource extends JsonResource
             'createdAtEn'       => Carbon::parse($this->created_at)->format('Y-m-d'),
             'billingAddress'    => $this->userInfo->adresse_residence,
             'locationAddress'   => new locationAddressRessource($this->userLocationAddress),
-            //'pays'              => $this->userLocationAddress->pays->nom,
-            
             'wallet'            => new UserCompteRessource($this->userCompte),
-
+            'BiometricFile'     => UserDocumentRessource::collection($this->documents),
         ];
     }
 }
