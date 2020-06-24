@@ -52,6 +52,7 @@ class User extends Authenticatable
      * Relationship : 
      * 
      * */
+
     public function userLocationAddress()
     {
         return $this->hasOne(UserAdresse::class);

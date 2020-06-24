@@ -567,10 +567,17 @@ class UserController extends Controller
         //$user->groupe;
         //$user->documents;
 
+        $shoppers = $user->groupe->shopperInGroupe;
+        //$shoppers->userLocationAddress;
+        
+        
+        
+        
+
         return response()->json([
             'code'      => '200',
             'message'   => 'Success.',
-            'data'      => new UserRessource($user),
+            'data'      => $shoppers,
         ], 200);
     }
 

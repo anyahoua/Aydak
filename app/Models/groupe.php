@@ -63,7 +63,53 @@ class Groupe extends Model
             'user_id'
         )->with('UserInfo');
     }
+/*
+    public function shopperInGroupe()
+    {
+        return $this->hasManyThrough(
+            User::class, 
+            GroupeUser::class,
+            'groupe_id',
+            'id',
+            'id',
+            'user_id'
+        )//->with('UserInfo')->having('profil_id', '=', '2');;
+        
+        
+        ->with(['UserInfo' => function ($query) {
+            $query->where('profil_id', '2');
+        }]);
+    }
+*/
 
+    public function shopperInGroupe()
+    {
+        return $this->hasManyThrough(
+            User::class, 
+            GroupeUser::class,
+            'groupe_id',
+            'id',
+            'id',
+            'user_id'
+        )
+        ->with('UserInfo')
+        ->with('userLocationAddress')
+        ->with('userCompte')
+        ->whereHas('UserInfo', function ($query) {
+            $query->where('profil_id', '2');
+        })
+        
+        ;
+
+        /*
+        ->with(['UserInfo' => function ($query) {
+            $query->where('profil_id', '2');
+        }]);
+        */
+    }
+
+
+    
     public function TeamleaderInGroupe()
     {
         return $this->hasOneThrough(

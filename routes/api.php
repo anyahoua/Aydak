@@ -46,13 +46,21 @@ Route::prefix('v1')->group(function(){
         Route::post('register', 'Api\UserController@register');
         
         // TEAMLEADER :
+        //-------------
         Route::post('tm/nextregister', 'Api\UserController@registerNextTeamleader');
         Route::middleware('auth:api')->post('tm/invitation', 'Api\UserController@InvitationShopper');
+        Route::middleware('auth:api')->get('tm/orders', 'Api\UserController@ordersDetails');
+
+
 
         // SHOPPER :
+        //-------------
         Route::post('shopper/code', 'Api\UserController@validateCode');
         Route::post('shopper/nextregister', 'Api\UserController@registerNextShopper');
         
+
+
+
         //
         Route::middleware('auth:api')->post('userdetails', 'Api\UserController@details');
         Route::middleware('auth:api')->post('profile', 'Api\UserController@profile');
@@ -70,7 +78,8 @@ Route::prefix('v1')->group(function(){
 
 
     // Clients:
-
+    //-------------
+    
     //Route::post('clogin', 'Api\ClientController@login');
     //Route::post('cregister', 'Api\ClientController@register');
     
