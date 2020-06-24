@@ -1,7 +1,12 @@
 <?php
-
+/*
 use App\User;
 use App\Models\Profil;
+use App\Models\Groupe;
+use App\Models\GroupeUser;
+use App\Models\UserInfo;
+use App\Models\DocUser;
+*/
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -14,14 +19,21 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         
-        factory(Profil::class, 3)->create();
+        factory(App\Models\Profil::class, 3)->create();
+        factory(App\Models\Groupe::class, 3)->create();
 
-        factory(User::class, 8)->create()
+        factory(App\User::class, 12)->create()
         ->each(function ($user) {
 
-            $userinfo = factory(App\Models\UserInfo::class)->make();
+            $userinfo   = factory(App\Models\UserInfo::class)->make();
             $user->userInformation()->save($userinfo);
+            
+            $groupeuser = factory(App\Models\GroupeUser::class)->make();
+            $user->groupeUser()->save($groupeuser);
 
+            //$docuser    = factory(App\Models\DocUser::class, 2)->make();
+            //$user->documents()->saveMany($docuser);
+            
         });
     }
 }

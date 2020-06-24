@@ -2,7 +2,10 @@
 
 namespace App;
 
+use App\Models\Pays;
+use App\Models\UserAdresse;
 use App\Models\UserInfo;
+use App\Models\UserCompte;
 use App\Models\GroupeUser;
 use App\Models\Groupe;
 use App\Models\InvitationShopper;
@@ -49,6 +52,10 @@ class User extends Authenticatable
      * Relationship : 
      * 
      * */
+    public function userLocationAddress()
+    {
+        return $this->hasOne(UserAdresse::class);
+    }
 
     public function userInformation()
     {
@@ -63,6 +70,12 @@ class User extends Authenticatable
     public function coursiers()
     {
         return $this->hasMany(UserInfo::class)->where('profil_id', '2');
+    }
+
+    // User Compte
+    public function userCompte()
+    {
+        return $this->hasOne(UserCompte::class)->where('etat','1');
     }
 
     public function groupeUser()

@@ -5,12 +5,11 @@
 use App\User;
 use App\Models\UserInfo;
 use Faker\Generator as Faker;
-use Faker\Provider\Person;
 use Illuminate\Support\Str;
 
 $factory->define(UserInfo::class, function (Faker $faker) {
     return [
-            'mobile'                => $faker->phoneNumber,//$faker->randomNumber($nbDigits = NULL, $strict = false),
+            'mobile'                => $faker->unique()->regexify('^(05|06|07)[0-9]{8}$'),
             'latitude'              => $faker->latitude($min = -90, $max = 90),
             'longitude'             => $faker->longitude($min = -180, $max = 180),
             'quartier_residence'    => $faker->streetName,

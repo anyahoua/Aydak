@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\User;
+use App\Models\UserAdresse;
 use App\Models\UserInfo;
 use App\Models\DocUser;
 use App\Models\GroupeUser;
@@ -16,6 +17,8 @@ use App\Traits\UploadTrait;
 use Validator;
 use Keygen;
 
+use App\Http\Resources\Api\UserLoginRessource;
+use App\Http\Resources\Api\UserRessource;
 
 class UserController extends Controller
 {
@@ -38,25 +41,6 @@ class UserController extends Controller
 
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         if (auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password']))) {
-            /*
-                //$user = $this->guard()->user();
-                $user = Auth::user();
-                $token =  $user->createToken('AydakUsers')->accessToken;
-                
-                $user->apitoken = $token;
-                $user->userInfo;
-                $user->userInfo->profil;
-                //$user->profil;
-
-                return response()->json([
-                    'code'      => '200',
-                    'message'   => 'Authentification réussie.',
-                    //'data'      => new UserLoginResource($user)
-                    //'apiToken'  => $token,
-                    'data'      => $user,
-                    
-                ], 200);
-            */
 
             $user = Auth::user();
 
@@ -64,16 +48,17 @@ class UserController extends Controller
                 $token =  $user->createToken('AydakUsers')->accessToken;
 
                 $user->apitoken = $token;
-                $user->userInfo;
-                $user->userInfo->profil;
-                //$user->profil;
+                //$user->userInfo;
+                //$user->userInfo->profil;
+                $user->userLocationAddress;
+                $user->userLocationAddress->pays;
 
                 return response()->json([
                     'code'      => '200',
                     'message'   => 'Authentification réussie.',
                     //'data'      => new UserLoginResource($user)
                     //'apiToken'  => $token,
-                    'data'      => $user,
+                    'data'      => new UserLoginRessource($user),
 
                 ], 200);
             } else {
@@ -233,21 +218,6 @@ class UserController extends Controller
      */
     public function register(Request $request)
     {
-/*
-        $validator = Validator::make($request->all(), [
-            'lastname'      => 'required',  // nom
-            'firstname'     => 'required',  // prenom
-            'address'       => 'required | string',
-            'profil'        => 'required | integer',
-            'username'      => ['required', 'regex:/^(05|06|07)[0-9]{8}$/', 'unique:users'], // Mobile
-            'password'      => 'required',
-            'c_password'    => 'required|same:password',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
-        }
-*/
         // Validate input request.
         $this->validator($request->all())->validate();
 
@@ -562,78 +532,7 @@ class UserController extends Controller
      */
     public function profile(Request $request)
     {
-        /*
-        $validator = Validator::make($request->all(), [ 
-            //'nom'           => 'required', 
-            //'prenom'        => 'required', 
-            //'username'      => 'required | unique:users', 
-            //'password'      => 'required', 
-            //'c_password'    => 'required|same:password', 
-
-        ]);
-        
-        if ($validator->fails()) { 
-            return response()->json(['error'=>$validator->errors()], 401);            
-        }
-
-//public_path().'/images/'
-*/
-        /*
-        $data = $request->validate([
-            'avatarImage'              => 'required| image | mimes:jpeg,png,jpg |max:2048',
-        ],
-        [
-            'avatarImage.required'     => 'L\'image Avatar est obligatoire.',
-        ]);
-        */
-
-        //-------------------------------//
-        // Upload file image
-        //-------------------------------//
-        $folder             = '/ecgs';  // Define folder path
-
-        if ($request->hasFile('avatarImage')) {
-
-            //return $request->file('avatarImage');
-
-            foreach ($request->file('avatarImage') as $avatar) {
-                $New_Image_Name[]     = time() . '.' . $avatar->getClientOriginalExtension();
-                $name = $avatar->getClientOriginalName();
-
-                //$avatar->move(public_path().'images/', $name);
-                $this->uploadOne($avatar, $folder, 'public', $name);
-
-                $data_name[] = $name;
-
-                //$this->uploadOne($avatar, $folder, 'public', $New_Image_Name);
-            }
-
-            return $data_name;
-        }
-
-        /*
-        if($request->hasFile('avatarImage'))
-        {
-
-            foreach($request->file('avatarImage') as $file)
-            {
-              $filePath[] = $this->UserImageUploadTrait($file); //passing parameter to our trait method one after another using foreach loop
-
-                //Image::create([
-                //  'image' => $filePath,
-                //]);
-
-            }
-
-            //Toastr::success('Image uploaded successfully :)','Success');
-        }
-*/
-        return response()->json([
-            'code'      => '201',
-            'message'   => 'Profile updated successfully.',
-            //'data'      => $filePath
-
-        ], 201);
+        return 'Profile';
     }
 
 
@@ -652,7 +551,7 @@ class UserController extends Controller
         return response()->json([
             'code'      => '200',
             'message'   => 'Success.',
-            'data'      => $user
+            'data'      => new UserRessource($user),
         ], 200);
     }
     

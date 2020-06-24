@@ -17,9 +17,9 @@ class CreateCommandesTable extends Migration
             $table->bigIncrements('id');
             $table->timestamp('date_livraison')->nullable();
             $table->timestamp('date_livraison_prevu')->nullable();
-            $table->foreignId('situation_id')->references('id')->on('situations');
-            $table->foreignId('client_id')->references('id')->on('clients');
-            $table->foreignId('groupe_id')->references('id')->on('groupes');
+            $table->foreignId('situation_id');//->references('id')->on('situations');
+            $table->foreignId('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->foreignId('groupe_id');//->references('id')->on('groupes');
             $table->timestamps();
         });
     }

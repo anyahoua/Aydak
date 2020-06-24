@@ -17,7 +17,7 @@ class CreateDocUsersTable extends Migration
             $table->id();
             $table->string('doc');
             $table->integer('etat');
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

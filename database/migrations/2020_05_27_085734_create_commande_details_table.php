@@ -20,8 +20,8 @@ class CreateCommandeDetailsTable extends Migration
             $table->double('prix_u_commande');
             $table->double('prix_u_achat')->nullable();
             $table->integer('etat');
-            $table->foreignId('commande_id')->references('id')->on('commandes');
-            $table->foreignId('produit_id')->references('id')->on('produits');
+            $table->foreignId('commande_id')->references('id')->on('commandes')->onDelete('cascade');
+            $table->foreignId('produit_id');
             //$table->timestamps();
         });
     }

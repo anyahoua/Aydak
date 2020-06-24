@@ -20,8 +20,8 @@ class CreateClientComptesTable extends Migration
             $table->double('ancien_solde');
             $table->double('nouveau_solde');
             $table->integer('etat');
-            $table->foreignId('client_id')->references('id')->on('clients');
-            $table->foreignId('groupe_id')->references('id')->on('groupes');
+            $table->foreignId('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->foreignId('groupe_id');
             $table->timestamps();
         });
     }

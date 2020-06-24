@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\CommandeDetail;
-
 use Illuminate\Database\Eloquent\Model;
 
-class Commande extends Model
+class ClientAdresse extends Model
 {
-    
-    protected $table        = 'commandes';
+    protected $table        = 'client_adresses';
     //protected $primaryKey   = 'id';
     //public $incrementing    = false;
     //protected $keyType      = 'string';
@@ -25,28 +22,18 @@ class Commande extends Model
      * @var array
      */
     protected $fillable = [
-        'date_livraison', 'date_livraison_prevu', 'situation_id', 'client_id', 'groupe_id',
+        'latitude', 'longitude', 'quartier', 'commune', 'daira', 'wilaya', 'pays_id', 'client_id', 'etat', 
     ];
-
-    
-    /** 
-     * Relationship : 
-     * 
-     * */
 
     public function client()
     {
         return $this->belongsTo(Client::class);
     }
 
-    public function situation()
+    public function pays()
     {
-        return $this->belongsTo(Situation::class);
+        return $this->belongsTo(Pays::class);
     }
 
-    public function dtailCommande()
-    {
-        return $this->hasMany(CommandeDetail::class);
-    }
 
 }

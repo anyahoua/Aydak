@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Models\ClientAdresse;
 use App\Models\ClientInfo;
 use App\Models\ClientCompte;
 use App\Models\ClientPreferenceAchat;
 use App\Models\Commande;
+use App\Models\Groupe;
 
 use Laravel\Passport\HasApiTokens;
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -53,6 +55,10 @@ class Client extends Authenticatable
      * Relationship : 
      * 
      * */
+    public function clientLocationAddress()
+    {
+        return $this->hasOne(ClientAdresse::class);
+    }
 
     // Client informations detail
     public function clientInfo()
@@ -82,6 +88,18 @@ class Client extends Authenticatable
         return $this->hasMany(Commande::class);
     }
 
+    public function commandesEnCours()
+    {
+        return $this->hasMany(Commande::class)
+                    ->with('situation')
+                    ->with('dtailCommande')
+                    ->where('situation_id', '=', '1')
+                    ->orWhere('situation_id','=','2');
+    }
 
+    public function groupe()
+    {
+        return $this->belongsTo(Groupe::class);
+    }
     
 }

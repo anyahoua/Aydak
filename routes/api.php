@@ -87,12 +87,16 @@ Route::prefix('v1')->group(function(){
         Route::post('login', 'Api\ClientController@login');
         Route::post('register', 'Api\ClientController@register');
 
-        Route::middleware('auth:client-api')->post('clientdetails', 'Api\ClientController@details');
-        Route::middleware('auth:client-api')->post('moncompte', 'Api\ClientController@myAccount');
-        Route::middleware('auth:client-api')->post('historiquecompte', 'Api\ClientController@myAccountHistory');
+        Route::middleware('auth:client-api')->get('clientdetails', 'Api\ClientController@details');
+        Route::middleware('auth:client-api')->get('moncompte', 'Api\ClientController@myAccount');
+        Route::middleware('auth:client-api')->get('historiquecompte', 'Api\ClientController@myAccountHistory');
+        Route::middleware('auth:client-api')->get('tmcontact', 'Api\ClientController@ContactTeamleader');
+        Route::middleware('auth:client-api')->get('categories', 'Api\CategorieController@index');
+        Route::middleware('auth:client-api')->get('souscategories/{caterorie_id}', 'Api\CategorieController@SubCaterory');
         
-        Route::middleware('auth:client-api')->post('commandes', 'Api\ClientController@myShoppingCart');
-        
+        // Commandes :
+        Route::middleware('auth:client-api')->get('commandesencours', 'Api\CommandeController@myCurrentOrders');
+        Route::middleware('auth:client-api')->post('commande', 'Api\CommandeController@AddOrder');
     });
 
     /*

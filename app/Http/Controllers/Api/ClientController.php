@@ -3,15 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Client;
+use App\Models\ClientAdresse;
 use App\Models\Groupe;
 use App\Models\ClientInfo;
 use App\Models\ClientCompte;
 use App\Models\ClientPreferenceAchat;
+use App\Models\Commande;
+use App\Models\CommandeDetail;
+use App\Models\CommandeCommentaire;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\UploadTrait;
+
+use App\Http\Resources\Api\ClientLoginRessource;
 
 use Validator;
 use Keygen;
@@ -61,12 +67,13 @@ class ClientController extends Controller
                 $token =  $client->createToken('AydakClients')->accessToken;
                 
                 $client->apitoken = $token;
-                $client->ClientInfo;
+                //$client->ClientInfo;
                 
                 //--
                 $client->clientCompte;
                 $client->clientPreferenceAchat;
                 $client->commandes;
+                $client->clientLocationAddress;
                 //--
                 
                 return response()->json([
@@ -74,7 +81,7 @@ class ClientController extends Controller
                     'message'   => 'Authentification client réussie.',
                     //'data'      => new UserLoginResource($user)
                     //'apiToken'  => $token,
-                    'data'      => $client
+                    'data'      => new ClientLoginRessource($client),
                 ], 200);
 
             } else {
@@ -255,21 +262,21 @@ class ClientController extends Controller
         ], 200);
     }
 
+
     /** 
-     * Connected Client Account tHistory API 
+     * Connected Client : Contact Team Leader API 
      * 
      * @return \Illuminate\Http\Response 
      */ 
-    public function myShoppingCart() 
+    public function ContactTeamleader() 
     { 
-        $shoppingCart = Auth::user(); 
-        $shoppingCart->commandes;
+        $client = Auth::user(); 
+        $teamleader = $client->groupe->TeamleaderInGroupe;
         
-
         return response()->json([
             'code'      => '200',
             'message'   => 'Success.',
-            'data'      => $shoppingCart
+            'data'      => $teamleader
         ], 200);
     }
 
