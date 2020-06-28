@@ -6,6 +6,8 @@ use App\Models\Pays;
 use App\Models\UserAdresse;
 use App\Models\UserInfo;
 use App\Models\UserCompte;
+use App\Models\UserCommande;
+use App\Models\Commande;
 use App\Models\GroupeUser;
 use App\Models\Groupe;
 use App\Models\InvitationShopper;
@@ -52,6 +54,18 @@ class User extends Authenticatable
      * Relationship : 
      * 
      * */
+
+    public function ordersUser()
+    {
+        return $this->hasManyThrough(
+            commande::class, 
+            UserCommande::class,
+            'user_id',
+            'id',
+            'id',
+            'commande_id'
+        );
+    }
 
     public function userLocationAddress()
     {

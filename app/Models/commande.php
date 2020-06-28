@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Client;
 use App\Models\CommandeDetail;
 
 use Illuminate\Database\Eloquent\Model;
@@ -44,7 +45,7 @@ class Commande extends Model
         return $this->belongsTo(Situation::class);
     }
 
-    public function dtailCommande()
+    public function detailCommande()
     {
         return $this->hasMany(CommandeDetail::class);
     }

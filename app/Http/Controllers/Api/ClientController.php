@@ -165,6 +165,7 @@ class ClientController extends Controller
         ];
 
         // Add client :
+        //-------------------
         $client   = Client::create($data);
         //--
 
@@ -175,9 +176,11 @@ class ClientController extends Controller
 
 
         // Add Client infos :
+        //-------------------
         $clientInfos                    = new ClientInfo;
 
         $clientInfos->mobile            = $request->username;
+        /*
         $clientInfos->quartier          = $request->district;   //quartier
         $clientInfos->latitude          = $request->latitude;
         $clientInfos->longitude         = $request->longitude;
@@ -185,14 +188,32 @@ class ClientController extends Controller
         $clientInfos->daira             = $request->daira;
         $clientInfos->wilaya            = $request->wilaya;
         $clientInfos->pays              = 'Algérie';
+        */
         $clientInfos->client_id         = $client->id;
         $clientInfos->etat              = '0';
 
         $clientInfos->save();
+
+        // Add Client Location Address :
+        //------------------------------
+        $clientLocationAddress                  = new ClientInfo;
+        
+        $clientLocationAddress->latitude        = $request->latitude;
+        $clientLocationAddress->longitude       = $request->longitude;
+        $clientLocationAddress->quartier        = $request->district;
+        $clientLocationAddress->commune         = $request->commune;
+        $clientLocationAddress->daira           = $request->daira;
+        $clientLocationAddress->wilaya          = $request->wilaya;
+        $clientLocationAddress->pays_id         = '3';
+        $clientLocationAddress->client_id       = $client->id;
+        $clientLocationAddress->etat            = '1';
+
+        $clientLocationAddress->save();        
+
         
         //
         $client->clientInfos;
-
+        $client->clientLocationAddress;
 
         return response()->json([
             'code'      => '201',

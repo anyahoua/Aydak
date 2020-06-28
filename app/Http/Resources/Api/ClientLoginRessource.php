@@ -26,7 +26,7 @@ class ClientLoginRessource extends JsonResource
             'token'             => $this->apitoken,
             'createdAtFr'       => Carbon::parse($this->created_at)->format('d-m-Y'),
             'createdAtEn'       => Carbon::parse($this->created_at)->format('Y-m-d'),
-            'billingAddress'    => $this->clientInfo->adresse_residence,
+            //'billingAddress'    => $this->clientInfo->adresse_residence,
             'locationAddress'   => new locationAddressRessource($this->clientLocationAddress),
             //'pays'              => $this->userLocationAddress->pays->nom,
             

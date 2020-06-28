@@ -21,8 +21,11 @@ class ClientInfo extends Model
      *
      * @var array
      */
-    protected $fillable = [
+    /*protected $fillable = [
         'mobile', 'quartier', 'latitude', 'longitude', 'deg2rad_longitude', 'deg2rad_latitude', 'ville', 'daira', 'wilaya', 'pays', 'client_id', 'etat', 
+    ];*/
+    protected $fillable = [
+        'mobile', 'client_id', 'etat', 
     ];
     
     public function client()

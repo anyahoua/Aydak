@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\User;
 use App\Models\UserAdresse;
 use App\Models\UserInfo;
+//use App\Models\UserCommande;
 use App\Models\DocUser;
 use App\Models\GroupeUser;
 use App\Models\Groupe;
@@ -19,6 +20,7 @@ use Keygen;
 
 use App\Http\Resources\Api\UserLoginRessource;
 use App\Http\Resources\Api\UserRessource;
+use App\Http\Resources\Api\OrdersRessource;
 
 class UserController extends Controller
 {
@@ -577,7 +579,7 @@ class UserController extends Controller
         return response()->json([
             'code'      => '200',
             'message'   => 'Success.',
-            'data'      => $shoppers,
+            'data'      => UserRessource::collection($shoppers),
         ], 200);
     }
 

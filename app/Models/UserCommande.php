@@ -4,10 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CommandeDetail extends Model
+class UserCommande extends Model
 {
-    
-    protected $table        = 'commande_details';
+    protected $table        = 'user_commandes';
     //protected $primaryKey   = 'id';
     //public $incrementing    = false;
     //protected $keyType      = 'string';
@@ -23,24 +22,24 @@ class CommandeDetail extends Model
      * @var array
      */
     protected $fillable = [
-        'quantite_commande', 'quantite_achat', 'prix_u_commande', 'prix_u_achat', 'etat', 'commande_id', 'produit_id', 
+        'user_id', 'commande_id', 'client_id', 'etat', 
     ];
 
-    
-    /** 
-     * Relationship : 
-     * 
-     * */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function commande()
     {
-        return $this->belongsTo(Commande::class);
+        return $this->belongsTo(Commande::class);//->with('detailCommande');
     }
 
-    public function produit()
+    public function client()
     {
-        return $this->belongsTo(Produit::class);
+        return $this->belongsTo(Client::class)->with('clientInfo');
     }
+
 
 
 }

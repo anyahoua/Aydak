@@ -31,7 +31,15 @@ class Produit extends Model
      * Relationship : 
      * 
      * */
+    public function prix()
+    {
+        return $this->hasOne(ProduitPrix::class)->where('etat', '1');
+    }
 
+    public function historyPrice()
+    {
+        return $this->hasMany(ProduitPrix::class);
+    }
 
 
 
