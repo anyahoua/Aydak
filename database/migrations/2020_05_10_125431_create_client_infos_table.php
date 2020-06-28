@@ -15,18 +15,10 @@ class CreateClientInfosTable extends Migration
     {
         Schema::create('client_infos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('mobile', 50);
-            $table->string('quartier');
-            $table->string('latitude');
-            $table->string('longitude');
-            $table->string('deg2rad_longitude')->nullable();
-            $table->string('deg2rad_latitude')->nullable();
-            $table->integer('etat');
             $table->foreignId('client_id')->references('id')->on('clients');
-            $table->string('ville')->nullable();
-            $table->string('daira')->nullable();
-            $table->string('wilaya')->nullable();
-            $table->string('pays')->nullable();
+            $table->string('mobile', 10);
+            $table->string('avatar');
+            $table->integer('etat');
             $table->timestamps();
         });
     }

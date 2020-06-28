@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Traits\UploadTrait;
 
 use App\Http\Resources\Api\ClientLoginRessource;
+use App\Http\Resources\Api\ClientDataRessource;
 
 use Validator;
 use Keygen;
@@ -173,22 +174,11 @@ class ClientController extends Controller
 
         $client->apitoken = $token;
 
-
-
         // Add Client infos :
         //-------------------
         $clientInfos                    = new ClientInfo;
 
         $clientInfos->mobile            = $request->username;
-        /*
-        $clientInfos->quartier          = $request->district;   //quartier
-        $clientInfos->latitude          = $request->latitude;
-        $clientInfos->longitude         = $request->longitude;
-        $clientInfos->ville             = $request->commune;
-        $clientInfos->daira             = $request->daira;
-        $clientInfos->wilaya            = $request->wilaya;
-        $clientInfos->pays              = 'Algérie';
-        */
         $clientInfos->client_id         = $client->id;
         $clientInfos->etat              = '0';
 
@@ -210,15 +200,30 @@ class ClientController extends Controller
 
         $clientLocationAddress->save();        
 
+        // Add Client Compte :
+        //--------------------
+        $clientCompte                  = new ClientCompte;
         
+        $clientCompte->debit            = '0';
+        $clientCompte->credit           = '0';
+        $clientCompte->ancien_solde     = '0';
+        $clientCompte->nouveau_solde    = '0';
+        $clientCompte->etat             = '1';
+        $clientCompte->client_id        = $client->id;
+        $clientCompte->groupe_id        = $request->groupeId;
+
+        $clientCompte->save(); 
+
+
         //
         $client->clientInfos;
         $client->clientLocationAddress;
+        $client->clientCompte;
 
         return response()->json([
             'code'      => '201',
             'message'   => 'Inscription réussie. Un Team-Leader va vous contacter bientot afin de recueillir votre prépaiement.',
-            'data'      => $client,
+            'data'      => new ClientDataRessource($client),
         ], 201);
     }
 

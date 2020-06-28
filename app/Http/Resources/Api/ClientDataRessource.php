@@ -18,14 +18,14 @@ class ClientDataRessource extends JsonResource
         //return parent::toArray($request);
 
         return [
-            'userId'            => $this->id,
+            'clientId'          => $this->id,
             'groupeId'          => $this->groupe_id,
             'userType'          => 3,
             'lastName'          => $this->nom,
             'firstName'         => $this->prenom,
             'mobile'            => $this->username,
             'avatar'            => null,
-            //'actived'           => $this->userInfo->etat,
+            'actived'           => $this->clientInfo->etat,
             'createdAtFr'       => Carbon::parse($this->created_at)->format('d-m-Y'),
             'createdAtEn'       => Carbon::parse($this->created_at)->format('Y-m-d'),
             'locationAddress'   => new locationAddressRessource($this->clientLocationAddress),

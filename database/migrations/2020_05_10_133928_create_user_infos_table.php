@@ -15,10 +15,11 @@ class CreateUserInfosTable extends Migration
     {
         Schema::create('user_infos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('mobile', 50);
+            $table->string('mobile', 10);
             $table->string('adresse_residence')->comment('Billing address');
             $table->foreignId('user_id')->references('id')->on('users');
             $table->foreignId('profil_id')->references('id')->on('profils');
+            $table->string('avatar');
             $table->integer('etat');
             $table->integer('etape');
             $table->timestamps();

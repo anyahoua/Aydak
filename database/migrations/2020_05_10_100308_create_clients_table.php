@@ -17,7 +17,7 @@ class CreateClientsTable extends Migration
             $table->bigIncrements('id');
             $table->string('nom');
             $table->string('prenom');
-            $table->string('username')->unique();
+            $table->string('username', 10)->unique();
             $table->string('password');
             $table->foreignId('groupe_id');//->references('id')->on('groupes');
             $table->rememberToken();

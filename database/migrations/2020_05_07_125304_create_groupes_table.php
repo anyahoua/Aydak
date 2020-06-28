@@ -17,6 +17,7 @@ class CreateGroupesTable extends Migration
             $table->bigIncrements('id');
             $table->string('nom')->unique();
             $table->string('photo')->nullable();
+            $table->string('daira');
             $table->string('latitude');
             $table->string('longitude');
             $table->string('deg2rad_longitude')->nullable();
