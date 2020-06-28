@@ -128,7 +128,7 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response 
      */ 
     public function register(Request $request) 
-    { 
+    {
 /*
         $validator = Validator::make($request->all(), [ 
             'nom'           => 'required', 
@@ -196,7 +196,7 @@ class ClientController extends Controller
 
         // Add Client Location Address :
         //------------------------------
-        $clientLocationAddress                  = new ClientInfo;
+        $clientLocationAddress                  = new ClientAdresse;
         
         $clientLocationAddress->latitude        = $request->latitude;
         $clientLocationAddress->longitude       = $request->longitude;
@@ -204,7 +204,7 @@ class ClientController extends Controller
         $clientLocationAddress->commune         = $request->commune;
         $clientLocationAddress->daira           = $request->daira;
         $clientLocationAddress->wilaya          = $request->wilaya;
-        $clientLocationAddress->pays_id         = '3';
+        $clientLocationAddress->pays_id         = config('global.country_id');
         $clientLocationAddress->client_id       = $client->id;
         $clientLocationAddress->etat            = '1';
 

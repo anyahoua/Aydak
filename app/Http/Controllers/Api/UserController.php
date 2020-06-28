@@ -239,18 +239,37 @@ class UserController extends Controller
 
         $user->apitoken = $token;
 
+        //      config('global.country_id')
+
         // Add User infos :
+        //------------------
         $userInfos                      = new UserInfo;
 
         $userInfos->mobile              = $request->username;
         $userInfos->adresse_residence   = $request->address;
         $userInfos->user_id             = $user->id;
         $userInfos->profil_id           = $request->profil;
-        $userInfos->etat                = '1';
+        $userInfos->etat                = '0';
         $userInfos->etape               = '1';
-        $userInfos->pays_residence       = 'Algérie';
 
         $userInfos->save();
+
+        // Add User Location Address :
+        //----------------------------
+        $UserLocationAddress                = new UserAdresse;
+        
+        $UserLocationAddress->latitude      = $request->latitude;
+        $UserLocationAddress->longitude     = $request->longitude;
+        $UserLocationAddress->quartier      = $request->district;
+        $UserLocationAddress->commune       = $request->commune;
+        $UserLocationAddress->daira         = $request->daira;
+        $UserLocationAddress->wilaya        = $request->wilaya;
+        $UserLocationAddress->pays_id       = config('global.country_id');
+        $UserLocationAddress->user_id       = $client->id;
+        $UserLocationAddress->etat          = '1';
+
+        $UserLocationAddress->save();
+
 
         //
         $user->userInfo;
