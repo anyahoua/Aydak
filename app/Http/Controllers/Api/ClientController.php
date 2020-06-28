@@ -19,6 +19,8 @@ use App\Traits\UploadTrait;
 
 use App\Http\Resources\Api\ClientLoginRessource;
 use App\Http\Resources\Api\ClientDataRessource;
+use App\Http\Resources\Api\ClientCompteRessource;
+use App\Http\Resources\Api\ClientOrdersRessource;
 
 use Validator;
 use Keygen;
@@ -80,8 +82,6 @@ class ClientController extends Controller
                 return response()->json([
                     'code'      => '200',
                     'message'   => 'Authentification client réussie.',
-                    //'data'      => new UserLoginResource($user)
-                    //'apiToken'  => $token,
                     'data'      => new ClientLoginRessource($client),
                 ], 200);
 
@@ -235,20 +235,11 @@ class ClientController extends Controller
     public function details() 
     { 
         $client = Auth::user(); 
-        $client->ClientInfo;
         
-        //--
-        /*
-        $client->clientCompte;
-        $client->clientPreferenceAchat;
-        $client->commandes;
-        */
-        //--
-
         return response()->json([
             'code'      => '200',
             'message'   => 'Success.',
-            'data'      => $client
+            'data'      => new ClientLoginRessource($client),
         ], 200);
     }
 
@@ -259,14 +250,12 @@ class ClientController extends Controller
      */ 
     public function myAccount() 
     { 
-        $compte = Auth::user(); 
-        $compte->clientCompte;
-        
+        $client = Auth::user(); 
 
         return response()->json([
             'code'      => '200',
             'message'   => 'Success.',
-            'data'      => $compte
+            'data'    => new ClientCompteRessource($client->clientCompte),
         ], 200);
     }
 
@@ -277,14 +266,12 @@ class ClientController extends Controller
      */ 
     public function myAccountHistory() 
     { 
-        $accountHistory = Auth::user(); 
-        $accountHistory->clientCompteHistory;
-        
+        $client = Auth::user(); 
 
         return response()->json([
             'code'      => '200',
             'message'   => 'Success.',
-            'data'      => $accountHistory
+            'data'      => $client->clientCompteHistory,
         ], 200);
     }
 
@@ -297,14 +284,32 @@ class ClientController extends Controller
     public function ContactTeamleader() 
     { 
         $client = Auth::user(); 
-        $teamleader = $client->groupe->TeamleaderInGroupe;
         
         return response()->json([
             'code'      => '200',
             'message'   => 'Success.',
-            'data'      => $teamleader
+            'data'      => $client->groupe->TeamleaderInGroupe
         ], 200);
     }
+
+
+    /** 
+     * Connected Client Show Current Orders API 
+     * 
+     * @return \Illuminate\Http\Response 
+     */ 
+    public function myCurrentOrders() 
+    { 
+        $client = Auth::user(); 
+
+        return response()->json([
+            'code'      => '200',
+            'message'   => 'Success.',
+            'data'      => ClientOrdersRessource::collection($client->commandes),
+        ], 200);
+    }
+
+
 
 
 }

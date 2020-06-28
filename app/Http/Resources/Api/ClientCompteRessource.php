@@ -18,6 +18,8 @@ class ClientCompteRessource extends JsonResource
         return [
             'walletId'      => $this->id,
             'clientId'      => $this->client_id,
+            'debit'         => $this->debit,
+            'credit'        => $this->credit,
             'newBalance'    => $this->nouveau_solde,
             'oldBalance'    => $this->ancien_solde,
             'createdAt'     => Carbon::parse($this->created_at)->format('d-m-Y H:i:s'),

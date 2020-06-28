@@ -80,7 +80,7 @@ class Client extends Authenticatable
 
     public function clientPreferenceAchat()
     {
-        return $this->hasOne(ClientPreferenceAchat::class);
+        return $this->hasMany(ClientPreferenceAchat::class);
     }
 
     public function commandes()
@@ -92,7 +92,7 @@ class Client extends Authenticatable
     {
         return $this->hasMany(Commande::class)
                     ->with('situation')
-                    ->with('dtailCommande')
+                    ->with('detailCommande')
                     ->where('situation_id', '=', '1')
                     ->orWhere('situation_id','=','2');
     }

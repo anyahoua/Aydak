@@ -19,7 +19,7 @@ class CreateUserInfosTable extends Migration
             $table->string('adresse_residence')->comment('Billing address');
             $table->foreignId('user_id')->references('id')->on('users');
             $table->foreignId('profil_id')->references('id')->on('profils');
-            $table->string('avatar');
+            $table->string('avatar')->nullable();
             $table->integer('etat');
             $table->integer('etape');
             $table->timestamps();

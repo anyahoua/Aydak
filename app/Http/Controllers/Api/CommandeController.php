@@ -26,7 +26,8 @@ class CommandeController extends Controller
      * Connected Client Show Current Orders API 
      * 
      * @return \Illuminate\Http\Response 
-     */ 
+     */
+    /*
     public function myCurrentOrders() 
     { 
         $orders = Auth::user(); 
@@ -39,6 +40,7 @@ class CommandeController extends Controller
             'data'      => $CurrentOrders
         ], 200);
     }
+    */
 
 
     /** 
@@ -50,29 +52,16 @@ class CommandeController extends Controller
     { 
         $validator = $request->validate([
             'expectedDeliveryDate'  => 'required | date_format:d-m-Y',
-            //'quantity'              => 'required | integer',
-            //'unitPrice'             => 'required | regex:/^\d+(\.\d{1,2})?$/',
-            //'productId'             => 'required | integer',
-        ]/*,
-        [
-            'doctorId.required'     => 'Le champ id medecin est obligatoire.',
-            'doctorId.required'     => 'Le champ id medecin doite être un entier.',
-            'dossierId.required'    => 'Le champ id dossier est obligatoire.',
-            'dossierId.integer'     => 'Le champ id dossier doite être un entier.',
-            'typeId.required'       => 'Le champ id type est obligatoire.',
-            'typeId.integer'        => 'Le chape id type doite être un entier.',
-        ]*/);
+        ]);
 
-        
-
+        //----------------------//
         // This Client :
-        //------------------
+        //----------------------//
         $client = Auth::user(); 
 
-        //return $client;
-
-        // Commande :
-        //------------------
+        //----------------------//
+        // Add Commande :
+        //----------------------//
         $data = [
             'date_livraison_prevu'  => Carbon::createFromFormat('d-m-Y', $request->expectedDeliveryDate)->format('Y-m-d'),
             'situation_id'          => '1',
@@ -82,10 +71,9 @@ class CommandeController extends Controller
 
         $commande   = Commande::create($data);
 
-
-        //------------------------------//
-        // Add Detail commande  //
-        //------------------------------//
+        //----------------------//
+        // Add Detail commande :
+        //----------------------//
         $entray = json_decode($request->getContent(), true);
 
 
@@ -101,7 +89,6 @@ class CommandeController extends Controller
             );
         }
 
-        //return $data2;
         CommandeDetail::insert($detailCommande);
 
         $commande->situation;

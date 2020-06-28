@@ -17,7 +17,7 @@ class CreateClientInfosTable extends Migration
             $table->bigIncrements('id');
             $table->foreignId('client_id')->references('id')->on('clients');
             $table->string('mobile', 10);
-            $table->string('avatar');
+            $table->string('avatar')->nullable();
             $table->integer('etat');
             $table->timestamps();
         });

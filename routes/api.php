@@ -104,7 +104,7 @@ Route::prefix('v1')->group(function(){
         Route::middleware('auth:client-api')->get('souscategories/{caterorie_id}', 'Api\CategorieController@SubCaterory');
         
         // Commandes :
-        Route::middleware('auth:client-api')->get('commandesencours', 'Api\CommandeController@myCurrentOrders');
+        Route::middleware('auth:client-api')->get('commandesencours', 'Api\ClientController@myCurrentOrders');
         Route::middleware('auth:client-api')->post('commande', 'Api\CommandeController@AddOrder');
     });
 

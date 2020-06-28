@@ -21,16 +21,15 @@ class ClientLoginRessource extends JsonResource
             'lastName'          => $this->nom,
             'firstName'         => $this->prenom,
             'mobile'            => $this->username,
-            'avatar'            => null,
+            'avatar'            => $this->clientInfo->avatar,
             'actived'           => $this->clientInfo->etat,
             'token'             => $this->apitoken,
             'createdAtFr'       => Carbon::parse($this->created_at)->format('d-m-Y'),
             'createdAtEn'       => Carbon::parse($this->created_at)->format('Y-m-d'),
-            //'billingAddress'    => $this->clientInfo->adresse_residence,
             'locationAddress'   => new locationAddressRessource($this->clientLocationAddress),
-            //'pays'              => $this->userLocationAddress->pays->nom,
-            
             'wallet'            => new ClientCompteRessource($this->clientCompte),
+            'Orders'            => ClientOrdersRessource::collection($this->commandes),
+            'buyingPreference'  => ClientPreferenceAchatRessource::collection($this->clientPreferenceAchat),
 
         ];
     }
