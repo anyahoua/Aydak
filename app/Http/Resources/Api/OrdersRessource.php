@@ -21,11 +21,11 @@ class OrdersRessource extends JsonResource
             
             'orderId'           => $this->id,
             'customerId'        => $this->client->id,
-            'createdAtFr'       => Carbon::parse($this->created_at)->format('d-m-Y'),
-            'createdAtEn'       => Carbon::parse($this->created_at)->format('Y-m-d'),
+            'createdAtFr'       => Carbon::parse($this->created_at)->format('d-m-Y H:i:s'),
+            'createdAtEn'       => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
             'state'             => $this->situation_id,
-            'state_texte'       => $this->situation->libely,
-            'total'             => null,
+            'stateName'         => $this->situation->libely,
+            'total'             => $this->detailCommande->count(),
 
             'cartItems'         => CommandeItemRessource::collection($this->detailCommande),
             

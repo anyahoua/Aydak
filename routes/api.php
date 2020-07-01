@@ -50,7 +50,10 @@ Route::prefix('v1')->group(function(){
         Route::post('tm/nextregister', 'Api\UserController@registerNextTeamleader');
         Route::middleware('auth:api')->post('tm/invitation', 'Api\UserController@InvitationShopper');
         Route::middleware('auth:api')->get('tm/orders', 'Api\UserController@ordersDetails');
-
+        Route::middleware('auth:api')->get('tm/ordersnottraited', 'Api\CommandeController@ordersNotTraited');
+        Route::middleware('auth:api')->get('tm/orderstraitednotassigned', 'Api\CommandeController@ordersTraitedNotAssigned');
+        Route::middleware('auth:api')->get('tm/ordersassignednotpurchased', 'Api\CommandeController@ordersAssignedNotPurchased');
+        
 
 
         // SHOPPER :

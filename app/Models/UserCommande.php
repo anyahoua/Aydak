@@ -22,7 +22,7 @@ class UserCommande extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'commande_id', 'client_id', 'etat', 
+        'user_id', 'commande_id', 'situation_id', 'client_id', 'etat', 
     ];
 
     public function user()
@@ -38,6 +38,11 @@ class UserCommande extends Model
     public function client()
     {
         return $this->belongsTo(Client::class)->with('clientInfo');
+    }
+
+    public function stateCommande()
+    {
+        return $this->belongsTo(Situation::class, 'situation_id');
     }
 
 

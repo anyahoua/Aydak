@@ -18,7 +18,7 @@ class ClientDataRessource extends JsonResource
         //return parent::toArray($request);
 
         return [
-            'clientId'          => $this->id,
+            'userId'            => $this->id,       // ----> Client ID
             'groupeId'          => $this->groupe_id,
             'userType'          => 3,
             'lastName'          => $this->nom,

@@ -5,7 +5,7 @@ namespace App\Http\Resources\Api;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
 
-class UserRessource extends JsonResource
+class UsersOrdersRessource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,6 +15,9 @@ class UserRessource extends JsonResource
      */
     public function toArray($request)
     {
+        //return parent::toArray($request);
+
+
         return [
             
             //'1' => $this->ordersUser1->count(),
@@ -48,12 +51,9 @@ class UserRessource extends JsonResource
             'orders'        => OrdersRessource::collection($this->ordersUser),
 
             //---------------------------
-            'ordersState'   => ['totalOrders' => $this->ordersUser->count(), 'orderState' => $this->userStateCommandesShoppers() ],
-            
-            // For teamleader :
-            //-----------------
-            //'ordersState'   => ['totalOrders' => $this->totalOrdersTm(), 'orderState' => $this->userStateCommandesTeamleader() ],
-            //---------------------------
+           // 'ordersState'   => ['totalOrders' => $this->ordersUser->count(), 'orderState' => $this->userStateCommandesShoppers() ],
+
         ];
+        
     }
 }

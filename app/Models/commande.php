@@ -50,4 +50,9 @@ class Commande extends Model
         return $this->hasMany(CommandeDetail::class);
     }
 
+    public function userCommande()
+    {
+        return $this->hasMany(UserCommande::class);
+    }
+
 }

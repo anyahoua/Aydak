@@ -591,10 +591,6 @@ class UserController extends Controller
         $shoppers = $user->groupe->shopperInGroupe;
         //$shoppers->userLocationAddress;
         
-        
-        
-        
-
         return response()->json([
             'code'      => '200',
             'message'   => 'Success.',

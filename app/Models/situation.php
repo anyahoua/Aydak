@@ -23,7 +23,7 @@ class Situation extends Model
      * @var array
      */
     protected $fillable = [
-        'libely', 'description', 
+        'libely', 'type','description', 
     ];
 
     
@@ -32,7 +32,10 @@ class Situation extends Model
      * 
      * */
 
-
+    public function commande()
+    {
+        return $this->hasOne(Commande::class);
+    }
 
 
 }

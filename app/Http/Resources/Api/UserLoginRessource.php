@@ -16,8 +16,10 @@ class UserLoginRessource extends JsonResource
     public function toArray($request)
     {
         return [
+
             'userId'            => $this->id,
-            'groupeId'          => $this->groupeUser->id,
+            'groupeId'          => $this->groupe->id,
+            'groupeName'        => $this->groupe->nom,
             'userType'          => $this->userInfo->profil_id,
             'type'              => $this->userInfo->profil->nom,
             'lastName'          => $this->nom,
@@ -28,10 +30,17 @@ class UserLoginRessource extends JsonResource
             'token'             => $this->apitoken,
             'createdAtFr'       => Carbon::parse($this->created_at)->format('d-m-Y'),
             'createdAtEn'       => Carbon::parse($this->created_at)->format('Y-m-d'),
+            //---------------------------
+            'rating'            => null,    // 4.5, 2, 3.6 ----> x/5
+            'totalReviews'      => null,    // 2, 8, 10 votes (nbr de votes)
+            //---------------------------
             'billingAddress'    => $this->userInfo->adresse_residence,
             'locationAddress'   => new locationAddressRessource($this->userLocationAddress),
             'wallet'            => new UserCompteRessource($this->userCompte),
-            'BiometricFile'     => UserDocumentRessource::collection($this->documents),
+            //'BiometricFile'     => UserDocumentRessource::collection($this->documents),
+            
+            //'ordersState'   => ['totalOrders' => $this->totalOrdersTm(), 'orderState' => $this->userStateCommandesTeamleader() ],
+            'ordersState'       => $this->orderStateUserLogin(),
         ];
     }
 }

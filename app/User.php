@@ -12,11 +12,14 @@ use App\Models\GroupeUser;
 use App\Models\Groupe;
 use App\Models\InvitationShopper;
 use App\Models\DocUser;
+use App\Models\Situation;
 
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable
 {
@@ -55,6 +58,44 @@ class User extends Authenticatable
      * 
      * */
 
+    public function orderState()
+    {
+
+        return $this->hasManyThrough(
+            commande::class, 
+            UserCommande::class,
+            'user_id',
+            'id',
+            'id',
+            'commande_id'
+        )
+        //->withCount('situation');
+        ->groupBy('situation_id');
+        //->where('situation_id', '2');
+        
+    }
+
+
+     public function orderState1($state)
+    {
+
+        return $this->hasManyThrough(
+            commande::class, 
+            UserCommande::class,
+            'user_id',
+            'id',
+            'id',
+            'commande_id'
+        )->where('situation_id', $state);
+
+        //->withCount('situation')
+        //->groupBy('situation_id');
+        //->where('situation_id', '2');
+        
+    }
+
+
+//-----------
     public function ordersUser()
     {
         return $this->hasManyThrough(
@@ -67,6 +108,141 @@ class User extends Authenticatable
         );
     }
 
+    public function ordersUserTest()
+    {
+        return $this->hasMany(UserCommande::class);
+    }
+
+    public function totalOrdersTm()
+    {
+        return Commande::where('groupe_id', $this->groupeUser->groupe_id)->get()->count();
+    }
+
+
+    public function userStateCommandesShoppers()
+    {
+        //--------------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------------//
+        /**
+         * -x-1 notTreated;
+         * -x-2 refused;
+         * -x-3 acceptedNotAssigned;
+         * 
+         * --------------------------
+         * 4 assigneeNotPurchased;
+         * 5 purchasedUnchecked;
+         * 6 checkedNotDelivered;
+         * 7 delivered;
+         * --------------------------
+
+        */
+        //$situations = Situation::all();
+        //$situ = array('1','2','3');
+        //$situations = Situation::whereIn('id', $situ)->get();
+        $situations = Situation::where('type', 2)->get();
+        
+        $totalCommandes = $this->ordersUser->count();
+
+        
+        foreach($situations as $key => $situation)
+        {
+            //$dataCommandes = Commande::select('situation_id', DB::raw('COUNT(id) as amount'))->where('situation_id', $situation->id)->get();
+            $dataCommandes = UserCommande::select('situation_id', DB::raw('COUNT(id) as amount'))
+                            ->where('user_id', $this->id)
+                            ->where('situation_id', $situation->id)
+                            ->get();
+            
+            foreach($dataCommandes as $i => $dataCommande)
+            {
+                if(empty($dataCommande->situation_id))
+                {
+                    $data[$key][$i]['stateName'] = $situation->libely;
+                    $data[$key][$i]['type'] = $situation->id;
+                    $data[$key][$i]['ratio'] = $totalCommandes ? number_format($dataCommande->amount/$totalCommandes, 3) : 0;
+                    $data[$key][$i]['orderCount'] = 0;
+                    
+                } else {
+
+                    $data[$key][$i]['stateName'] = $situation->libely;
+                    $data[$key][$i]['type'] = $dataCommande->situation_id;
+                    $data[$key][$i]['ratio'] = $totalCommandes ? number_format($dataCommande->amount/$totalCommandes, 3) : 0;
+                    $data[$key][$i]['orderCount'] = $dataCommande->amount;
+                    
+                }
+            }
+        }
+
+        $data2 = array_merge($data[0], $data[1], $data[2], $data[3]);//, $data[4], $data[5], $data[6]);
+        
+        return $data2;
+    }
+
+    public function userStateCommandesTeamleader()
+    {
+        /**
+         * --------------------------
+         * 1 notTreated;
+         * 2 refused;
+         * 3 acceptedNotAssigned;
+         * --------------------------
+         * 
+         * -x-4 assigneeNotPurchased;
+         * -x-5 purchasedUnchecked;
+         * -x-6 checkedNotDelivered;
+         * -x-7 delivered;
+
+        */
+        $situations = Situation::all();
+        //$situ = array('1','2','3');
+        //$situations = Situation::whereIn('id', $situ)->get();
+        //$situations = Situation::where('type', 1)->get();
+        
+        $totalCommandes = Commande::where('groupe_id', $this->groupeUser->groupe_id)->get()->count();
+        
+        foreach($situations as $key => $situation)
+        {
+            $dataCommandes = UserCommande::select('situation_id', DB::raw('COUNT(id) as amount'))->where('situation_id', $situation->id)->get();
+            
+            foreach($dataCommandes as $i => $dataCommande)
+            {
+                if(empty($dataCommande->situation_id))
+                {
+                    $data[$key][$i]['stateName'] = $situation->libely;
+                    $data[$key][$i]['type'] = $situation->id;
+                    $data[$key][$i]['ratio'] = $totalCommandes ? number_format($dataCommande->amount/$totalCommandes, 3) : 0;
+                    $data[$key][$i]['orderCount'] = 0;
+                    
+                } else {
+
+                    $data[$key][$i]['stateName'] = $situation->libely;
+                    $data[$key][$i]['type'] = $dataCommande->situation_id;
+                    $data[$key][$i]['ratio'] = $totalCommandes ? number_format($dataCommande->amount/$totalCommandes, 3) : 0;
+                    $data[$key][$i]['orderCount'] = $dataCommande->amount;
+                    
+                }
+            }
+        }
+
+        $data2 = array_merge($data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6]);
+        
+        return $data2;
+    }
+
+
+    
+    public function orderStateUserLogin()
+    {
+        if($this->userInfo->profil_id==1)
+        {
+            $data = ['totalOrders' => $this->totalOrdersTm(), 'orderState' => $this->userStateCommandesTeamleader() ];
+
+        } else {
+            $data = ['totalOrders' => $this->ordersUser->count(), 'orderState' => $this->userStateCommandesShoppers() ];
+        }
+
+        return $data;
+    }
+    
     public function userLocationAddress()
     {
         return $this->hasOne(UserAdresse::class);
@@ -97,6 +273,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(GroupeUser::class);
     }
+
+    public function groupeUsers()
+    {
+        return $this->hasMany(GroupeUser::class);
+    }
+
 
     public function groupe()
     {
