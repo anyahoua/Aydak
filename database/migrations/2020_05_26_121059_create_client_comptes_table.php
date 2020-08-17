@@ -22,6 +22,8 @@ class CreateClientComptesTable extends Migration
             $table->integer('etat');
             $table->foreignId('client_id')->references('id')->on('clients')->onDelete('cascade');
             $table->foreignId('groupe_id');
+            $table->string('type', 20);
+            $table->foreignId('commande_id')->references('id')->on('commandes');
             $table->timestamps();
         });
     }

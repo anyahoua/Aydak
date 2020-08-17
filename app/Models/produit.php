@@ -33,12 +33,12 @@ class Produit extends Model
      * */
     public function prix()
     {
-        return $this->hasOne(ProduitPrix::class)->where('etat', '1');
+        return $this->hasOne(PrixProduit::class)->where('etat', '1');
     }
 
     public function historyPrice()
     {
-        return $this->hasMany(ProduitPrix::class);
+        return $this->hasMany(PrixProduit::class);
     }
 
 

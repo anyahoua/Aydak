@@ -45,6 +45,9 @@ Route::prefix('v1')->group(function(){
         Route::post('login', 'Api\UserController@login');
         Route::post('register', 'Api\UserController@register');
         
+        Route::middleware('auth:api')->get('logout', 'Api\UserController@logout');
+        Route::post('refresh', 'Api\UserController@refreshToken');
+
         // TEAMLEADER :
         //-------------
         Route::post('tm/nextregister', 'Api\UserController@registerNextTeamleader');

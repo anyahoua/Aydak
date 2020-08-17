@@ -47,6 +47,7 @@ class User extends Authenticatable
      * The attributes that should be cast to native types.
      *
      * @var array
+     * integer, real, float, double, decimal:<digits>, string, boolean, object, array, collection, date, datetime, and timestamp.
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -57,6 +58,10 @@ class User extends Authenticatable
      * Relationship : 
      * 
      * */
+    
+     public function findForPassport($identifier) {
+        return $this->orWhere('email', $identifier)->orWhere('username', $identifier)->first();
+    }
 
     public function orderState()
     {

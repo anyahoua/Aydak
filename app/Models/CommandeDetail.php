@@ -26,6 +26,17 @@ class CommandeDetail extends Model
         'quantite_commande', 'quantite_achat', 'prix_u_commande', 'prix_u_achat', 'etat', 'commande_id', 'produit_id', 
     ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'quantite_commande' => 'integer',
+        'quantite_achat'    => 'integer',
+        'prix_u_commande'   => 'double',
+        'prix_u_achat'      => 'double',
+    ];
     
     /** 
      * Relationship : 

@@ -25,6 +25,15 @@ class ProduitPrix extends Model
         'produit_id', 'prix', 'etat', 
     ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        //'prix' => 'decimal:2',
+        'prix' => 'double',
+    ];
     
     /** 
      * Relationship : 

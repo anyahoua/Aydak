@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Laravel\Passport\Client as OClient;
 use App\User;
 use App\Models\UserAdresse;
 use App\Models\UserInfo;
@@ -12,8 +13,18 @@ use App\Models\Groupe;
 use App\Models\InvitationShopper;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
+
+//use GuzzleHttp\Client;
+//use Illuminate\Support\Facades\Http;
+
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
+
+
 use App\Traits\UploadTrait;
 use Validator;
 use Keygen;
@@ -22,7 +33,8 @@ use App\Http\Resources\Api\UserLoginRessource;
 use App\Http\Resources\Api\UserRessource;
 use App\Http\Resources\Api\OrdersRessource;
 
-class UserController extends Controller
+class UserController extends ApiController
+//class UserController extends Controller
 {
     use UploadTrait;
 
@@ -36,10 +48,22 @@ class UserController extends Controller
 
         $input = $request->all();
 
-        $this->validate($request, [
+        // $this->validate($request, [
+        //     'username' => 'required',
+        //     'password' => 'required',
+        // ]);
+
+        $validator = Validator::make($request->all(), [
             'username' => 'required',
             'password' => 'required',
         ]);
+        
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
+
+
+
 
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         if (auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password']))) {
@@ -47,6 +71,7 @@ class UserController extends Controller
             $user = Auth::user();
 
             if ($user->userInfo->etat == 1) {
+/*
                 $token =  $user->createToken('AydakUsers')->accessToken;
 
                 $user->apitoken = $token;
@@ -63,12 +88,141 @@ class UserController extends Controller
                     'data'      => new UserLoginRessource($user),
 
                 ], 200);
+*/
+            //---------------------------------------
+
+            //$oClient = OClient::where('password_client', 1)->first();
+            $oClient = OClient::find(2);
+
+            $fullToken = $this->getTokenAndRefreshToken($oClient, $request->username, $request->password);
+
+            $user->access_token     = $fullToken['access_token'];;
+            $user->refresh_token    = $fullToken['refresh_token'];
+            $user->expires_in       = $fullToken['expires_in'];
+            //$user->userInfo;
+            //$user->userInfo->profil;
+            $user->userLocationAddress;
+            $user->userLocationAddress->pays;
+
+            return $this->successResponse(new UserLoginRessource($user));
+            
+/*
+            return response()->json([
+                'code'      => '200',
+                'message'   => 'Authentification réussie.',
+                //'data'      => new UserLoginResource($user)
+                //'apiToken'  => $token,
+                'data'      => new UserLoginRessource($user),
+
+            ], 200);
+*/
+            //---------------------------------------
+
+
+
             } else {
-                return response()->json(['error' => 'Unauthorised status'], 401);
+                return $this->errorResponse('Unauthorised status', 401);
+                //return response()->json(['error' => 'Unauthorised status'], 401);
             }
         } else {
-            return response()->json(['error' => 'Unauthorised'], 401);
+            return $this->errorResponse('Unauthorised', 401);
+            //return response()->json(['error' => 'Unauthorised'], 401);
         }
+    }
+
+    /* Generate passport token and refresh token */
+    public function getTokenAndRefreshToken(OClient $oClient, $username, $password) { 
+
+        $http = new \GuzzleHttp\Client();
+
+        $url = route('passport.token');
+        
+        $response = $http->post($url, [
+            'form_params' => [
+                'grant_type' => 'password',
+                'client_id' => $oClient->id,
+                'client_secret' => $oClient->secret,
+                'username' => $username,
+                'password' => $password,
+                'scope' => '*',
+            ],
+            'http_errors' => false // add this to return errors in json
+        ]);
+
+        return json_decode((string) $response->getBody(), true);
+
+        // $result = json_decode((string) $response->getBody(), true);
+        // return response()->json($result, 200);
+    }
+
+    public function refreshToken(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'refresh_token' => 'required',
+        ]);
+        
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
+
+        try {
+
+            $oClient = OClient::find(2);
+
+            $http = new \GuzzleHttp\Client();
+    
+            $url = route('passport.token');
+            
+            $response = $http->post($url, [
+                'form_params' => [
+                    'grant_type' => 'refresh_token',
+                    'refresh_token' => $request->refresh_token,
+                    'client_id' => $oClient->id,
+                    'client_secret' => $oClient->secret,
+                    'scope' => '',
+                ],
+                //'http_errors' => false // add this to return errors in json
+            ]);
+    
+            $myReponse = collect( json_decode((string) $response->getBody(), true) );
+
+            return $this->successResponse($myReponse);
+
+        } catch (RequestException $e) {
+              
+            if ($e->hasResponse()) {
+
+                $statusCode   = $e->getResponse()->getStatusCode();
+                $json_reponse = json_decode($e->getResponse()->getBody(true), true);
+                $message      = $json_reponse['message'];
+
+                return $this->errorResponse($message, $statusCode);
+            }
+
+        }
+
+
+    }
+
+
+    /**
+     * Logout user (Revoke the token)
+     *
+     * @return [string] message
+     */
+    public function logout(Request $request)
+    {
+        //return $request;
+
+        $request->user()->token()->revoke();
+
+        return $this->successResponse($data=null, 'Successfully logged out');
+/*
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
+*/
     }
 
     /** 
@@ -254,6 +408,7 @@ class UserController extends Controller
 
         $userInfos->save();
 
+        /*
         // Add User Location Address :
         //----------------------------
         $UserLocationAddress                = new UserAdresse;
@@ -265,11 +420,11 @@ class UserController extends Controller
         $UserLocationAddress->daira         = $request->daira;
         $UserLocationAddress->wilaya        = $request->wilaya;
         $UserLocationAddress->pays_id       = config('global.country_id');
-        $UserLocationAddress->user_id       = $client->id;
+        $UserLocationAddress->user_id       = $user->id;
         $UserLocationAddress->etat          = '1';
 
         $UserLocationAddress->save();
-
+        */
 
         //
         $user->userInfo;
@@ -396,7 +551,7 @@ class UserController extends Controller
         //-----------------------------------------
 
 
-
+/*
         //-----------------------------------------
         // UPDATE in User Info
         //-----------------------------------------
@@ -413,7 +568,24 @@ class UserController extends Controller
 
         $UserInfo->save();
         //-----------------------------------------
+*/
 
+        // Add User Location Address :
+        //-----------------------------------------
+        $UserLocationAddress                = new UserAdresse;
+        
+        $UserLocationAddress->latitude      = $request->latitude;
+        $UserLocationAddress->longitude     = $request->longitude;
+        $UserLocationAddress->quartier      = $request->district;
+        $UserLocationAddress->commune       = $request->commune;
+        $UserLocationAddress->daira         = $request->daira;
+        $UserLocationAddress->wilaya        = $request->wilaya;
+        $UserLocationAddress->pays_id       = config('global.country_id');
+        $UserLocationAddress->user_id       = $request->userId;
+        $UserLocationAddress->etat          = '1';
+
+        $UserLocationAddress->save();
+        //-----------------------------------------
 
         return response()->json([
             'code'      => '201',
