@@ -214,7 +214,8 @@ class UserController extends ApiController
     {
 
         $user = $request->User();
-        //$user = Auth::user();
+
+        //return $user->token();
 
         $ts = $user->userInfo->teamleader_shopper;
 
@@ -236,13 +237,13 @@ class UserController extends ApiController
             //S'il est activer
             if ($user->userInfo->etat == 1)
             {
-                $oClient = OClient::find(2);
+                //$oClient = OClient::find(2);
 
-                $fullToken = $this->getTokenAndRefreshToken($oClient, $request->username, $request->password);
+                //$fullToken = $this->getTokenAndRefreshToken($oClient, $request->username, $request->password);
 
-                $user->access_token     = $fullToken['access_token'];
-                $user->refresh_token    = $fullToken['refresh_token'];
-                $user->expires_in       = $fullToken['expires_in'];
+                //$user->access_token     = $fullToken['access_token'];
+                //$user->refresh_token    = $fullToken['refresh_token'];
+                //$user->expires_in       = $fullToken['expires_in'];
                 $user->userLocationAddress;
                 $user->userLocationAddress->pays;
             

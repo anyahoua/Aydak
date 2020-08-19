@@ -310,7 +310,7 @@ class User extends Authenticatable
 
     public function userWallet()
     {
-        if($this->userInfo->teamleader_shopper==1)
+        if($this->userProfil->profil_id==1)
         {
             return $this->hasOne(UserCompte::class)->where('etat','1')->where('profil_id', 1);
 
