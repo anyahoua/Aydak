@@ -6,7 +6,7 @@ use Laravel\Passport\Client as OClient;
 use App\User;
 use App\Models\UserAdresse;
 use App\Models\UserInfo;
-//use App\Models\UserCommande;
+use App\Models\UserConnexion;
 use App\Models\DocUser;
 use App\Models\GroupeUser;
 use App\Models\Groupe;
@@ -45,6 +45,8 @@ class UserController extends ApiController
      */
     public function login(Request $request)
     {
+        // $data = ['userId' => '1', 'action' => 'connexion', 'profil_id' => '2'];
+        // return $this->userConnexion($data);
 
         $input = $request->all();
 
@@ -104,6 +106,13 @@ class UserController extends ApiController
 
                 //return $user->isTeamleader;
 
+                //-------------------
+                // Connexion History
+                //-------------------
+                $data = ['userId' => $user->id, 'action' => 'Connexion', 'profil_id' => '1'];
+
+                $this->userConnexion($data);
+                //-------------------
                 
                 return $this->successResponse(new UserLoginRessource($user));
                 //---------------------------------------
@@ -196,6 +205,67 @@ class UserController extends ApiController
 
     }
 
+    /** 
+     * Switch Login API
+     * 
+     * @return \Illuminate\Http\Response 
+     */
+    public function switchLogin(Request $request)
+    {
+
+        $user = $request->User();
+        //$user = Auth::user();
+
+        $ts = $user->userInfo->teamleader_shopper;
+
+        if($ts==1)
+        {
+            $userId = $user->id;
+            
+            if($user->userProfil->profil_id == 1)
+            {
+                $profilId   = '2';
+                $action     = 'Switch to Shopper';
+
+            } else {
+                $profilId   = '1';
+                $action     = 'Switch to Teamleader';
+            }
+            
+
+            //S'il est activer
+            if ($user->userInfo->etat == 1)
+            {
+                $oClient = OClient::find(2);
+
+                $fullToken = $this->getTokenAndRefreshToken($oClient, $request->username, $request->password);
+
+                $user->access_token     = $fullToken['access_token'];
+                $user->refresh_token    = $fullToken['refresh_token'];
+                $user->expires_in       = $fullToken['expires_in'];
+                $user->userLocationAddress;
+                $user->userLocationAddress->pays;
+            
+                //-------------------
+                // Connexion History
+                //-------------------
+                $data = ['userId' => $userId, 'action' => $action, 'profil_id' => $profilId];
+
+                $this->userConnexion($data);
+                //-------------------            
+            
+                return $this->successResponse(new UserLoginRessource($user));
+
+            } else {
+                return $this->errorResponse('Unauthorised status', 401);
+            }
+
+        }
+        
+        return $this->errorResponse('Unauthorised!.', 403);
+    }
+
+
 
     /**
      * Logout user (Revoke the token)
@@ -204,18 +274,17 @@ class UserController extends ApiController
      */
     public function logout(Request $request)
     {
-        //return $request;
-
-        // $user = $request->user();
-        // $user->userInfo;
-        // //$user->userInfo->profil;
-        // $user->userLocationAddress;
-        // $user->userLocationAddress->pays;
-
-        // return $user;
 
         $request->user()->token()->revoke();
 
+        //---------------------
+        // Deconnexion History
+        //---------------------
+        // $data = ['userId' => $user->id, 'action' => 'Deconnexion', 'profil_id' => ?? ];
+
+        // $this->userConnexion($data);
+        //---------------------
+        
         return $this->successResponse($data=null, 'Successfully logged out');
     }
 

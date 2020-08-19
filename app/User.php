@@ -13,6 +13,7 @@ use App\Models\Groupe;
 use App\Models\InvitationShopper;
 use App\Models\DocUser;
 use App\Models\Situation;
+use App\Models\UserConnexion;
 
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -317,6 +318,13 @@ class User extends Authenticatable
             return $this->hasOne(UserCompte::class)->where('etat','1')->where('profil_id', 2);
         }
     }
+
+
+    public function userProfil()
+    {
+        return $this->hasOne(UserConnexion::class)->latest('id');
+    }
+
 
  
 }
