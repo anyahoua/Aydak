@@ -94,7 +94,8 @@ class Groupe extends Model
         )
         ->with('UserInfo')
         ->with('userLocationAddress')
-        ->with('userCompte')
+        //->with('userCompte')
+        ->with('userWallet')
         ->whereHas('UserInfo', function ($query) {
             $query->where('profil_id', '2');
         })

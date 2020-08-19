@@ -63,8 +63,6 @@ class UserController extends ApiController
         }
 
 
-
-
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         if (auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password']))) {
 
@@ -89,34 +87,26 @@ class UserController extends ApiController
 
                 ], 200);
 */
-            //---------------------------------------
+                //---------------------------------------
 
-            //$oClient = OClient::where('password_client', 1)->first();
-            $oClient = OClient::find(2);
+                //$oClient = OClient::where('password_client', 1)->first();
+                $oClient = OClient::find(2);
 
-            $fullToken = $this->getTokenAndRefreshToken($oClient, $request->username, $request->password);
+                $fullToken = $this->getTokenAndRefreshToken($oClient, $request->username, $request->password);
 
-            $user->access_token     = $fullToken['access_token'];;
-            $user->refresh_token    = $fullToken['refresh_token'];
-            $user->expires_in       = $fullToken['expires_in'];
-            //$user->userInfo;
-            //$user->userInfo->profil;
-            $user->userLocationAddress;
-            $user->userLocationAddress->pays;
+                $user->access_token     = $fullToken['access_token'];
+                $user->refresh_token    = $fullToken['refresh_token'];
+                $user->expires_in       = $fullToken['expires_in'];
+                //$user->userInfo;
+                //$user->userInfo->profil;
+                $user->userLocationAddress;
+                $user->userLocationAddress->pays;
 
-            return $this->successResponse(new UserLoginRessource($user));
-            
-/*
-            return response()->json([
-                'code'      => '200',
-                'message'   => 'Authentification réussie.',
-                //'data'      => new UserLoginResource($user)
-                //'apiToken'  => $token,
-                'data'      => new UserLoginRessource($user),
+                //return $user->isTeamleader;
 
-            ], 200);
-*/
-            //---------------------------------------
+                
+                return $this->successResponse(new UserLoginRessource($user));
+                //---------------------------------------
 
 
 
@@ -131,7 +121,8 @@ class UserController extends ApiController
     }
 
     /* Generate passport token and refresh token */
-    public function getTokenAndRefreshToken(OClient $oClient, $username, $password) { 
+    public function getTokenAndRefreshToken(OClient $oClient, $username, $password)
+    { 
 
         $http = new \GuzzleHttp\Client();
 
@@ -215,14 +206,17 @@ class UserController extends ApiController
     {
         //return $request;
 
+        // $user = $request->user();
+        // $user->userInfo;
+        // //$user->userInfo->profil;
+        // $user->userLocationAddress;
+        // $user->userLocationAddress->pays;
+
+        // return $user;
+
         $request->user()->token()->revoke();
 
         return $this->successResponse($data=null, 'Successfully logged out');
-/*
-        return response()->json([
-            'message' => 'Successfully logged out'
-        ]);
-*/
     }
 
     /** 
@@ -233,7 +227,109 @@ class UserController extends ApiController
     public function InvitationShopper(Request $request)
     {
 
-        $data = $request->validate(
+        $validator = Validator::make($request->all(), 
+            [
+                // 'userId'            => 'required| integer ',
+                'mobile'            => ['required', 'regex:/^(05|06|07)[0-9]{8}$/'],
+            ],
+            [
+                // 'userId.required'   => 'Le champ userId est obligatoire.',
+                // 'userId.integer'    => 'userId doite être un entier.',
+                'mobile.required'   => 'Le champ mobile est obligatoire.',
+                'regex.required'    => 'Le champ mobile est invalide.',
+            ]
+        );
+        
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
+
+
+        // If Mobile exist
+        $coursier = User::where('username', $request->mobile)->first();
+        if(!empty($coursier)){
+            //return response()->json(['error' => 'Unauthorised!. This mobile exist.'], 401);
+            return $this->errorResponse('Unauthorised!. Ce numéro de mobile existe déjà.', 401);
+        }
+
+
+        // Get Teamleader :
+        //-----------------------------
+        $Teamleader = $request->user();
+
+        if(!empty($Teamleader)){
+        
+            $profilId = $Teamleader->userInfo->profil->id;
+
+            if($profilId == '1'){
+
+                // Generate code : 
+                //-----------------------------
+                $generatedCode = $this->generateCode();
+                
+                // Disable All Old Invitations Shopper :
+                //-----------------------------
+                InvitationShopper::where('mobile', $request->mobile)->where('etat', '0')->update(['etat' => '1']);
+
+                // Add Invitation Shopper :
+                //-----------------------------
+                $Invitation                     = new InvitationShopper;
+
+                $Invitation->mobile             = $request->mobile;
+                $Invitation->code               = $generatedCode;
+                //$Invitation->date_activation    = '';
+                $Invitation->etat               = '0';
+                $Invitation->user_id            = $Teamleader->id;
+                $Invitation->groupe_id          = $Teamleader->groupeUser->groupe_id;
+
+                $Invitation->save();
+            } else {
+                //return response()->json(['error' => 'Unauthorised for this action.'], 401);
+                return $this->errorResponse('Unauthorised for this action.', 401);
+            }
+
+        } else {
+            //return response()->json(['error' => 'User not found.'], 404);
+            return $this->errorResponse('Teamleader not found.', 401);
+        }
+
+        return $this->successResponse($Invitation, 'Invitation à bien été envoyée.');
+    }
+
+    /*
+    public function InvitationShopper____OLD(Request $request)
+    {
+
+        // $user = $request->user();
+        // $user->userInfo;
+        // //$user->userInfo->profil;
+        // $user->userLocationAddress;
+        // $user->userLocationAddress->pays;
+
+        // return $user;
+
+        $user = $request->user();
+        //$user->userInfo;
+        $pr = $user->userInfo->profil->id;
+        //$user->userLocationAddress;
+        //$user->userLocationAddress->pays;
+
+        return $pr;
+
+        // $data = $request->validate(
+        //     [
+        //         'userId'            => 'required| integer ',
+        //         'mobile'            => ['required', 'regex:/^(05|06|07)[0-9]{8}$/'],
+        //     ],
+        //     [
+        //         'userId.required'   => 'Le champ userId est obligatoire.',
+        //         'userId.integer'    => 'userId doite être un entier.',
+        //         'mobile.required'   => 'Le champ mobile est obligatoire.',
+        //         'regex.required'    => 'Le champ mobile est invalide.',
+        //     ]
+        // );
+
+        $validator = Validator::make($request->all(), 
             [
                 'userId'            => 'required| integer ',
                 'mobile'            => ['required', 'regex:/^(05|06|07)[0-9]{8}$/'],
@@ -245,12 +341,17 @@ class UserController extends ApiController
                 'regex.required'    => 'Le champ mobile est invalide.',
             ]
         );
+        
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
 
 
         // If Mobile exist
         $coursier = User::where('username', $request->mobile)->first();
         if(!empty($coursier)){
-            return response()->json(['error' => 'Unauthorised!. This mobile exist.'], 401);
+            //return response()->json(['error' => 'Unauthorised!. This mobile exist.'], 401);
+            return $this->errorResponse('Unauthorised!. Ce numéro de mobile existe déjà.', 401);
         }
 
 
@@ -306,6 +407,8 @@ class UserController extends ApiController
 
         ], 200);
     }
+    */
+
 
     /** 
      * Validate Code For Shopper API
@@ -314,7 +417,8 @@ class UserController extends ApiController
      */
     public function validateCode(Request $request)
     {
-        $data = $request->validate(
+
+        $validator = Validator::make($request->all(), 
             [
                 'code'              => 'required| integer ',
                 'mobile'            => ['required', 'regex:/^(05|06|07)[0-9]{8}$/'],
@@ -325,36 +429,37 @@ class UserController extends ApiController
                 'regex.required'    => 'Le champ mobile est invalide.',
             ]
         );
+        
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
+
 
         $query = InvitationShopper::where('code', $request->code)->where('mobile', $request->mobile)->where('etat', '0');
 
         $Invitation = $query->first();
 
-        if(!empty($Invitation)){
-
+        if(!empty($Invitation))
+        {
             $Invitation->user;
             $Invitation->groupe;
 
-            return response()->json([
-                'code'      => '200',
-                'message'   => 'Le coursier à bien été invité.',
-                'data'      => $Invitation
-
-            ], 200);
+            return $this->successResponse($Invitation, 'Le coursier à bien été invité.');
         }
         
-        return response()->json(['error' => 'unauthorized code'], 401);
+        return $this->errorResponse('Unauthorized code', 401);
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+
+    /** 
+     * Register First Step Teamleader And Shopper API
+     * 
+     * @return \Illuminate\Http\Response 
      */
-    protected function validator(array $request)
+    public function register(Request $request)
     {
-        return Validator::make($request, [
+
+        $validator = Validator::make($request->all(), [
             'lastName'      => ['required', 'string', 'max:255'],
             'firstName'     => ['required', 'string', 'max:255'],
             'address'       => ['required', 'string', 'max:255'],
@@ -364,18 +469,10 @@ class UserController extends ApiController
             'password'      => ['required', 'string', 'min:8'],
             'c_password'    => ['required', 'same:password'],
         ]);
-
-    }
-
-    /** 
-     * Register First Step Teamleader And Shopper API
-     * 
-     * @return \Illuminate\Http\Response 
-     */
-    public function register(Request $request)
-    {
-        // Validate input request.
-        $this->validator($request->all())->validate();
+        
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
 
         // Input data user :
         $data = [
@@ -389,7 +486,7 @@ class UserController extends ApiController
         $user   = User::create($data);
         //--
 
-        $token  =  $user->createToken('AydakUsers')->accessToken;
+        $token  = $user->createToken('AydakUsers')->accessToken;
 
         $user->apitoken = $token;
 
@@ -408,7 +505,7 @@ class UserController extends ApiController
 
         $userInfos->save();
 
-        /*
+/*
         // Add User Location Address :
         //----------------------------
         $UserLocationAddress                = new UserAdresse;
@@ -424,18 +521,13 @@ class UserController extends ApiController
         $UserLocationAddress->etat          = '1';
 
         $UserLocationAddress->save();
-        */
-
+*/
         //
         $user->userInfo;
 
-        return response()->json([
-            'code'      => '201',
-            'message'   => 'Inscription (etape 1) réussie.',
-            'data'      => $user
-
-        ], 201);
+        return $this->successResponse($user, 'Inscription (etape 1) réussie.', 201);
     }
+
 
     /** 
      * Register Next Step Teamleader API
@@ -444,9 +536,10 @@ class UserController extends ApiController
      */
     public function registerNextTeamleader(Request $request)
     {
-        $data = $request->validate(
+        $validator = Validator::make($request->all(), 
             [
                 'userId'            => 'required| integer',
+                'isLeader'          => 'required| integer',
                 'groupeName'        => 'required| string | unique:groupes,nom',
                 'district'          => 'required| string',
                 'commune'           => 'required| string',
@@ -460,6 +553,8 @@ class UserController extends ApiController
             [
                 'userId.required'       => 'Le champ userId est obligatoire.',
                 'userId.integer'        => 'userId doite être un entier.',
+                'isLeader.required'     => 'Le champ isLeader est obligatoire.',
+                'isLeader.integer'      => 'isLeader doite être un entier.',
                 'groupeName.required'   => 'Le champ groupeId est obligatoire.',
                 'district.required'     => 'Le champ district est obligatoire.',
                 'commune'               => 'Le champ commune est obligatoire.',
@@ -472,7 +567,20 @@ class UserController extends ApiController
             ]
         );
 
-        //return Groupe::where('nom', $request->groupeName)->count();
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
+
+        //-----------------------------------------
+        // UPDATE in User Info
+        //-----------------------------------------
+        $UserInfo                       = UserInfo::findOrFail($request->userId);
+        $UserInfo->teamleader_shopper   = $request->isLeader;
+        $UserInfo->etape                = '2';
+        
+        $UserInfo->save();
+        //-----------------------------------------
+
 
         //-----------------------------------------
         // Add New Groupe
@@ -551,25 +659,6 @@ class UserController extends ApiController
         //-----------------------------------------
 
 
-/*
-        //-----------------------------------------
-        // UPDATE in User Info
-        //-----------------------------------------
-        $userInformations               = UserInfo::where('user_id', $request->userId)->first();
-
-        $UserInfo                       = UserInfo::find($userInformations->id);
-
-        $UserInfo->latitude             = $request->latitude;
-        $UserInfo->longitude            = $request->longitude;
-        $UserInfo->quartier_residence   = $request->district;
-        $UserInfo->ville_residence      = $request->commune;
-        $UserInfo->daira_residence      = $request->daira;
-        $UserInfo->wilaya_residence     = $request->wilaya;
-
-        $UserInfo->save();
-        //-----------------------------------------
-*/
-
         // Add User Location Address :
         //-----------------------------------------
         $UserLocationAddress                = new UserAdresse;
@@ -587,12 +676,7 @@ class UserController extends ApiController
         $UserLocationAddress->save();
         //-----------------------------------------
 
-        return response()->json([
-            'code'      => '201',
-            'message'   => 'Inscription (etape 2) réussie.',
-            'data'      => $UserInfo
-
-        ], 201);
+        return $this->successResponse($UserInfo, 'Inscription (etape 2) réussie.', 201);
 
     }
 
@@ -603,7 +687,7 @@ class UserController extends ApiController
      */
     public function registerNextShopper(Request $request)
     {
-        $data = $request->validate(
+        $validator = Validator::make($request->all(), 
             [
                 'userId'            => 'required| integer',
                 'groupeId'          => 'required| integer',
@@ -631,6 +715,10 @@ class UserController extends ApiController
                 'rapSheet.required'     => 'L\'image rapSheet est obligatoire.',
             ]
         );
+
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
 
         // Card ID
         if ($request->hasFile('cardId')) {
@@ -709,13 +797,7 @@ class UserController extends ApiController
         $UserInfo->save();
         //-----------------------------------------
 
-        return response()->json([
-            'code'      => '201',
-            'message'   => 'Inscription (etape 2) réussie.',
-            'data'      => $UserInfo
-
-        ], 201);
-
+        return $this->successResponse($UserInfo, 'Inscription (etape 2) réussie.', 201);
     }
 
     /** 
@@ -741,11 +823,7 @@ class UserController extends ApiController
         $user->groupe;
         $user->documents;
 
-        return response()->json([
-            'code'      => '200',
-            'message'   => 'Success.',
-            'data'      => new UserRessource($user),
-        ], 200);
+        return $this->successResponse(new UserRessource($user), 'User Détails');
     }
     
     /** 
@@ -761,13 +839,8 @@ class UserController extends ApiController
         //$user->documents;
 
         $shoppers = $user->groupe->shopperInGroupe;
-        //$shoppers->userLocationAddress;
         
-        return response()->json([
-            'code'      => '200',
-            'message'   => 'Success.',
-            'data'      => UserRessource::collection($shoppers),
-        ], 200);
+        return $this->successResponse(UserRessource::collection($shoppers), 'Orders details');
     }
 
 

@@ -78,7 +78,10 @@ class Handler extends ExceptionHandler
 
     public function handleException($request, Throwable $exception)
     {
-
+        if ($exception instanceof ModelNotFoundException) {
+            return $this->errorResponse('The specified record cannot be found', 404);
+        }
+        
         if ($exception instanceof MethodNotAllowedHttpException) {
             return $this->errorResponse('The specified method for the request is invalid', 405);
         }

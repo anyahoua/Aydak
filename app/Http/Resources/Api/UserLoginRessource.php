@@ -21,6 +21,7 @@ class UserLoginRessource extends JsonResource
             'groupeId'          => $this->groupe->id,
             'groupeName'        => $this->groupe->nom,
             'userType'          => $this->userInfo->profil_id,
+            'isLeader'          => $this->userInfo->teamleader_shopper,
             'type'              => $this->userInfo->profil->nom,
             'lastName'          => $this->nom,
             'firstName'         => $this->prenom,
@@ -38,7 +39,9 @@ class UserLoginRessource extends JsonResource
             //---------------------------
             'billingAddress'    => $this->userInfo->adresse_residence,
             'locationAddress'   => new locationAddressRessource($this->userLocationAddress),
-            'wallet'            => new UserCompteRessource($this->userCompte),
+            //'wallet'            => new UserCompteRessource($this->userCompte),
+            'wallet'            => new UserCompteRessource($this->userWallet),
+
             //'BiometricFile'     => UserDocumentRessource::collection($this->documents),
             
             //'ordersState'   => ['totalOrders' => $this->totalOrdersTm(), 'orderState' => $this->userStateCommandesTeamleader() ],

@@ -10,6 +10,7 @@ use App\Models\CommandeCommentaire;
 use App\Models\UserCommande;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -21,10 +22,9 @@ use App\Http\Resources\Api\UsersOrdersRessource;
 use Validator;
 use Keygen;
 
-class CommandeController extends Controller
+//class CommandeController extends Controller
+class CommandeController extends ApiController
 {
-
-
 
     /** 
      * Connected User Teamleader Show Orders Not Traited API 
@@ -39,13 +39,15 @@ class CommandeController extends Controller
                     ->where('situation_id', '1')
                     ->get();
         
-
+        return $this->successResponse(OrdersRessource::collection($Orders), 'Successfully');
+/*
         return response()->json([
             'code'      => '200',
             'message'   => 'Success.',
             'data'      => OrdersRessource::collection($Orders),
             //'data'      => $this->Orders,
         ], 200);
+*/
     }
     
     /** 
@@ -61,13 +63,15 @@ class CommandeController extends Controller
                     ->where('situation_id', '3')
                     ->get();
         
-
+        return $this->successResponse(OrdersRessource::collection($Orders), 'Successfully');
+/*
         return response()->json([
             'code'      => '200',
             'message'   => 'Success.',
             'data'      => OrdersRessource::collection($Orders),
             //'data'      => $this->Orders,
         ], 200);
+*/
     }
 
 
@@ -80,27 +84,8 @@ class CommandeController extends Controller
     { 
         $user = Auth::user();
 
-//$Orders = $user->ordersUser2;
-
-/*
-        $Orders = UserCommande::where('groupe_id', $user->groupe->id)
-                    ->where('situation_id', '4')
-                    ->get();
-                    */
-                    
-                    
-        
-
-        return response()->json([
-            'code'      => '200',
-            'message'   => 'Success.',
-            //'data'      => OrdersRessource::collection($Orders),
-            'data'      => UsersOrdersRessource::collection($user->groupe->shopperInGroupe),
-            
-        ], 200);
+        return $this->successResponse(UsersOrdersRessource::collection($user->groupe->shopperInGroupe), 'Successfully');
     }
-
-
 
 
     /** 
@@ -109,10 +94,15 @@ class CommandeController extends Controller
      * @return \Illuminate\Http\Response 
      */ 
     public function AddOrder(Request $request) 
-    { 
-        $validator = $request->validate([
+    {
+        $validator = Validator::make($request->all(), [
             'expectedDeliveryDate'  => 'required | date_format:d-m-Y',
         ]);
+        
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
+
 
         //----------------------//
         // This Client :
@@ -153,12 +143,7 @@ class CommandeController extends Controller
 
         $commande->situation;
 
-        return response()->json([
-            'code'      => '201',
-            'message'   => 'Commande envoyé avec success.',
-            'data'      => $commande
-        ], 201);
-        
+        return $this->successResponse($commande, 'Commande envoyé avec success.', 201);
     }
 
 

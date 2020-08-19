@@ -13,6 +13,7 @@ use App\Models\CommandeDetail;
 use App\Models\CommandeCommentaire;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\UploadTrait;
@@ -25,7 +26,8 @@ use App\Http\Resources\Api\ClientOrdersRessource;
 use Validator;
 use Keygen;
 
-class ClientController extends Controller
+//class ClientController extends Controller
+class ClientController extends ApiController
 {
     /** 
      * login api 
@@ -36,10 +38,14 @@ class ClientController extends Controller
 
         $input = $request->all();
 
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'username' => 'required',
             'password' => 'required',
         ]);
+        
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
 
 
         if(auth::guard('client')->attempt(array('username' => $input['username'], 'password' => $input['password'])))
@@ -79,19 +85,17 @@ class ClientController extends Controller
                 $client->clientLocationAddress;
                 //--
                 
-                return response()->json([
-                    'code'      => '200',
-                    'message'   => 'Authentification client réussie.',
-                    'data'      => new ClientLoginRessource($client),
-                ], 200);
+                return $this->successResponse(new ClientLoginRessource($client), 'Authentification client réussie.');
 
             } else {
-                return response()->json(['error'=>'Unauthorised status'], 401); 
+                return $this->errorResponse('Unauthorised status', 401);
+                //return response()->json(['error'=>'Unauthorised status'], 401);
             }
 
 
-        } else{ 
-            return response()->json(['error'=>'Unauthorised'], 401); 
+        } else{
+            return $this->errorResponse('Unauthorised', 401);
+            //return response()->json(['error'=>'Unauthorised'], 401); 
         } 
     }
 
@@ -153,8 +157,26 @@ class ClientController extends Controller
 
         $client->apitoken = $token;
 */
-        // Validate input request.
-        $this->validator($request->all())->validate();
+        $validator = Validator::make($request->all(), [
+            'lastName'      => ['required', 'string', 'max:255'],
+            'firstName'     => ['required', 'string', 'max:255'],
+            'groupeId'      => ['required', 'integer'],
+            'username'      => ['required', 'regex:/^(05|06|07)[0-9]{8}$/', 'unique:clients'], // Mobile
+            //'password'      => ['required', 'string', 'min:8', 'confirmed'], //---> password_confirmation = 'le mot de passe'
+            'password'      => ['required', 'string', 'min:8'],
+            'c_password'    => ['required', 'same:password'],
+
+            'district'          => ['required', 'string'],
+            'commune'           => ['required', 'string'],
+            'daira'             => ['required', 'string'],
+            'wilaya'            => ['required', 'string'],
+            'latitude'          => ['required', 'numeric'],
+            'longitude'         => ['required', 'numeric'],
+        ]);
+
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
 
         // Input data user :
         $data = [
@@ -220,11 +242,7 @@ class ClientController extends Controller
         $client->clientLocationAddress;
         $client->clientCompte;
 
-        return response()->json([
-            'code'      => '201',
-            'message'   => 'Inscription réussie. Un Team-Leader va vous contacter bientot afin de recueillir votre prépaiement.',
-            'data'      => new ClientDataRessource($client),
-        ], 201);
+        return $this->successResponse(new ClientDataRessource($client), 'Inscription réussie. Un Team-Leader va vous contacter bientot afin de recueillir votre prépaiement.', 201);
     }
 
     /** 
@@ -236,11 +254,7 @@ class ClientController extends Controller
     { 
         $client = Auth::user(); 
         
-        return response()->json([
-            'code'      => '200',
-            'message'   => 'Success.',
-            'data'      => new ClientLoginRessource($client),
-        ], 200);
+        return $this->successResponse(new ClientLoginRessource($client), 'Successfully');
     }
 
     /** 
@@ -252,11 +266,7 @@ class ClientController extends Controller
     { 
         $client = Auth::user(); 
 
-        return response()->json([
-            'code'      => '200',
-            'message'   => 'Success.',
-            'data'    => new ClientCompteRessource($client->clientCompte),
-        ], 200);
+        return $this->successResponse(new ClientCompteRessource($client->clientCompte), 'Successfully');
     }
 
     /** 
@@ -268,11 +278,7 @@ class ClientController extends Controller
     { 
         $client = Auth::user(); 
 
-        return response()->json([
-            'code'      => '200',
-            'message'   => 'Success.',
-            'data'      => $client->clientCompteHistory,
-        ], 200);
+        return $this->successResponse($client->clientCompteHistory, 'Successfully');
     }
 
 
@@ -285,11 +291,7 @@ class ClientController extends Controller
     { 
         $client = Auth::user(); 
         
-        return response()->json([
-            'code'      => '200',
-            'message'   => 'Success.',
-            'data'      => $client->groupe->TeamleaderInGroupe
-        ], 200);
+        return $this->successResponse($client->groupe->TeamleaderInGroupe, 'Successfully');
     }
 
 
@@ -302,11 +304,7 @@ class ClientController extends Controller
     { 
         $client = Auth::user(); 
 
-        return response()->json([
-            'code'      => '200',
-            'message'   => 'Success.',
-            'data'      => ClientOrdersRessource::collection($client->commandes),
-        ], 200);
+        return $this->successResponse(ClientOrdersRessource::collection($client->commandes), 'Successfully');
     }
 
 

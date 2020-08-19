@@ -307,6 +307,16 @@ class User extends Authenticatable
         return $this->hasMany(DocUser::class);
     }
 
+    public function userWallet()
+    {
+        if($this->userInfo->teamleader_shopper==1)
+        {
+            return $this->hasOne(UserCompte::class)->where('etat','1')->where('profil_id', 1);
 
+        } else {
+            return $this->hasOne(UserCompte::class)->where('etat','1')->where('profil_id', 2);
+        }
+    }
 
+ 
 }

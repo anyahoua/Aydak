@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Models\Groupe;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
 
-class GroupeController extends Controller
+//class GroupeController extends Controller
+class GroupeController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -18,12 +20,7 @@ class GroupeController extends Controller
     {
         $Groupes = Groupe::all();
 
-        return response()->json([
-            'code'      => '200',
-            'message'   => 'Successfully.',
-            'data'      => $Groupes
-            
-        ], 200);
+        return $this->successResponse($Groupes, 'Successfully');
     }
 
     /**
@@ -90,8 +87,7 @@ class GroupeController extends Controller
         //$groupe->groupes;
         //$groupe->users->userInfo->profil;
         
-        return $groupe;
-
+        return $this->successResponse($groupe, 'Successfully');
     }
 
     /**
@@ -152,7 +148,8 @@ class GroupeController extends Controller
             ->get();
         
 
-
+        return $this->successResponse($groupes, 'Successfully');
+/*
         return response()->json([
             'code'      => '200',
             'message'   => 'Successfully.',
@@ -160,6 +157,7 @@ class GroupeController extends Controller
             'data'      => $groupes
             
         ], 200);
+*/
     }
 
 

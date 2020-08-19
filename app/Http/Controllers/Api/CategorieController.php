@@ -15,6 +15,7 @@ use App\Models\CommandeCommentaire;
 */
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 //use App\Traits\UploadTrait;
@@ -22,7 +23,8 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 //use Keygen;
 
-class CategorieController extends Controller
+//class CategorieController extends Controller
+class CategorieController extends ApiController
 {
     
     /** 
@@ -34,11 +36,7 @@ class CategorieController extends Controller
     {
         $categories = Categorie::where('etat', '1')->get();
 
-        return response()->json([
-            'code'      => '200',
-            'message'   => 'Success.',
-            'data'      => $categories
-        ], 200);
+        return $this->successResponse($categories, 'Successfully');
     }
 
 
@@ -53,12 +51,7 @@ class CategorieController extends Controller
         
         $sous_categories = SousCategorie::where('categorie_id', $caterorie_id)->where('etat', '1')->get();
 
-        return response()->json([
-            'code'      => '200',
-            'message'   => 'Success.',
-            'data'      => $sous_categories
-        ], 200);
-        
+        return $this->successResponse($sous_categories, 'Successfully');
     }
 
 

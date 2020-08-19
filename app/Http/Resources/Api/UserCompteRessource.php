@@ -7,6 +7,16 @@ use Illuminate\Support\Carbon;
 
 class UserCompteRessource extends JsonResource
 {
+
+    // public function __construct($resource, $wallet)
+    // {
+    //     // Ensure you call the parent constructor
+    //     parent::__construct($resource);
+    //     $this->resource = $resource;
+        
+    //     $this->foo = $wallet;
+    // }
+
     /**
      * Transform the resource into an array.
      *

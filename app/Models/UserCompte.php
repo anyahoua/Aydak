@@ -22,7 +22,7 @@ class UserCompte extends Model
      * @var array
      */
     protected $fillable = [
-        'debit', 'credit', 'ancien_solde', 'nouveau_solde', 'etat', 'user_id', 'groupe_id',
+        'debit', 'credit', 'ancien_solde', 'nouveau_solde', 'etat', 'user_id', 'profil_id', 'groupe_id',
     ];
 
     public function user()
@@ -30,5 +30,10 @@ class UserCompte extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function profil()
+    {
+        return $this->belongsTo(Profil::class);
+    }
+    
 
 }

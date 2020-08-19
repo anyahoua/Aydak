@@ -21,6 +21,7 @@ class CreateUserComptesTable extends Migration
             $table->double('nouveau_solde');
             $table->integer('etat');
             $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('profil_id')->references('id')->on('profils');
             $table->foreignId('groupe_id');
             $table->timestamps();
         });

@@ -48,7 +48,8 @@ class UsersOrdersRessource extends JsonResource
                 
             ],
             //'wallet'        => $this->userCompte ? new UserCompteRessource($this->userCompte) : [],
-            'wallet'        => $this->userCompte ? new UserCompteRessource($this->userCompte) : new \ArrayObject(),
+            //'wallet'        => $this->userCompte ? new UserCompteRessource($this->userCompte) : new \ArrayObject(),
+            'wallet'        => $this->userWallet ? new UserCompteRessource($this->userWallet) : new \ArrayObject(),
             'orders'        => OrdersRessource::collection($this->ordersUser),
 
             //---------------------------
