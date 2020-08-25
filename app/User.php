@@ -291,7 +291,7 @@ class User extends Authenticatable
         return $this->hasOneThrough(
             Groupe::class, 
             GroupeUser::class,
-            'id',
+            'user_id',
             'id',
             'id',
             'groupe_id'

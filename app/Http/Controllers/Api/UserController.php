@@ -133,6 +133,36 @@ class UserController extends ApiController
     public function getTokenAndRefreshToken(OClient $oClient, $username, $password)
     { 
 
+        $url = route('passport.token');
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => $url,
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "grant_type=password&client_id=".$oClient->id."&client_secret=".$oClient->secret."&username=".$username."&password=".$password."&scope=*",
+          CURLOPT_HTTPHEADER => array(
+            "Accept: application/json",
+            "Content-Type: application/x-www-form-urlencoded"
+          ),
+        ));
+        
+        $response = curl_exec($curl);
+        
+        curl_close($curl);
+
+        return json_decode((string) $response, true);
+        
+    }
+/*
+    public function getTokenAndRefreshToken(OClient $oClient, $username, $password)
+    { 
+
         $http = new \GuzzleHttp\Client();
 
         $url = route('passport.token');
@@ -154,7 +184,51 @@ class UserController extends ApiController
         // $result = json_decode((string) $response->getBody(), true);
         // return response()->json($result, 200);
     }
+*/
+public function refreshToken(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'refresh_token' => 'required',
+    ]);
+    
+    if($validator->fails()){
+        return $this->errorResponse($validator->messages(), 422);
+    }
 
+    $url = route('passport.token');
+    $oClient = OClient::find(2);
+
+    $curl = curl_init();
+    $tok = csrf_token();
+
+    curl_setopt_array($curl, array(
+      //CURLOPT_URL => "https://aydak.cooffa.shop/api/v1/users/refresh",
+      CURLOPT_URL => $url,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "POST",
+      CURLOPT_POSTFIELDS => "grant_type=refresh_token&refresh_token=".$request->refresh_token."&client_id=".$oClient->id."&client_secret=".$oClient->secret."&scope=*",
+      CURLOPT_HTTPHEADER => array(
+        "Accept: application/json"
+      ),
+    ));
+    
+    $response = curl_exec($curl);
+    
+    curl_close($curl);
+
+    $myReponse = collect( json_decode((string) $response, true) );
+
+    return $this->successResponse($myReponse);
+
+
+}
+
+/*
     public function refreshToken(Request $request)
     {
 
@@ -204,6 +278,7 @@ class UserController extends ApiController
 
 
     }
+*/
 
     /** 
      * Switch Login API
@@ -606,6 +681,7 @@ class UserController extends ApiController
      */
     public function registerNextTeamleader(Request $request)
     {
+
         $validator = Validator::make($request->all(), 
             [
                 'userId'            => 'required| integer',
@@ -644,7 +720,8 @@ class UserController extends ApiController
         //-----------------------------------------
         // UPDATE in User Info
         //-----------------------------------------
-        $UserInfo                       = UserInfo::findOrFail($request->userId);
+        $user                           = User::findOrFail($request->userId);
+        $UserInfo                       = UserInfo::where('user_id', $user->id)->first();
         $UserInfo->teamleader_shopper   = $request->isLeader;
         $UserInfo->etape                = '2';
         
