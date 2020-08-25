@@ -287,7 +287,8 @@ public function refreshToken(Request $request)
      */
     public function switchLogin(Request $request)
     {
-
+        //dd($request);
+        
         $user = $request->User();
 
         //return $user->token();
@@ -954,6 +955,57 @@ public function refreshToken(Request $request)
      */
     public function profile(Request $request)
     {
+        // Request et Token :
+        //-------------------
+        // table users : nom, prenom, passord
+        // table user_infos : adresse_residence, teamleader_shopper, avatar
+        // table user_adresses : latitude, longitude, quartier, commune, daira, wilaya
+/*
+        $validator = Validator::make($request->all(), 
+            [
+                'lastName'      => 'string | max:255',
+                'firstName'     => 'string | max:255',
+                'address'       => 'string | max:255',
+                'password'      => 'string | min:8',
+                'c_password'    => 'required| same:password',
+    
+                'isLeader'      => 'integer',
+                'avatar'        => 'image | mimes:jpeg,png,jpg |max:2048',
+
+                'district'          => 'string',
+                'commune'           => 'string',
+                'daira'             => 'string',
+                'wilaya'            => 'string',
+                'latitude'          => 'string',
+                'longitude'         => 'string',
+
+            ],
+            // [
+            //     'lastName.required'       => 'Le champ lastName est obligatoire.',
+            //     'userId.integer'        => 'userId doite être un entier.',
+            //     'groupeId.required'     => 'Le champ groupeId est obligatoire.',
+            //     'groupeId.integer'      => 'groupeId doite être un entier.',
+            //     'isLeader.required'     => 'Le champ isLeader est obligatoire.',
+            //     'isLeader.integer'      => 'isLeader doite être un entier.',
+            //     'district.required'     => 'Le champ district est obligatoire.',
+            //     'commune'               => 'Le champ commune est obligatoire.',
+            //     'daira'                 => 'Le champ daira est obligatoire.',
+            //     'wilaya'                => 'Le champ wilaya est obligatoire.',
+            //     'latitude'              => 'Le champ latitude est obligatoire.',
+            //     'longitude'             => 'Le champ longitude est obligatoire.',
+            //     'avatar.required'       => 'L\'image cardId est obligatoire.',
+    
+            // ]
+        );
+        
+
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
+*/
+
+
+
         return 'Profile';
     }
 
