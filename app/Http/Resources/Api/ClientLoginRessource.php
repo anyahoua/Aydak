@@ -24,6 +24,11 @@ class ClientLoginRessource extends JsonResource
             'avatar'            => $this->clientInfo->avatar,
             'actived'           => $this->clientInfo->etat,
             'token'             => $this->apitoken,
+            
+            // 'token'             => $this->access_token,
+            // 'tokenExpireAt'     => $this->expires_in,
+            // 'refreshToken'      => $this->refresh_token,
+
             'createdAtFr'       => Carbon::parse($this->created_at)->format('d-m-Y'),
             'createdAtEn'       => Carbon::parse($this->created_at)->format('Y-m-d'),
             'locationAddress'   => new locationAddressRessource($this->clientLocationAddress),

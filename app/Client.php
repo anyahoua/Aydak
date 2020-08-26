@@ -55,6 +55,10 @@ class Client extends Authenticatable
      * Relationship : 
      * 
      * */
+    public function findForPassport($identifier) {
+        return $this->orWhere('username', $identifier)->first();
+    }
+    
     public function clientLocationAddress()
     {
         return $this->hasOne(ClientAdresse::class);

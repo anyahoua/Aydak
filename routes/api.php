@@ -101,6 +101,7 @@ Route::prefix('v1')->group(function(){
         Route::delete('/{etage}', 'EtageController@destroy')->name('etages.destroy');
 */
         Route::post('login', 'Api\ClientController@login');
+        Route::middleware('auth:client-api')->get('logout', 'Api\ClientController@logout');
         Route::post('register', 'Api\ClientController@register');
 
         Route::middleware('auth:client-api')->get('clientdetails', 'Api\ClientController@details');

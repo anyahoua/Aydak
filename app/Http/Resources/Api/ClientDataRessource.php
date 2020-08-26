@@ -29,7 +29,7 @@ class ClientDataRessource extends JsonResource
             'createdAtFr'       => Carbon::parse($this->created_at)->format('d-m-Y'),
             'createdAtEn'       => Carbon::parse($this->created_at)->format('Y-m-d'),
             'locationAddress'   => new locationAddressRessource($this->clientLocationAddress),
-            'wallet'            => new ClientCompteRessource($this->clientCompte),
+            'wallet'            => $this->clientCompte ? new ClientCompteRessource($this->clientCompte) : new \ArrayObject(),
         ];
 
     }

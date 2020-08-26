@@ -8,6 +8,7 @@ use App\Models\Commande;
 use App\Models\CommandeDetail;
 use App\Models\CommandeCommentaire;
 use App\Models\UserCommande;
+use App\Models\ProduitPrix;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ApiController;
@@ -130,9 +131,13 @@ class CommandeController extends ApiController
         $detailCommande = array();
         foreach($entray["order"] as $key => $row)
         {
+
+            //Prix produit
+            $prix_unitaire = ProduitPrix::where('produit_id', $row['productId'])->first();
+            
             $detailCommande[] = array(
                 'quantite_commande' => $row['quantity'],
-                'prix_u_commande'   => $row['unitPrice'],
+                'prix_u_commande'   => $prix_unitaire->prix, //$row['unitPrice'],
                 'etat'              => '0',
                 'commande_id'       => $commande->id,
                 'produit_id'        => $row['productId'],

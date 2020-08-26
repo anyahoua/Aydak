@@ -99,33 +99,27 @@ class ClientController extends ApiController
         } 
     }
 
-
     /**
-     * Get a validator for an incoming registration request.
+     * Logout client (Revoke the token)
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return [string] message
      */
-    protected function validator(array $request)
+    public function logout(Request $request)
     {
-        return Validator::make($request, [
-            'lastName'      => ['required', 'string', 'max:255'],
-            'firstName'     => ['required', 'string', 'max:255'],
-            'groupeId'      => ['required', 'integer'],
-            'username'      => ['required', 'regex:/^(05|06|07)[0-9]{8}$/', 'unique:clients'], // Mobile
-            //'password'      => ['required', 'string', 'min:8', 'confirmed'], //---> password_confirmation = 'le mot de passe'
-            'password'      => ['required', 'string', 'min:8'],
-            'c_password'    => ['required', 'same:password'],
 
-            'district'          => ['required', 'string'],
-            'commune'           => ['required', 'string'],
-            'daira'             => ['required', 'string'],
-            'wilaya'            => ['required', 'string'],
-            'latitude'          => ['required', 'numeric'],
-            'longitude'         => ['required', 'numeric'],
-        ]);
+        $request->user()->token()->revoke();
 
+        //---------------------
+        // Deconnexion History
+        //---------------------
+        // $data = ['userId' => $user->id, 'action' => 'Deconnexion', 'profil_id' => ?? ];
+
+        // $this->userConnexion($data);
+        //---------------------
+        
+        return $this->successResponse($data=null, 'Successfully logged out');
     }
+
 
     /** 
      * Register api 
@@ -134,29 +128,7 @@ class ClientController extends ApiController
      */ 
     public function register(Request $request) 
     {
-/*
-        $validator = Validator::make($request->all(), [ 
-            'nom'           => 'required', 
-            'prenom'        => 'required', 
-            'username'      => 'required | unique:clients', 
-            'password'      => 'required', 
-            'c_password'    => 'required|same:password', 
-            'groupe_id'     => 'required', 
-        ]);
-        
-        if ($validator->fails()) { 
-            return response()->json(['error'=>$validator->errors()], 401);            
-        }
 
-        $input = $request->all(); 
-        $input['password'] = bcrypt($input['password']);
-
-
-        $client = Client::create($input);
-        $token  =  $client->createToken('AydakClients')->accessToken;
-
-        $client->apitoken = $token;
-*/
         $validator = Validator::make($request->all(), [
             'lastName'      => ['required', 'string', 'max:255'],
             'firstName'     => ['required', 'string', 'max:255'],
@@ -222,6 +194,7 @@ class ClientController extends ApiController
 
         $clientLocationAddress->save();        
 
+/*
         // Add Client Compte :
         //--------------------
         $clientCompte                  = new ClientCompte;
@@ -234,7 +207,8 @@ class ClientController extends ApiController
         $clientCompte->client_id        = $client->id;
         $clientCompte->groupe_id        = $request->groupeId;
 
-        $clientCompte->save(); 
+        $clientCompte->save();
+*/
 
 
         //
