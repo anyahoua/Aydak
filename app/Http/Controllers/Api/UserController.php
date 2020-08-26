@@ -69,6 +69,8 @@ class UserController extends ApiController
         if (auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password']))) {
 
             $user = Auth::user();
+            
+            $user->currentProfilId  = $user->userInfo->profil_id;
 
             if ($user->userInfo->etat == 1) {
 /*
@@ -301,18 +303,19 @@ public function refreshToken(Request $request)
             
             if($user->userProfil->profil_id == 1)
             {
-                $profilId   = '2';
+                $profilId   = 2;
                 $action     = 'Switch to Shopper';
 
             } else {
-                $profilId   = '1';
+                $profilId   = 1;
                 $action     = 'Switch to Teamleader';
             }
             
-
+            $user->currentProfilId  = $profilId;
+            $user->userProfil;
             //S'il est activer
-            if ($user->userInfo->etat == 1)
-            {
+            //if ($user->userInfo->etat == 1)
+            //{
                 //$oClient = OClient::find(2);
 
                 //$fullToken = $this->getTokenAndRefreshToken($oClient, $request->username, $request->password);
@@ -329,17 +332,17 @@ public function refreshToken(Request $request)
                 $data = ['userId' => $userId, 'action' => $action, 'profil_id' => $profilId];
 
                 $this->userConnexion($data);
-                //-------------------            
-            
+                //------------------- 
+                
                 return $this->successResponse(new UserLoginRessource($user));
 
-            } else {
-                return $this->errorResponse('Unauthorised status', 401);
-            }
+            //} else {
+            //    return $this->errorResponse('Unauthorised status', 401);
+            //}
 
         }
         
-        return $this->errorResponse('Unauthorised!.', 403);
+        return $this->errorResponse('Unauthorised switching!.', 403);
     }
 
 

@@ -34,6 +34,16 @@ class UserInfo extends Model
         'mobile', 'adresse_residence', 'user_id', 'profil_id', 'teamleader_shopper', 'etat', 'etape', 
     ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     * integer, real, float, double, decimal:<digits>, string, boolean, object, array, collection, date, datetime, and timestamp.
+     */
+    protected $casts = [
+        'teamleader_shopper' => 'integer',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

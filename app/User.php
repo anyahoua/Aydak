@@ -238,12 +238,13 @@ class User extends Authenticatable
     
     public function orderStateUserLogin()
     {
-        if($this->userInfo->profil_id==1)
+        //if($this->userInfo->profil_id==1)
+        if($this->userProfil->profil_id==1)
         {
-            $data = ['totalOrders' => $this->totalOrdersTm(), 'orderState' => $this->userStateCommandesTeamleader() ];
+            $data = ['totalOrders' => $this->ordersUser->count(), 'orderState' => $this->userStateCommandesShoppers() ];
 
         } else {
-            $data = ['totalOrders' => $this->ordersUser->count(), 'orderState' => $this->userStateCommandesShoppers() ];
+            $data = ['totalOrders' => $this->totalOrdersTm(), 'orderState' => $this->userStateCommandesTeamleader() ];
         }
 
         return $data;
@@ -308,23 +309,21 @@ class User extends Authenticatable
         return $this->hasMany(DocUser::class);
     }
 
-    public function userWallet()
-    {
-        if($this->userProfil->profil_id==1)
-        {
-            return $this->hasOne(UserCompte::class)->where('etat','1')->where('profil_id', 1);
-
-        } else {
-            return $this->hasOne(UserCompte::class)->where('etat','1')->where('profil_id', 2);
-        }
-    }
-
-
     public function userProfil()
     {
         return $this->hasOne(UserConnexion::class)->latest('id');
     }
 
+    public function userWallet()
+    {
+        if($this->userProfil->profil_id==1)
+        {
+            return $this->hasOne(UserCompte::class)->where('etat', '1')->where('profil_id', 2);
 
+        } else {
+            return $this->hasOne(UserCompte::class)->where('etat', '1')->where('profil_id', 1);
+        }
+
+    }
  
 }
