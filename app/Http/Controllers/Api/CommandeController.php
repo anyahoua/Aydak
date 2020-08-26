@@ -84,7 +84,7 @@ class CommandeController extends ApiController
     public function ordersAssignedNotPurchased() 
     { 
         $user = Auth::user();
-
+        //return $user->groupe->shopperInGroupe;
         return $this->successResponse(UsersOrdersRessource::collection($user->groupe->shopperInGroupe), 'Successfully');
     }
 
@@ -134,7 +134,7 @@ class CommandeController extends ApiController
 
             //Prix produit
             $prix_unitaire = ProduitPrix::where('produit_id', $row['productId'])->first();
-            
+
             $detailCommande[] = array(
                 'quantite_commande' => $row['quantity'],
                 'prix_u_commande'   => $prix_unitaire->prix, //$row['unitPrice'],

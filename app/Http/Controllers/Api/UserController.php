@@ -301,7 +301,8 @@ public function refreshToken(Request $request)
         {
             $userId = $user->id;
             
-            if($user->userProfil->profil_id == 1)
+            //if($user->userProfil->profil_id == 1)
+            if($user->userInfo->current_profil_id == 1)
             {
                 $profilId   = 2;
                 $action     = 'Switch to Shopper';

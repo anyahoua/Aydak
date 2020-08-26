@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Models\UserConnexion;
+use App\Models\UserInfo;
 
 trait ApiConnexion{
 
@@ -25,6 +26,12 @@ trait ApiConnexion{
         $userConnexion->save();
 
         //return $userConnexion;
+
+        //-----------
+        
+        UserInfo::where('user_id', $data['userId'])->update([ 'current_profil_id' => $data['profil_id'] ]);
+
+
         return true;
     }
     

@@ -23,6 +23,7 @@ class UserLoginRessource extends JsonResource
             'userType'          => $this->userInfo->profil_id,
             
             'CurrentuserType'   => $this->currentProfilId, /* ? $this->currentProfilId : '22',*/
+            //'CurrentuserType'   => $this->userInfo->current_profil_id, /* ? $this->currentProfilId : '22',*/
 
             'isLeader'          => $this->userInfo->teamleader_shopper,
             'type'              => $this->userInfo->profil->nom,

@@ -95,11 +95,12 @@ class Groupe extends Model
         ->with('UserInfo')
         ->with('userLocationAddress')
         //->with('userCompte')
-        ->with('userWallet')
+        //->with('userWallet')
+        ->with('ShopperWallet')
         ->whereHas('UserInfo', function ($query) {
-            $query->where('profil_id', '2');
+            $query->where('profil_id', '2')
+            ->Orwhere('teamleader_shopper', '1');
         })
-        
         ;
 
         /*

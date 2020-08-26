@@ -31,7 +31,7 @@ class UserInfo extends Model
     */
 
     protected $fillable = [
-        'mobile', 'adresse_residence', 'user_id', 'profil_id', 'teamleader_shopper', 'etat', 'etape', 
+        'mobile', 'adresse_residence', 'user_id', 'profil_id', 'current_profil_id', 'teamleader_shopper', 'etat', 'etape', 
     ];
 
     /**
