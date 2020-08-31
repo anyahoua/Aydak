@@ -30,6 +30,7 @@ use Validator;
 use Keygen;
 
 use App\Http\Resources\Api\UserLoginRessource;
+use App\Http\Resources\Api\UserProfileRessource;
 use App\Http\Resources\Api\UserRessource;
 use App\Http\Resources\Api\OrdersRessource;
 
@@ -952,67 +953,276 @@ public function refreshToken(Request $request)
         return $this->successResponse($UserInfo, 'Inscription (etape 2) réussie.', 201);
     }
 
-    /** 
-     * Profile api 
-     * 
-     * @return \Illuminate\Http\Response 
-     */
+    /*
+    |-------------------------------------------------------------------------------
+    | Updates a User's Profile
+    |-------------------------------------------------------------------------------
+    | URL:            /api/v1/users/tm/profile
+    | Method:         PUT
+    | Description:    Updates the authenticated user's profile
+    */
     public function profile(Request $request)
     {
+
         // Request et Token :
         //-------------------
         // table users : nom, prenom, passord
         // table user_infos : adresse_residence, teamleader_shopper, avatar
         // table user_adresses : latitude, longitude, quartier, commune, daira, wilaya
-/*
+
         $validator = Validator::make($request->all(), 
             [
-                'lastName'      => 'string | max:255',
-                'firstName'     => 'string | max:255',
-                'address'       => 'string | max:255',
-                'password'      => 'string | min:8',
-                'c_password'    => 'required| same:password',
-    
-                'isLeader'      => 'integer',
-                'avatar'        => 'image | mimes:jpeg,png,jpg |max:2048',
+                'lastName'              => 'string | max:255',
+                'firstName'             => 'string | max:255',
+                'address'               => 'string | max:255',
+                'password'              => 'nullable | required_with:password_confirmation | string | min:8 | confirmed',
+                //'isLeader'              => 'integer',
+                'isLeader'              => ['nullable', 'regex:/^[0-1]/'], // Mobile
 
-                'district'          => 'string',
-                'commune'           => 'string',
-                'daira'             => 'string',
-                'wilaya'            => 'string',
-                'latitude'          => 'string',
-                'longitude'         => 'string',
+                'avatar'                => 'image|mimes:jpeg,png,jpg|max:2048',
+                'district'              => 'string',
+                'commune'               => 'string',
+                'daira'                 => 'string',
+                'wilaya'                => 'string',
+                'latitude'              => 'string',
+                'longitude'             => 'string',
 
             ],
-            // [
-            //     'lastName.required'       => 'Le champ lastName est obligatoire.',
-            //     'userId.integer'        => 'userId doite être un entier.',
-            //     'groupeId.required'     => 'Le champ groupeId est obligatoire.',
-            //     'groupeId.integer'      => 'groupeId doite être un entier.',
-            //     'isLeader.required'     => 'Le champ isLeader est obligatoire.',
-            //     'isLeader.integer'      => 'isLeader doite être un entier.',
-            //     'district.required'     => 'Le champ district est obligatoire.',
-            //     'commune'               => 'Le champ commune est obligatoire.',
-            //     'daira'                 => 'Le champ daira est obligatoire.',
-            //     'wilaya'                => 'Le champ wilaya est obligatoire.',
-            //     'latitude'              => 'Le champ latitude est obligatoire.',
-            //     'longitude'             => 'Le champ longitude est obligatoire.',
-            //     'avatar.required'       => 'L\'image cardId est obligatoire.',
-    
-            // ]
+            [
+                'lastName.string'       => 'Le champ :attribute doite être une chaine de caractère.',
+                'lastName.max'          => 'Le champ :attribute doit contenir au maximum :max caractères.',
+                'firstName.string'      => 'Le champ :attribute doite être une chaine de caractère.',
+                'firstName.max'         => 'Le champ :attribute doit contenir au maximum :max caractères.',
+                'password.confirmed'    => 'La confirmation du mot de passe ne correspond pas.',
+                'password.min'          => 'Le :attribute doit comporter au moins :min caractères.',
+                'address.string'        => 'Le champ :attribute doite être une chaine de caractère.',
+                'address.max'           => 'Le champ :attribute doit contenir au maximum :max caractères.',
+                'isLeader.regex'        => 'Le champ :attribute doite être 0 ou 1.',
+                'avatar.image'          => 'Le type de fichier envoyer doit être une image.',
+                'avatar.mimes'          => 'Le type de fichier doit être au format jpeg, jpg, png.',
+                'avatar.max'            => 'La taille maximale du fichier est de 2 Mo.',
+                'district.string'       => 'Le champ :attribute doite être une chaine de caractère.',
+                'commune.string'        => 'Le champ :attribute doite être une chaine de caractère.',
+                'daira.string'          => 'Le champ :attribute doite être une chaine de caractère.',
+                'wilaya.string'         => 'Le champ :attribute doite être une chaine de caractère.',
+                'latitude.string'       => 'Le champ :attribute doite être une chaine de caractère.',
+                'longitude.string'      => 'Le champ :attribute doite être une chaine de caractère.',
+            ]
         );
         
 
         if($validator->fails()){
             return $this->errorResponse($validator->messages(), 422);
         }
-*/
+
+        //return 'RETURN : '.$request->isLeader;
+
+        $user = Auth::user();
+        $id = $user->id;
+
+        // Table Users :
+        //--------------
+        if(!empty($request->lastName))
+        {
+            $user->nom      = $request->lastName;
+        }
+        if(!empty($request->firstName))
+        {
+            $user->prenom   = $request->firstName;
+        }
+        if(!empty($request->password))
+        {
+            $user->password          = bcrypt($request->password);
+        }
+
+        $user->save();
+
+        // Table user_infos :
+        //------------------
+        if(!empty($request->address))
+        {
+            $user->userInformation->adresse_residence = $request->address;
+        }
+        
+        $user->userInformation->teamleader_shopper = $request->isLeader;
+        
+
+        if ($request->hasFile('avatar')) {
+
+            $Image      = $request->file('avatar');
+
+            // Avatar image name :
+            if(!empty($user->userInformation->avatar))
+            {
+                $Image_Name = $user->userInformation->avatar;
+            } else {
+                $Image_Name = $this->generateDocName() . '.' . $Image->getClientOriginalExtension();
+            }
+            
+            $folder     = '/users/avatar';
+
+            // Upload image
+            $this->uploadOne($Image, $folder, 'public', $Image_Name);
+
+            $user->userInformation->avatar = $Image_Name;
+        }
+
+        $user->userInformation->save();
+
+        // Table adresses :
+        //------------------
+        if(!empty($request->district))
+        {        
+            $user->userLocationAddress->quartier    = $request->district;
+        }
+        if(!empty($request->commune))
+        {
+            $user->userLocationAddress->commune     = $request->commune;
+        }
+        if(!empty($request->daira))
+        {
+            $user->userLocationAddress->daira       = $request->daira;
+        }
+        if(!empty($request->wilaya))
+        {
+            $user->userLocationAddress->wilaya      = $request->wilaya;
+        }
+        if(!empty($request->latitude))
+        {
+            $user->userLocationAddress->latitude    = $request->latitude;
+        }
+        if(!empty($request->longitude))
+        {
+            $user->userLocationAddress->longitude   = $request->longitude;
+        }
+        
+        $user->userLocationAddress->save();
 
 
-
-        return 'Profile';
+        return $this->successResponse(new UserProfileRessource($user));
     }
 
+    /*
+    |-------------------------------------------------------------------------------
+    | Updates a User's Profile
+    |-------------------------------------------------------------------------------
+    | URL:            /api/v1/users/changePassword
+    | Method:         PUT
+    | Description:    Updates the authenticated user's password
+    */
+    public function changePassword(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), 
+            [
+                'password'      => 'required|string|min:8',
+                'c_password'    => 'required|same:password',
+            ],
+            [
+                'lastName.string'       => 'Le champ :attribute doite être une chaine de caractère.',
+                'lastName.max'          => 'Le champ :attribute doit contenir au maximum :max caractères.',
+                'firstName.string'      => 'Le champ :attribute doite être une chaine de caractère.',
+                'firstName.max'         => 'Le champ :attribute doit contenir au maximum :max caractères.',
+                'address.string'        => 'Le champ :attribute doite être une chaine de caractère.',
+                'address.max'           => 'Le champ :attribute doit contenir au maximum :max caractères.',
+                'isLeader.integer'      => 'Le champ :attribute doite être 0 ou 1.',
+                'avatar.image'          => 'Le type de fichier envoyer doit être une image.',
+                'avatar.mimes'          => 'Le type de fichier doit être au format jpeg, jpg, png.',
+                'avatar.max'            => 'La taille maximale du fichier est de 2 Mo.',
+                'district.string'       => 'Le champ :attribute doite être une chaine de caractère.',
+                'commune.string'        => 'Le champ :attribute doite être une chaine de caractère.',
+                'daira.string'          => 'Le champ :attribute doite être une chaine de caractère.',
+                'wilaya.string'         => 'Le champ :attribute doite être une chaine de caractère.',
+                'latitude.string'       => 'Le champ :attribute doite être une chaine de caractère.',
+                'longitude.string'      => 'Le champ :attribute doite être une chaine de caractère.',
+            ]
+        );
+        
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
+
+        $user = Auth::user();
+        $id = $user->id;
+
+        // Table Users :
+        //--------------
+        if(!empty($request->lastName))
+        {
+            $user->nom      = $request->lastName;
+        }
+        if(!empty($request->firstName))
+        {
+            $user->prenom   = $request->firstName;
+        }
+        
+        $user->save();
+
+        // Table user_infos :
+        //------------------
+        if(!empty($request->address))
+        {
+            $user->userInformation->adresse_residence = $request->address;
+        }
+        if(!empty($request->isLeader))
+        {
+            $user->userInformation->teamleader_shopper = $request->isLeader;
+        }
+
+        if ($request->hasFile('avatar')) {
+
+            $Image      = $request->file('avatar');
+
+            // Avatar image name :
+            if(!empty($user->userInformation->avatar))
+            {
+                $Image_Name = $user->userInformation->avatar;
+            } else {
+                $Image_Name = $this->generateDocName() . '.' . $Image->getClientOriginalExtension();
+            }
+            
+            $folder     = '/users/avatar';
+
+            // Upload image
+            $this->uploadOne($Image, $folder, 'public', $Image_Name);
+
+            $user->userInformation->avatar = $Image_Name;
+        }
+
+        $user->userInformation->save();
+
+        // Table adresses :
+        //------------------
+        if(!empty($request->district))
+        {        
+            $user->userLocationAddress->quartier    = $request->district;
+        }
+        if(!empty($request->commune))
+        {
+            $user->userLocationAddress->commune     = $request->commune;
+        }
+        if(!empty($request->daira))
+        {
+            $user->userLocationAddress->daira       = $request->daira;
+        }
+        if(!empty($request->wilaya))
+        {
+            $user->userLocationAddress->wilaya      = $request->wilaya;
+        }
+        if(!empty($request->latitude))
+        {
+            $user->userLocationAddress->latitude    = $request->latitude;
+        }
+        if(!empty($request->longitude))
+        {
+            $user->userLocationAddress->longitude   = $request->longitude;
+        }
+        
+        $user->userLocationAddress->save();
+
+
+        return $user;
+    }
 
     /** 
      * Connected User Details api 

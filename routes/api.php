@@ -57,7 +57,7 @@ Route::prefix('v1')->group(function(){
         Route::middleware('auth:api')->get('tm/ordersnottraited', 'Api\CommandeController@ordersNotTraited');
         Route::middleware('auth:api')->get('tm/orderstraitednotassigned', 'Api\CommandeController@ordersTraitedNotAssigned');
         Route::middleware('auth:api')->get('tm/ordersassignednotpurchased', 'Api\CommandeController@ordersAssignedNotPurchased');
-        
+        Route::middleware('auth:api')->post('tm/profile', 'Api\UserController@profile');
 
 
         // SHOPPER :
@@ -70,7 +70,7 @@ Route::prefix('v1')->group(function(){
 
         //
         Route::middleware('auth:api')->post('userdetails', 'Api\UserController@details');
-        Route::middleware('auth:api')->post('profile', 'Api\UserController@profile');
+        
 
     });
 

@@ -30,7 +30,7 @@ class UserLoginRessource extends JsonResource
             'lastName'          => $this->nom,
             'firstName'         => $this->prenom,
             'mobile'            => $this->username,
-            'avatar'            => null,
+            'avatar'            => $this->userInfo->avatar,
             'actived'           => $this->userInfo->etat,
             'token'             => $this->access_token,
             'tokenExpireAt'     => $this->expires_in,

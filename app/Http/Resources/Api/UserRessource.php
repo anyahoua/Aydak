@@ -33,7 +33,7 @@ class UserRessource extends JsonResource
                 'lastName'          => $this->nom,
                 'firstName'         => $this->prenom,
                 'mobile'            => $this->username,
-                'avatar'            => null,
+                'avatar'            => $this->userInfo->avatar,
                 'actived'           => $this->userInfo->etat,
                 'createdAtFr'       => Carbon::parse($this->created_at)->format('d-m-Y'),
                 'createdAtEn'       => Carbon::parse($this->created_at)->format('Y-m-d'),
