@@ -24,4 +24,14 @@ class SousCategorie extends Model
     protected $fillable = [
         'libely', 'categorie_id', 'etat', 'icon',
     ];
+
+
+    public function categorie()
+    {
+        return $this->belongsTo(Categorie::class);
+    }
+
+
+
+
 }

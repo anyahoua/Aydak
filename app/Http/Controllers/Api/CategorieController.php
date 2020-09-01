@@ -18,12 +18,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-//use App\Traits\UploadTrait;
+
+use App\Http\Resources\Api\Categories\CategoriesIndexRessource;
+use App\Http\Resources\Api\Categories\SousCategoriesRessource;
 
 use Validator;
-//use Keygen;
 
-//class CategorieController extends Controller
 class CategorieController extends ApiController
 {
     
@@ -36,7 +36,8 @@ class CategorieController extends ApiController
     {
         $categories = Categorie::where('etat', '1')->get();
 
-        return $this->successResponse($categories, 'Successfully');
+        //return $this->successResponse($categories, 'Successfully');
+        return $this->successResponse(CategoriesIndexRessource::collection($categories), 'Successfully');
     }
 
 
@@ -47,11 +48,9 @@ class CategorieController extends ApiController
      */ 
     public function SubCaterory(Request $request, $caterorie_id) 
     {
-        //return 'Category : '.$caterorie_id;
-        
         $sous_categories = SousCategorie::where('categorie_id', $caterorie_id)->where('etat', '1')->get();
 
-        return $this->successResponse($sous_categories, 'Successfully');
+        return $this->successResponse(SousCategoriesRessource::collection($sous_categories), 'Successfully');
     }
 
 

@@ -26,5 +26,10 @@ class Famille extends Model
         'sous_categorie_id', 'libely', 'etat', 'icon',
     ];
 
+    public function sousCategorie()
+    {
+        return $this->belongsTo(SousCategorie::class);
+    }
+
 
 }

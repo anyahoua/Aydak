@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
 
+use App\Http\Resources\Api\Clients\GroupesListeRessource;
+
 //class GroupeController extends Controller
 class GroupeController extends ApiController
 {
@@ -113,7 +115,17 @@ class GroupeController extends ApiController
         //
     }
 
+    // Groupe Liste
+    public function groupeListe(Request $request)
+    {
+        $Groupes = Groupe::where('etat', 1)
+        ->withCount('shoppersInGroupe')
+        //->with(['TeamleaderInGroupe', 'shoppersInGroupe'])
+        ->with(['TeamleaderInGroupe'])
+        ->get();
 
+        return $this->successResponse(GroupesListeRessource::collection($Groupes), 'Successfully');
+    }
 
     /* trouver les restaurants les plus proches
     *

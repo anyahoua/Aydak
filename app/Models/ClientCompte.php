@@ -37,4 +37,9 @@ class ClientCompte extends Model
         return $this->belongsTo(Client::class);
     }
 
+    public function commande()
+    {
+        return $this->belongsTo(Commande::class);
+    }
+
 }

@@ -33,10 +33,16 @@ class ClientPreferenceAchat extends Model
      * 
      * */
 
-    public function Client()
+    public function client()
     {
         return $this->belongsTo(Client::class);
     }
+
+    public function produit()
+    {
+        return $this->belongsTo(Produit::class);
+    }
+
 
 
 

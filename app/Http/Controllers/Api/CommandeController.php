@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Traits\UploadTrait;
 
-use App\Http\Resources\Api\OrdersRessource;
-use App\Http\Resources\Api\UsersOrdersRessource;
+use App\Http\Resources\Api\Users\OrdersRessource;
+use App\Http\Resources\Api\Users\UsersOrdersRessource;
 
 use Validator;
 use Keygen;
@@ -84,8 +84,8 @@ class CommandeController extends ApiController
     public function ordersAssignedNotPurchased() 
     { 
         $user = Auth::user();
-        //return $user->groupe->shopperInGroupe;
-        return $this->successResponse(UsersOrdersRessource::collection($user->groupe->shopperInGroupe), 'Successfully');
+        //return $user->groupe->shoppersInGroupe;
+        return $this->successResponse(UsersOrdersRessource::collection($user->groupe->shoppersInGroupe), 'Successfully');
     }
 
 

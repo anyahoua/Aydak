@@ -19,7 +19,7 @@ class CreateClientPreferenceAchatsTable extends Migration
             $table->integer('etat');
             $table->foreignId('client_id')->references('id')->on('clients');
             $table->foreignId('produit_id')->references('id')->on('produits');
-            //$table->timestamps();
+            $table->timestamps();
         });
     }
 

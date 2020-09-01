@@ -44,10 +44,11 @@ Route::prefix('v1')->group(function(){
         
         Route::post('login', 'Api\UserController@login');
         Route::post('register', 'Api\UserController@register');
+        Route::post('refresh', 'Api\UserController@refreshToken');
 
         Route::middleware('auth:api')->post('switchlogin', 'Api\UserController@switchLogin');
         Route::middleware('auth:api')->get('logout', 'Api\UserController@logout');
-        Route::post('refresh', 'Api\UserController@refreshToken');
+        Route::middleware('auth:api')->post('profile', 'Api\UserController@profile');
 
         // TEAMLEADER :
         //-------------
@@ -57,7 +58,6 @@ Route::prefix('v1')->group(function(){
         Route::middleware('auth:api')->get('tm/ordersnottraited', 'Api\CommandeController@ordersNotTraited');
         Route::middleware('auth:api')->get('tm/orderstraitednotassigned', 'Api\CommandeController@ordersTraitedNotAssigned');
         Route::middleware('auth:api')->get('tm/ordersassignednotpurchased', 'Api\CommandeController@ordersAssignedNotPurchased');
-        Route::middleware('auth:api')->post('tm/profile', 'Api\UserController@profile');
 
 
         // SHOPPER :
@@ -104,16 +104,23 @@ Route::prefix('v1')->group(function(){
         Route::middleware('auth:client-api')->get('logout', 'Api\ClientController@logout');
         Route::post('register', 'Api\ClientController@register');
 
-        Route::middleware('auth:client-api')->get('clientdetails', 'Api\ClientController@details');
-        Route::middleware('auth:client-api')->get('moncompte', 'Api\ClientController@myAccount');
-        Route::middleware('auth:client-api')->get('historiquecompte', 'Api\ClientController@myAccountHistory');
-        Route::middleware('auth:client-api')->get('tmcontact', 'Api\ClientController@ContactTeamleader');
+        Route::middleware('auth:client-api')->get('myDetails', 'Api\ClientController@details');
+        Route::middleware('auth:client-api')->get('myAccount', 'Api\ClientController@myAccount');
+        Route::middleware('auth:client-api')->get('accountHistory', 'Api\ClientController@myAccountHistory');
+        Route::middleware('auth:client-api')->get('myTeamleader', 'Api\ClientController@ContactTeamleader');
         Route::middleware('auth:client-api')->get('categories', 'Api\CategorieController@index');
-        Route::middleware('auth:client-api')->get('souscategories/{caterorie_id}', 'Api\CategorieController@SubCaterory');
+        Route::middleware('auth:client-api')->get('subcategories/{caterorie_id}', 'Api\CategorieController@SubCaterory');
+
+        Route::middleware('auth:client-api')->get('groupesList', 'Api\GroupeController@groupeListe');
+        Route::middleware('auth:client-api')->get('productsList', 'Api\ProductController@productListe');
+        Route::middleware('auth:client-api')->get('productFavoritsListe', 'Api\ProductController@productFavoritsListe');
+
+        Route::middleware('auth:client-api')->post('addProductFavorit', 'Api\ProductController@addProductFavorit');
+        
         
         // Commandes :
-        Route::middleware('auth:client-api')->get('commandesencours', 'Api\ClientController@myCurrentOrders');
-        Route::middleware('auth:client-api')->post('commande', 'Api\CommandeController@AddOrder');
+        Route::middleware('auth:client-api')->get('currentOrders', 'Api\ClientController@myCurrentOrders');
+        Route::middleware('auth:client-api')->post('order', 'Api\CommandeController@AddOrder');
     });
 
     /*

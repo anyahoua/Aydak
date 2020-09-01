@@ -18,10 +18,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\UploadTrait;
 
-use App\Http\Resources\Api\ClientLoginRessource;
-use App\Http\Resources\Api\ClientDataRessource;
-use App\Http\Resources\Api\ClientCompteRessource;
-use App\Http\Resources\Api\ClientOrdersRessource;
+use App\Http\Resources\Api\Clients\ClientLoginRessource;
+use App\Http\Resources\Api\Clients\ClientDataRessource;
+use App\Http\Resources\Api\Clients\ClientCompteRessource;
+use App\Http\Resources\Api\Clients\ClientOrdersRessource;
 
 use Validator;
 use Keygen;
@@ -231,15 +231,19 @@ class ClientController extends ApiController
         return $this->successResponse(new ClientLoginRessource($client), 'Successfully');
     }
 
-    /** 
-     * Connected Client Account API 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
+    /*
+    |-------------------------------------------------------------------------------
+    | Client Account
+    |-------------------------------------------------------------------------------
+    | URL:            /api/v1/clients/productFavoritsListe
+    | Method:         GET
+    | Description:    Show Connected Client Account API.
+    */
     public function myAccount() 
     { 
         $client = Auth::user(); 
 
+        //return $client->clientCompte;
         return $this->successResponse(new ClientCompteRessource($client->clientCompte), 'Successfully');
     }
 
@@ -276,10 +280,12 @@ class ClientController extends ApiController
      */ 
     public function myCurrentOrders() 
     { 
-        $client = Auth::user(); 
+        $client = Auth::user();
 
         return $this->successResponse(ClientOrdersRessource::collection($client->commandes), 'Successfully');
     }
+
+
 
 
 

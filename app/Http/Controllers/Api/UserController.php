@@ -29,10 +29,10 @@ use App\Traits\UploadTrait;
 use Validator;
 use Keygen;
 
-use App\Http\Resources\Api\UserLoginRessource;
-use App\Http\Resources\Api\UserProfileRessource;
-use App\Http\Resources\Api\UserRessource;
-use App\Http\Resources\Api\OrdersRessource;
+use App\Http\Resources\Api\Users\UserLoginRessource;
+use App\Http\Resources\Api\Users\UserProfileRessource;
+use App\Http\Resources\Api\Users\UserRessource;
+use App\Http\Resources\Api\Users\OrdersRessource;
 
 class UserController extends ApiController
 //class UserController extends Controller
@@ -188,8 +188,11 @@ class UserController extends ApiController
         // return response()->json($result, 200);
     }
 */
+
+
 public function refreshToken(Request $request)
 {
+
     $validator = Validator::make($request->all(), [
         'refresh_token' => 'required',
     ]);
@@ -205,19 +208,18 @@ public function refreshToken(Request $request)
     $tok = csrf_token();
 
     curl_setopt_array($curl, array(
-      //CURLOPT_URL => "https://aydak.cooffa.shop/api/v1/users/refresh",
-      CURLOPT_URL => $url,
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => "",
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 0,
-      CURLOPT_FOLLOWLOCATION => true,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => "POST",
-      CURLOPT_POSTFIELDS => "grant_type=refresh_token&refresh_token=".$request->refresh_token."&client_id=".$oClient->id."&client_secret=".$oClient->secret."&scope=*",
-      CURLOPT_HTTPHEADER => array(
-        "Accept: application/json"
-      ),
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => "grant_type=refresh_token&refresh_token=".$request->refresh_token."&client_id=".$oClient->id."&client_secret=".$oClient->secret."&scope=*",
+        CURLOPT_HTTPHEADER => array(
+            "Accept: application/json"
+        ),
     ));
     
     $response = curl_exec($curl);
@@ -227,7 +229,6 @@ public function refreshToken(Request $request)
     $myReponse = collect( json_decode((string) $response, true) );
 
     return $this->successResponse($myReponse);
-
 
 }
 
@@ -1251,7 +1252,7 @@ public function refreshToken(Request $request)
         //$user->groupe;
         //$user->documents;
 
-        $shoppers = $user->groupe->shopperInGroupe;
+        $shoppers = $user->groupe->shoppersInGroupe;
         
         return $this->successResponse(UserRessource::collection($shoppers), 'Orders details');
     }

@@ -63,26 +63,8 @@ class Groupe extends Model
             'user_id'
         )->with('UserInfo');
     }
-/*
-    public function shopperInGroupe()
-    {
-        return $this->hasManyThrough(
-            User::class, 
-            GroupeUser::class,
-            'groupe_id',
-            'id',
-            'id',
-            'user_id'
-        )//->with('UserInfo')->having('profil_id', '=', '2');;
-        
-        
-        ->with(['UserInfo' => function ($query) {
-            $query->where('profil_id', '2');
-        }]);
-    }
-*/
 
-    public function shopperInGroupe()
+    public function shoppersInGroupe()
     {
         return $this->hasManyThrough(
             User::class, 
@@ -100,14 +82,8 @@ class Groupe extends Model
         ->whereHas('UserInfo', function ($query) {
             $query->where('profil_id', '2')
             ->Orwhere('teamleader_shopper', '1');
-        })
-        ;
-
-        /*
-        ->with(['UserInfo' => function ($query) {
-            $query->where('profil_id', '2');
-        }]);
-        */
+        });
+        
     }
 
 
