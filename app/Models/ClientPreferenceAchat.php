@@ -3,11 +3,16 @@
 namespace App\Models;
 
 use App\Client;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ClientPreferenceAchat extends Model
 {
-    
+    use SoftDeletes;
+
+    protected $dates        = ['deleted_at'];
+
     protected $table        = 'client_preference_achats';
     //protected $primaryKey   = 'id';
     //public $incrementing    = false;
@@ -24,7 +29,8 @@ class ClientPreferenceAchat extends Model
      * @var array
      */
     protected $fillable = [
-        'quantite_produit', 'etat', 'client_id', 'produit_id', 
+        //'quantite_produit', 'etat', 'client_id', 'produit_id', 
+        'client_id', 'produit_id', 
     ];
 
 

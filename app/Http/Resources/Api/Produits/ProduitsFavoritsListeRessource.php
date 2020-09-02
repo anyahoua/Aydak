@@ -19,6 +19,7 @@ class ProduitsFavoritsListeRessource extends JsonResource
 
         return [
  
+            'id'                => $this->id,
             'ProductId'         => $this->produit->id,
             'ProductName'       => trim($this->produit->libely),
             'unitMeasure'       => trim($this->produit->uniteMesure->libely),

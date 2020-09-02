@@ -15,11 +15,11 @@ class CreateClientPreferenceAchatsTable extends Migration
     {
         Schema::create('client_preference_achats', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('quantite_produit');
-            $table->integer('etat');
-            $table->foreignId('client_id')->references('id')->on('clients');
-            $table->foreignId('produit_id')->references('id')->on('produits');
+            $table->foreignId('clientid')->references('id')->on('clients');
+            $table->foreignId('produitid')->references('id')->on('produits');
+            $table->unique(["clientid", "produitid"], 'client_produit_unique');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

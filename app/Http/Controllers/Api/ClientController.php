@@ -22,6 +22,7 @@ use App\Http\Resources\Api\Clients\ClientLoginRessource;
 use App\Http\Resources\Api\Clients\ClientDataRessource;
 use App\Http\Resources\Api\Clients\ClientCompteRessource;
 use App\Http\Resources\Api\Clients\ClientOrdersRessource;
+use App\Http\Resources\Api\Clients\ClientNewBalanceRessource;
 
 use Validator;
 use Keygen;
@@ -285,7 +286,12 @@ class ClientController extends ApiController
         return $this->successResponse(ClientOrdersRessource::collection($client->commandes), 'Successfully');
     }
 
+    public function mySolde() 
+    { 
+        $client = Auth::user();
 
+        return $this->successResponse(new ClientNewBalanceRessource($client->clientNouveauSolde), 'Successfully');
+    }
 
 
 

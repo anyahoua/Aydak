@@ -116,11 +116,17 @@ Route::prefix('v1')->group(function(){
         Route::middleware('auth:client-api')->get('productFavoritsListe', 'Api\ProductController@productFavoritsListe');
 
         Route::middleware('auth:client-api')->post('addProductFavorit', 'Api\ProductController@addProductFavorit');
-        
+        Route::middleware('auth:client-api')->delete('deleteProductFavorit/{favorit}', 'Api\ProductController@deleteProductFavorit');
+
+        Route::middleware('auth:client-api')->get('balance', 'Api\ClientController@mySolde');
+
         
         // Commandes :
         Route::middleware('auth:client-api')->get('currentOrders', 'Api\ClientController@myCurrentOrders');
-        Route::middleware('auth:client-api')->post('order', 'Api\CommandeController@AddOrder');
+        Route::middleware('auth:client-api')->post('order', 'Api\CommandeController@addOrder');
+        Route::middleware('auth:client-api')->put('cancelOrder/{commande}', 'Api\CommandeController@cancelOrder');
+        Route::middleware('auth:client-api')->post('addCommentCommande', 'Api\CommandeController@addCommentCommande');
+        Route::middleware('auth:client-api')->put('validateReceiptOrder/{commande}', 'Api\CommandeController@validateReceiptOrder');
     });
 
     /*

@@ -85,21 +85,50 @@ class ProductController extends ApiController
     */
     public function addProductFavorit(Request $request)
     {
-        $client             = Auth::user();
+        $client                 = Auth::user();
+        
+        $validator = Validator::make($request->all(), [
+            'productId' => 'required|integer|unique:client_preference_achats,produit_id,NULL,id,client_id,'.$client->id.'',
+        ]);
+        
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
 
-        $Favoris = new ClientPreferenceAchat;
+        $Favoris                = new ClientPreferenceAchat;
 
-        $Favoris->etat          = '1';
         $Favoris->client_id     = $client->id;
         $Favoris->produit_id    = $request->productId;
 
         $Favoris->save();
-        //-----------------------------------------        
 
-        return new ProduitsFavoritsListeRessource($Favoris);
 
-        // $ProductsFavoris    = $client->clientPreferenceAchat()->paginate(3);
-        // return new ProduitsFavoritsListeRessourceCollection($ProductsFavoris);
+        //return new ProduitsFavoritsListeRessource($Favoris);
+        return $this->successResponse(new ProduitsFavoritsListeRessource($Favoris), 'Successfully');
+    }
+
+    /*
+    |-------------------------------------------------------------------------------
+    | Delete favored product
+    |-------------------------------------------------------------------------------
+    | URL:            /api/v1/clients/deleteProductFavorit/{favorit_id}
+    | Method:         POST
+    | Description:    Delete Favorit Product By Client.
+    */
+    public function deleteProductFavorit(Request $request, ClientPreferenceAchat $favorit)
+    {
+        $client             = Auth::user();
+        //$FavoritProduct = ClientPreferenceAchat::where('client_id', $client->id)->where('produit_id', $request->productId)->first();
+
+        if($favorit->client_id !== $client->id)
+        {
+            return $this->errorResponse('Forbidden', 403);
+        }
+
+        $favorit->delete();
+
+        return $this->successResponse($favorit, 'Successfully');
+        
     }
 
 

@@ -23,9 +23,9 @@ class ClientOrdersRessource extends JsonResource
             'customerId'        => $this->client->id,
             'createdAtFr'       => Carbon::parse($this->created_at)->format('d-m-Y'),
             'createdAtEn'       => Carbon::parse($this->created_at)->format('Y-m-d'),
-            'state'             => $this->situation_id,
-            'state_texte'       => $this->situation->libely,
-            'total'             => null,
+            'stateId'           => $this->situation_id,
+            'stateName'         => $this->situation->libely,
+            'total'             => null, /* ??? */
 
             'cartItems'         => CommandeItemRessource::collection($this->detailCommande),
             

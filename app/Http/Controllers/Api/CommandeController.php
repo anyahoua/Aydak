@@ -94,7 +94,7 @@ class CommandeController extends ApiController
      * 
      * @return \Illuminate\Http\Response 
      */ 
-    public function AddOrder(Request $request) 
+    public function addOrder(Request $request) 
     {
         $validator = Validator::make($request->all(), [
             'expectedDeliveryDate'  => 'required | date_format:d-m-Y',
@@ -151,5 +151,112 @@ class CommandeController extends ApiController
         return $this->successResponse($commande, 'Commande envoyé avec success.', 201);
     }
 
+    /*
+    |-------------------------------------------------------------------------------
+    | Cancel Order
+    |-------------------------------------------------------------------------------
+    | URL:            /api/v1/clients/cancelOrder/{commande_id}
+    | Method:         POST
+    | Description:    Cancel order By Client.
+    */
+    public function cancelOrder(Request $request, Commande $commande) 
+    {
+        $client = Auth::user();
 
+        if($commande->client_id !== $client->id)
+        {
+            return $this->errorResponse('Forbidden', 403);
+        }
+
+        $commande->update(['situation_id' => 7]);
+
+        return $this->successResponse($commande, 'Commande annulé avec success.', 200);
+    }
+
+    /*
+    |-------------------------------------------------------------------------------
+    | Cancel Order
+    |-------------------------------------------------------------------------------
+    | URL:            /api/v1/clients/cancelOrder/{commande_id}
+    | Method:         POST
+    | Description:    Cancel order By Client.
+    */
+    public function addCommentCommande(Request $request) 
+    {
+        $validator = Validator::make($request->all(), [
+            'comment'       => 'required | string',
+            'commandeId'    => 'required | integer',
+        ]);
+        
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
+
+        $client     = Auth::user();
+        $commande   = Commande::findOrFail($request->commandeId);
+
+        if($commande->client_id !== $client->id)
+        {
+            return $this->errorResponse('Forbidden', 403);
+        }
+
+        //----------------------//
+        // Add Comment Commande :
+        //----------------------//
+        $data = [
+            'commentaire'   => $request->comment,
+            'etat'          => 1,
+            'user_id'       => $client->id,
+            'groupe_id'     => $client->groupe->id,
+            'commande_id'   => $commande->id,
+            'profil_id'     => 3,
+        ];
+
+        $comment   = CommandeCommentaire::create($data);
+
+        $comment->profil;
+        $comment->groupe;
+        $comment->commande;
+
+        return $this->successResponse($comment, 'Commentaire ajouté avec success.', 201);
+    }
+
+    /*
+    |-------------------------------------------------------------------------------
+    | Vlidate Receipt Order
+    |-------------------------------------------------------------------------------
+    | URL:            /api/v1/clients/validateReceiptOrder/{commande_id}
+    | Method:         PUT
+    | Description:    Cancel order By Client.
+    */
+    public function validateReceiptOrder(Request $request, Commande $commande) 
+    {
+        $validator = Validator::make($request->all(), [
+            'montant'   => 'required | string',
+            'solde'     => 'required | string',
+        ]);
+        
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
+
+        $client = Auth::user();
+
+        if($commande->client_id !== $client->id)
+        {
+            return $this->errorResponse('Forbidden', 403);
+        }
+
+        $commande->update(['situation_id' => 6]);
+
+        $newSolde = $request->solde - $request->montant;
+
+        $client->clientWallet->update(['etat' => 1, 'ancien_solde' => $request->solde, 'nouveau_solde' => $newSolde]);
+
+
+        return $this->successResponse($commande, 'Commande annulé avec success.', 200);
+    }
+    
+
+    
 }

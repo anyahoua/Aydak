@@ -70,10 +70,19 @@ class Client extends Authenticatable
         return $this->hasOne(ClientInfo::class);
     }
     
-    // Client Compte
+    public function clientWallet()
+    {
+        return $this->hasOne(ClientCompte::class); //->where('etat','1')->where('type', 'verssement');
+    }
+
     public function clientCompte()
     {
         return $this->hasOne(ClientCompte::class)->where('etat','1')->where('type', 'verssement');
+    }
+
+    public function clientNouveauSolde()
+    {
+        return $this->hasOne(ClientCompte::class)->select('nouveau_solde')->where('etat','1');
     }
 
     // Client Compte History
@@ -84,7 +93,7 @@ class Client extends Authenticatable
 
     public function clientPreferenceAchat()
     {
-        return $this->hasMany(ClientPreferenceAchat::class)->where('etat', 1);
+        return $this->hasMany(ClientPreferenceAchat::class);//->where('etat', 1);
     }
 
     public function commandes()

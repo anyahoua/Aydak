@@ -31,8 +31,35 @@ class CommandeCommentaire extends Model
      * Relationship : 
      * 
      * */
+    public function groupe()
+    {
+        return $this->belongsTo(Groupe::class);
+    }
 
+    public function commande()
+    {
+        return $this->belongsTo(Commande::class);
+    }
 
+    public function profil()
+    {
+        return $this->belongsTo(Profil::class);
+    }
+
+    public function teamleader()
+    {
+        return $this->belongsTo(Profil::class)->where('profil_id', 1);
+    }
+
+    public function shopper()
+    {
+        return $this->belongsTo(Profil::class)->where('profil_id', 2);
+    }
+    
+    public function client()
+    {
+        return $this->belongsTo(Profil::class)->where('profil_id', 3);
+    }
 
 
 }
