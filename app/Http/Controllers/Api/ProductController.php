@@ -168,7 +168,7 @@ class ProductController extends ApiController
             ->where('produits.libely', 'like', ''.$request->q.'%')
             ->where('produits.etat', 1)
 
-            // Sous cat != 0 :
+            // Sous cat = value :
             ->where('sous_categories.id', $request->subcategorieId)
             ->where('sous_categories.etat', 1)
             
@@ -193,7 +193,7 @@ class ProductController extends ApiController
             ->where('produits.libely', 'like', ''.$request->q.'%')
             ->where('produits.etat', 1)
 
-            // Sous cat != 0 :
+            // cat = value :
             ->where('categories.id', $request->categorieId)
             ->where('categories.etat', 1)
             
