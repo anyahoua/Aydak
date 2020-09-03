@@ -14,12 +14,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 
 use App\Http\Resources\Api\Produits\ProduitsListeRessource;
 use App\Http\Resources\Api\Produits\ProduitsListeRessourceCollection;
 use App\Http\Resources\Api\Produits\ProduitsFavoritsListeRessource;
 use App\Http\Resources\Api\Produits\ProduitsFavoritsListeRessourceCollection;
+use App\Http\Resources\Api\Produits\SearchProductRessource;
+use App\Http\Resources\Api\Produits\SearchProductRessourceCollection;
 
 use Validator;
 
@@ -49,13 +52,13 @@ class ProductController extends ApiController
     */
     public function productListe(Request $request)
     {
-        $Products       = Produit::where('etat', 1)->paginate(5);
+        $products       = Produit::where('etat', 1)->paginate(5);
         
         //->withCount('shoppersInGroupe')
         //->with(['TeamleaderInGroupe', 'shoppersInGroupe'])
         //->with(['uniteMesure', 'famille', 'familleSousCategorie'])
         
-        return new ProduitsListeRessourceCollection($Products);
+        return new ProduitsListeRessourceCollection($products);
         //return $this->successResponse(new ProduitsListeRessourceCollection($Products), 'Successfully');
     }
 
@@ -70,9 +73,9 @@ class ProductController extends ApiController
     public function productFavoritsListe(Request $request)
     {
         $client             = Auth::user();
-        $ProductsFavoris    = $client->clientPreferenceAchat()->paginate(3);
+        $productsFavoris    = $client->clientPreferenceAchat()->paginate(3);
 
-        return new ProduitsFavoritsListeRessourceCollection($ProductsFavoris);
+        return new ProduitsFavoritsListeRessourceCollection($productsFavoris);
     }
 
     /*
@@ -128,6 +131,81 @@ class ProductController extends ApiController
         $favorit->delete();
 
         return $this->successResponse($favorit, 'Successfully');
+        
+    }
+
+    /*
+    |-------------------------------------------------------------------------------
+    | Searching Products
+    |-------------------------------------------------------------------------------
+    | URL:            /api/v1/clients/searchProduct/
+    | Method:         POST
+    | Description:    Searching Products By the Clients.
+    */
+    public function searchProduct(Request $request)
+    {
+        //return $request->q;
+
+        $client     = Auth::user();
+
+        if( !empty($request->subcategorieId) )
+        {
+//return 1;
+            $products   = DB::table('produits')
+            ->select('produits.id', 'produits.libely', 'produits.photo', 'unite_val' , 'commentaire', 
+                    'produit_prix.prix', 
+                    'unite_mesures.libely as unite_mesure', 
+                    'familles.id as famille_id', 'familles.libely as famille', 
+                    'sous_categories.id as sous_categorie_id', 'sous_categories.libely as sous_categorie', 
+                    'categories.id as categorie_id', 'categories.libely as categorie')
+
+            ->join('unite_mesures', 'unite_mesures.id', '=', 'produits.unite_mesure_id')
+            ->join('produit_prix', 'produit_prix.produit_id', '=', 'produits.id')
+            ->join('familles', 'familles.id', '=', 'produits.famille_id')
+            ->join('sous_categories', 'sous_categories.id', '=', 'familles.sous_categorie_id')
+            ->join('categories', 'categories.id', '=', 'sous_categories.categorie_id')
+
+            ->where('produits.libely', 'like', ''.$request->q.'%')
+            ->where('produits.etat', 1)
+
+            // Sous cat != 0 :
+            ->where('sous_categories.id', $request->subcategorieId)
+            ->where('sous_categories.etat', 1)
+            
+            ->paginate(5);
+
+        } else {
+//return 2;
+            $products   = DB::table('produits')
+            ->select('produits.id', 'produits.libely', 'produits.photo', 'unite_val' , 'commentaire', 
+                    'produit_prix.prix', 
+                    'unite_mesures.libely as unite_mesure', 
+                    'familles.id as famille_id', 'familles.libely as famille', 
+                    'sous_categories.id as sous_categorie_id', 'sous_categories.libely as sous_categorie', 
+                    'categories.id as categorie_id', 'categories.libely as categorie')
+
+            ->join('unite_mesures', 'unite_mesures.id', '=', 'produits.unite_mesure_id')
+            ->join('produit_prix', 'produit_prix.produit_id', '=', 'produits.id')
+            ->join('familles', 'familles.id', '=', 'produits.famille_id')
+            ->join('sous_categories', 'sous_categories.id', '=', 'familles.sous_categorie_id')
+            ->join('categories', 'categories.id', '=', 'sous_categories.categorie_id')
+
+            ->where('produits.libely', 'like', ''.$request->q.'%')
+            ->where('produits.etat', 1)
+
+            // Sous cat != 0 :
+            ->where('categories.id', $request->categorieId)
+            ->where('categories.etat', 1)
+            
+            ->paginate(5);
+
+        }   
+
+        $products->withQueryString()->links();
+
+        //return $products;
+
+        return new SearchProductRessourceCollection($products);
         
     }
 

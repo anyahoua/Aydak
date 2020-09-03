@@ -28,7 +28,7 @@ class SousCategorie extends Model
 
     public function categorie()
     {
-        return $this->belongsTo(Categorie::class);
+        return $this->belongsTo(Categorie::class)->where('etat', '1');
     }
 
 

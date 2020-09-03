@@ -28,7 +28,17 @@ class Famille extends Model
 
     public function sousCategorie()
     {
-        return $this->belongsTo(SousCategorie::class);
+        return $this->belongsTo(SousCategorie::class)->where('etat', '1')->with('categorie');
+    }
+
+    public function produits()
+    {
+        return $this->hasMany(Produit::class)->where('etat', '1');
+    }    
+
+    public function sousCategorieSearch()
+    {
+        return $this->belongsTo(SousCategorie::class)->where('etat', '1')->with('categorie');
     }
 
 

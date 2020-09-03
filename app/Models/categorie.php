@@ -29,7 +29,10 @@ class Categorie extends Model
      * Relationship : 
      * 
      * */
-
+    public function sousCategories()
+    {
+        return $this->hasMany(SousCategorie::class)->where('etat', '1');
+    }  
 
      
 }

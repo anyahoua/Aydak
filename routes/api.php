@@ -91,33 +91,33 @@ Route::prefix('v1')->group(function(){
     //Route::post('cregister', 'Api\ClientController@register');
     
     Route::prefix('clients')->group(function(){
-/*
-        //Route::resource('/{site}', 'EtageController');
-        Route::get('/site/{site}', 'EtageController@index')->name('etages.index');
-        Route::get('/site/{site}/create', 'EtageController@create')->name('etages.create');
-        Route::post('/site/{site}', 'EtageController@store')->name('etages.store');
-        Route::get('/{etage}/edit', 'EtageController@edit')->name('etages.edit');
-        Route::put('/{etage}', 'EtageController@update')->name('etages.update');
-        Route::delete('/{etage}', 'EtageController@destroy')->name('etages.destroy');
-*/
+
+        // Register, Login & Logout
+        Route::post('register', 'Api\ClientController@register');
         Route::post('login', 'Api\ClientController@login');
         Route::middleware('auth:client-api')->get('logout', 'Api\ClientController@logout');
-        Route::post('register', 'Api\ClientController@register');
-
+        
+        // Client
         Route::middleware('auth:client-api')->get('myDetails', 'Api\ClientController@details');
-        Route::middleware('auth:client-api')->get('myAccount', 'Api\ClientController@myAccount');
-        Route::middleware('auth:client-api')->get('accountHistory', 'Api\ClientController@myAccountHistory');
+
+        // Groupes, Teamleader
+        Route::middleware('auth:client-api')->get('groupesList', 'Api\GroupeController@groupeListe');
         Route::middleware('auth:client-api')->get('myTeamleader', 'Api\ClientController@ContactTeamleader');
+
+        // Categories, Subcategories ...
         Route::middleware('auth:client-api')->get('categories', 'Api\CategorieController@index');
         Route::middleware('auth:client-api')->get('subcategories/{caterorie_id}', 'Api\CategorieController@SubCaterory');
 
-        Route::middleware('auth:client-api')->get('groupesList', 'Api\GroupeController@groupeListe');
+        // Products
         Route::middleware('auth:client-api')->get('productsList', 'Api\ProductController@productListe');
         Route::middleware('auth:client-api')->get('productFavoritsListe', 'Api\ProductController@productFavoritsListe');
-
         Route::middleware('auth:client-api')->post('addProductFavorit', 'Api\ProductController@addProductFavorit');
         Route::middleware('auth:client-api')->delete('deleteProductFavorit/{favorit}', 'Api\ProductController@deleteProductFavorit');
+        Route::middleware('auth:client-api')->get('searchProduct', 'Api\ProductController@searchProduct');
 
+        // Wallet
+        Route::middleware('auth:client-api')->get('myAccount', 'Api\ClientController@myAccount');
+        Route::middleware('auth:client-api')->get('accountHistory', 'Api\ClientController@myAccountHistory');
         Route::middleware('auth:client-api')->get('balance', 'Api\ClientController@mySolde');
 
         

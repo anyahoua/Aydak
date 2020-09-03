@@ -45,16 +45,12 @@ class Produit extends Model
     {
         return $this->belongsTo(UniteMesure::class);
     }
-    
+
     public function famille()
     {
-        return $this->belongsTo(Famille::class);
+        return $this->belongsTo(Famille::class)->with('sousCategorie');
     }
 
-    public function familleSousCategorie()
-    {
-        return $this->belongsTo(Famille::class);//->with('sousCategorie');
-    }
 
 
 
