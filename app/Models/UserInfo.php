@@ -54,5 +54,4 @@ class UserInfo extends Model
         return $this->belongsTo(Profil::class);
     }
 
-
 }

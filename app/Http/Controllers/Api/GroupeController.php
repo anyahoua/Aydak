@@ -115,7 +115,15 @@ class GroupeController extends ApiController
         //
     }
 
-    // Groupe Liste
+    /*
+    |-------------------------------------------------------------------------------
+    | CLIENT        : Listing Groupes
+    |-------------------------------------------------------------------------------
+    | URL           : /api/v1/clients/groupesList
+    | Method        : PUT
+    | Description   : Show a listing of groupes by current connected Client.
+    |-------------------------------------------------------------------------------
+    */
     public function groupeListe(Request $request)
     {
         $Groupes = Groupe::where('etat', 1)
@@ -127,11 +135,18 @@ class GroupeController extends ApiController
         return $this->successResponse(GroupesListeRessource::collection($Groupes), 'Successfully');
     }
 
-    /* trouver les restaurants les plus proches
-    *
-    * @param1 : pass current latitude of the driver
-    * @param2 : pass current longitude of the driver
-    * @param3 : pass the radius in meter within how much distance you wanted to fiter
+    /*
+    |-------------------------------------------------------------------------------
+    | CLIENT        : Find Nearest Groupe
+    |-------------------------------------------------------------------------------
+    | URL           : /api/v1/clients/findnearest
+    | Method        : PUT
+    | Description   : Show a listing of groupes (Find Nearest Groupe) by current connected Client.
+    |-------------------------------------------------------------------------------
+    | @radius       : integer 
+    | @latitude     : numeric 
+    | @longitude    : numeric
+    |-------------------------------------------------------------------------------    
     */
     public function findNearestGroupes(Request $request)
     {
@@ -161,15 +176,6 @@ class GroupeController extends ApiController
         
 
         return $this->successResponse($groupes, 'Successfully');
-/*
-        return response()->json([
-            'code'      => '200',
-            'message'   => 'Successfully.',
-            'total'      => $groupes->count(),
-            'data'      => $groupes
-            
-        ], 200);
-*/
     }
 
 

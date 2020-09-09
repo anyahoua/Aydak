@@ -6,7 +6,7 @@ use App\Client;
 use App\Models\ClientAdresse;
 use App\Models\Groupe;
 use App\Models\ClientInfo;
-use App\Models\ClientCompte;
+//use App\Models\ClientCompte;
 use App\Models\ClientPreferenceAchat;
 use App\Models\Commande;
 use App\Models\CommandeDetail;
@@ -20,9 +20,8 @@ use App\Traits\UploadTrait;
 
 use App\Http\Resources\Api\Clients\ClientLoginRessource;
 use App\Http\Resources\Api\Clients\ClientDataRessource;
-use App\Http\Resources\Api\Clients\ClientCompteRessource;
 use App\Http\Resources\Api\Clients\ClientOrdersRessource;
-use App\Http\Resources\Api\Clients\ClientNewBalanceRessource;
+
 
 use Validator;
 use Keygen;
@@ -30,11 +29,16 @@ use Keygen;
 //class ClientController extends Controller
 class ClientController extends ApiController
 {
-    /** 
-     * login api 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
+
+    /*
+    |-------------------------------------------------------------------------------
+    | CLIENT        : Login Client
+    |-------------------------------------------------------------------------------
+    | URL           : /api/v1/clients/login
+    | Method        : POST
+    | Description   : Login a Client.
+    |-------------------------------------------------------------------------------
+    */
     public function login(Request $request){ 
 
         $input = $request->all();
@@ -100,11 +104,15 @@ class ClientController extends ApiController
         } 
     }
 
-    /**
-     * Logout client (Revoke the token)
-     *
-     * @return [string] message
-     */
+    /*
+    |-------------------------------------------------------------------------------
+    | CLIENT        : Logout Client
+    |-------------------------------------------------------------------------------
+    | URL           : /api/v1/clients/logout
+    | Method        : GET
+    | Description   : Logout client (Revoke the token).
+    |-------------------------------------------------------------------------------
+    */
     public function logout(Request $request)
     {
 
@@ -121,12 +129,28 @@ class ClientController extends ApiController
         return $this->successResponse($data=null, 'Successfully logged out');
     }
 
-
-    /** 
-     * Register api 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
+    /*
+    |-------------------------------------------------------------------------------
+    | CLIENT        : Register Client
+    |-------------------------------------------------------------------------------
+    | URL           :  /api/v1/clients/register
+    | Method        : POST
+    | Description   : Register a new Client.
+    |-------------------------------------------------------------------------------
+    | @lastName     : string 
+    | @firstName    : string 
+    | @groupeId     : integer 
+    | @username     : string (mobile phone) 
+    | @password     : string 
+    | @c_password   : string 
+    | @district     : string 
+    | @commune      : string 
+    | @daira        : string 
+    | @wilaya       : string
+    | @latitude     : numeric 
+    | @longitude    : numeric
+    |-------------------------------------------------------------------------------
+    */
     public function register(Request $request) 
     {
 
@@ -220,11 +244,15 @@ class ClientController extends ApiController
         return $this->successResponse(new ClientDataRessource($client), 'Inscription réussie. Un Team-Leader va vous contacter bientot afin de recueillir votre prépaiement.', 201);
     }
 
-    /** 
-     * Connected Client Details API 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
+    /*
+    |-------------------------------------------------------------------------------
+    | CLIENT        : Details Client
+    |-------------------------------------------------------------------------------
+    | URL           : /api/v1/clients/myDetails
+    | Method        : GET
+    | Description   : Show details for current connected Client.
+    |-------------------------------------------------------------------------------
+    */
     public function details() 
     { 
         $client = Auth::user(); 
@@ -234,38 +262,13 @@ class ClientController extends ApiController
 
     /*
     |-------------------------------------------------------------------------------
-    | Client Account
+    | CLIENT        : Contact Tealleader
     |-------------------------------------------------------------------------------
-    | URL:            /api/v1/clients/productFavoritsListe
-    | Method:         GET
-    | Description:    Show Connected Client Account API.
+    | URL           : /api/v1/clients/myTeamleader
+    | Method        : GET
+    | Description   : Show contact tealleader by current connected Client.
+    |-------------------------------------------------------------------------------
     */
-    public function myAccount() 
-    { 
-        $client = Auth::user(); 
-
-        //return $client->clientCompte;
-        return $this->successResponse(new ClientCompteRessource($client->clientCompte), 'Successfully');
-    }
-
-    /** 
-     * Connected Client Account tHistory API 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
-    public function myAccountHistory() 
-    { 
-        $client = Auth::user(); 
-
-        return $this->successResponse($client->clientCompteHistory, 'Successfully');
-    }
-
-
-    /** 
-     * Connected Client : Contact Team Leader API 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
     public function ContactTeamleader() 
     { 
         $client = Auth::user(); 
@@ -273,12 +276,15 @@ class ClientController extends ApiController
         return $this->successResponse($client->groupe->TeamleaderInGroupe, 'Successfully');
     }
 
-
-    /** 
-     * Connected Client Show Current Orders API 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
+    /*
+    |-------------------------------------------------------------------------------
+    | CLIENT        : Current Orders
+    |-------------------------------------------------------------------------------
+    | URL           : /api/v1/clients/currentOrders
+    | Method        : GET
+    | Description   : Show current orders by current connected Client.
+    |-------------------------------------------------------------------------------
+    */
     public function myCurrentOrders() 
     { 
         $client = Auth::user();
@@ -286,12 +292,6 @@ class ClientController extends ApiController
         return $this->successResponse(ClientOrdersRessource::collection($client->commandes), 'Successfully');
     }
 
-    public function mySolde() 
-    { 
-        $client = Auth::user();
-
-        return $this->successResponse(new ClientNewBalanceRessource($client->clientNouveauSolde), 'Successfully');
-    }
 
 
 

@@ -27,11 +27,19 @@ use Keygen;
 class CommandeController extends ApiController
 {
 
-    /** 
-     * Connected User Teamleader Show Orders Not Traited API 
-     * 
-     * @return \Illuminate\Http\Response 
-     */
+    /*
+    |-------------------------------------------------------------------------------
+    | USERS         : Orders Not Traited
+    |-------------------------------------------------------------------------------
+    | URL           : /api/v1/users/tm/ordersnottraited
+    | Method        : GET
+    | Description   : Show orders not traited by current connected teamleader.
+    |-------------------------------------------------------------------------------
+    | @expectedDeliveryDate : date->format(Y-m-d)
+    | @productId            : int
+    | @quantity             : int
+    |-------------------------------------------------------------------------------
+    */
     public function ordersNotTraited() 
     { 
         $user = Auth::user();
@@ -41,21 +49,17 @@ class CommandeController extends ApiController
                     ->get();
         
         return $this->successResponse(OrdersRessource::collection($Orders), 'Successfully');
-/*
-        return response()->json([
-            'code'      => '200',
-            'message'   => 'Success.',
-            'data'      => OrdersRessource::collection($Orders),
-            //'data'      => $this->Orders,
-        ], 200);
-*/
     }
     
-    /** 
-     * Connected User Teamleader Show Orders Traited Not Assigned API 
-     * 
-     * @return \Illuminate\Http\Response 
-     */
+    /*
+    |-------------------------------------------------------------------------------
+    | USERS         : Orders Traited Not Assigned
+    |-------------------------------------------------------------------------------
+    | URL           : /api/v1/users/tm/orderstraitednotassigned
+    | Method        : GET
+    | Description   : Show orders traited not assigned by current connected teamleader.
+    |-------------------------------------------------------------------------------
+    */
     public function ordersTraitedNotAssigned() 
     { 
         $user = Auth::user();
@@ -65,22 +69,17 @@ class CommandeController extends ApiController
                     ->get();
         
         return $this->successResponse(OrdersRessource::collection($Orders), 'Successfully');
-/*
-        return response()->json([
-            'code'      => '200',
-            'message'   => 'Success.',
-            'data'      => OrdersRessource::collection($Orders),
-            //'data'      => $this->Orders,
-        ], 200);
-*/
     }
 
-
-    /** 
-     * Connected User Teamleader Show Orders Assigned Not Purchased API 
-     * 
-     * @return \Illuminate\Http\Response 
-     */
+    /*
+    |-------------------------------------------------------------------------------
+    | USERS         : Orders Assigned Not Purchased
+    |-------------------------------------------------------------------------------
+    | URL           : /api/v1/users/tm/ordersassignednotpurchased
+    | Method        : GET
+    | Description   : Show orders assigned not purchased by current connected teamleader.
+    |-------------------------------------------------------------------------------
+    */
     public function ordersAssignedNotPurchased() 
     { 
         $user = Auth::user();
@@ -89,11 +88,19 @@ class CommandeController extends ApiController
     }
 
 
-    /** 
-     * Client Add Order API 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
+    /*
+    |-------------------------------------------------------------------------------
+    | CLIENT        : Cancel Order
+    |-------------------------------------------------------------------------------
+    | URL           : /api/v1/clients/order
+    | Method        : POST
+    | Description   : Add new order by connected client.
+    |-------------------------------------------------------------------------------
+    | @expectedDeliveryDate : date->format(Y-m-d)
+    | @productId            : int
+    | @quantity             : int
+    |-------------------------------------------------------------------------------
+    */
     public function addOrder(Request $request) 
     {
         $validator = Validator::make($request->all(), [
@@ -104,10 +111,6 @@ class CommandeController extends ApiController
             return $this->errorResponse($validator->messages(), 422);
         }
 
-
-        //----------------------//
-        // This Client :
-        //----------------------//
         $client = Auth::user(); 
 
         //----------------------//
@@ -131,8 +134,6 @@ class CommandeController extends ApiController
         $detailCommande = array();
         foreach($entray["order"] as $key => $row)
         {
-
-            //Prix produit
             $prix_unitaire = ProduitPrix::where('produit_id', $row['productId'])->first();
 
             $detailCommande[] = array(
@@ -153,11 +154,16 @@ class CommandeController extends ApiController
 
     /*
     |-------------------------------------------------------------------------------
-    | Cancel Order
+    | CLIENT        : Cancel Order
     |-------------------------------------------------------------------------------
-    | URL:            /api/v1/clients/cancelOrder/{commande_id}
-    | Method:         POST
-    | Description:    Cancel order By Client.
+    | URL           : /api/v1/clients/cancelOrder/{commande_id}
+    | Method        : POST
+    | Description   : Cancel order By Client.
+    |-------------------------------------------------------------------------------
+    |
+    | @commande_id  : int
+    |
+    |-------------------------------------------------------------------------------
     */
     public function cancelOrder(Request $request, Commande $commande) 
     {
@@ -175,11 +181,16 @@ class CommandeController extends ApiController
 
     /*
     |-------------------------------------------------------------------------------
-    | Cancel Order
+    | CLIENT        : Cancel Order
     |-------------------------------------------------------------------------------
-    | URL:            /api/v1/clients/cancelOrder/{commande_id}
-    | Method:         POST
-    | Description:    Cancel order By Client.
+    | URL           : /api/v1/clients/cancelOrder/{commande_id}
+    | Method        : POST
+    | Description   : Cancel order By Client.
+    |-------------------------------------------------------------------------------
+    |
+    | @commande_id  : int
+    |
+    |-------------------------------------------------------------------------------
     */
     public function addCommentCommande(Request $request) 
     {
@@ -223,11 +234,16 @@ class CommandeController extends ApiController
 
     /*
     |-------------------------------------------------------------------------------
-    | Vlidate Receipt Order
+    | CLIENT        : Vlidate Receipt Order
     |-------------------------------------------------------------------------------
-    | URL:            /api/v1/clients/validateReceiptOrder/{commande_id}
-    | Method:         PUT
-    | Description:    Cancel order By Client.
+    | URL           : /api/v1/clients/validateReceiptOrder/{commande_id}
+    | Method        : PUT
+    | Description   : Cancel order By Client.
+    |-------------------------------------------------------------------------------
+    |
+    | @commande_id  : int
+    |
+    |-------------------------------------------------------------------------------
     */
     public function validateReceiptOrder(Request $request, Commande $commande) 
     {
@@ -252,7 +268,6 @@ class CommandeController extends ApiController
         $newSolde = $request->solde - $request->montant;
 
         $client->clientWallet->update(['etat' => 1, 'ancien_solde' => $request->solde, 'nouveau_solde' => $newSolde]);
-
 
         return $this->successResponse($commande, 'Commande annulé avec success.', 200);
     }

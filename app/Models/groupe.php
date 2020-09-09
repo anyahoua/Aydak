@@ -99,6 +99,7 @@ class Groupe extends Model
             'user_id'
         )
         //->withCount('coursiers')
+        ->with('groupe')
         ->with(['UserInfo' => function ($query) {
                 $query->where('profil_id', '1');
         }]);

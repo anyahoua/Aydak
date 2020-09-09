@@ -31,5 +31,14 @@ class Profil extends Model
         return $this->belongsTo(UserInfo::class, 'id');
     }
 
+    public function commission()
+    {
+        return $this->hasOne(Commission::class);
+    }
+
+    public function commissionAydak()
+    {
+        return $this->hasOne(Commission::class)->where('id', 1);
+    }    
 
 }

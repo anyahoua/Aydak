@@ -16,6 +16,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
+//use Illuminate\Support\Facades\Config;
 
 use App\Http\Resources\Api\Produits\ProduitsListeRessource;
 use App\Http\Resources\Api\Produits\ProduitsListeRessourceCollection;
@@ -28,11 +29,15 @@ use Validator;
 
 class ProductController extends ApiController
 {
-    /** 
-     * Show All Products API 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
+
+    /*
+    |-------------------------------------------------------------------------------
+    | Ligting Products
+    |-------------------------------------------------------------------------------
+    | URL:            /api/v1/clients/ ???
+    | Method:         POST
+    | Description:    Show All Products. (NOT USED YET.)
+    */
     public function index(Request $request) 
     {
         $produits = Produit::where('etat', '1')->get();
@@ -48,11 +53,11 @@ class ProductController extends ApiController
     |-------------------------------------------------------------------------------
     | URL:            /api/v1/clients/productsList
     | Method:         GET
-    | Description:    Show All Products in the List.
+    | Description:    Show All Products in the List with paginate.
     */
     public function productListe(Request $request)
     {
-        $products       = Produit::where('etat', 1)->paginate(5);
+        $products       = Produit::where('etat', 1)->paginate(config('global.client_per_page'));
         
         //->withCount('shoppersInGroupe')
         //->with(['TeamleaderInGroupe', 'shoppersInGroupe'])
@@ -73,7 +78,7 @@ class ProductController extends ApiController
     public function productFavoritsListe(Request $request)
     {
         $client             = Auth::user();
-        $productsFavoris    = $client->clientPreferenceAchat()->paginate(3);
+        $productsFavoris    = $client->clientPreferenceAchat()->paginate(config('global.client_per_page'));
 
         return new ProduitsFavoritsListeRessourceCollection($productsFavoris);
     }
@@ -172,7 +177,7 @@ class ProductController extends ApiController
             ->where('sous_categories.id', $request->subcategorieId)
             ->where('sous_categories.etat', 1)
             
-            ->paginate(5);
+            ->paginate(config('global.client_per_page'));
 
         } else {
 //return 2;
@@ -197,7 +202,7 @@ class ProductController extends ApiController
             ->where('categories.id', $request->categorieId)
             ->where('categories.etat', 1)
             
-            ->paginate(5);
+            ->paginate(config('global.client_per_page'));
 
         }   
 

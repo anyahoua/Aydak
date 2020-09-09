@@ -27,11 +27,15 @@ use Validator;
 class CategorieController extends ApiController
 {
     
-    /** 
-     * Show All Categories API 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
+    /*
+    |-------------------------------------------------------------------------------
+    | CLIENT        : Categories listing
+    |-------------------------------------------------------------------------------
+    | URL           : /api/v1/clients/categories
+    | Method        : GET
+    | Description   : Show All Categories API.
+    |-------------------------------------------------------------------------------
+    */
     public function index(Request $request) 
     {
         $categories = Categorie::where('etat', '1')->get();
@@ -40,12 +44,19 @@ class CategorieController extends ApiController
         return $this->successResponse(CategoriesIndexRessource::collection($categories), 'Successfully');
     }
 
-
-    /** 
-     * Show All Sous Categories API 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
+    /*
+    |-------------------------------------------------------------------------------
+    | CLIENT        : Sub Categories listing
+    |-------------------------------------------------------------------------------
+    | URL           : /api/v1/clients/subcategories/{caterorie_id}
+    | Method        : GET
+    | Description   : Show All Sous Categories API.
+    |-------------------------------------------------------------------------------
+    |
+    | @caterorie_id : int
+    |
+    |-------------------------------------------------------------------------------
+    */    
     public function SubCaterory(Request $request, $caterorie_id) 
     {
         $sous_categories = SousCategorie::where('categorie_id', $caterorie_id)->where('etat', '1')->get();
