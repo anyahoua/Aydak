@@ -88,6 +88,82 @@ class CommandeController extends ApiController
     }
 
 
+    /** Orders Purchased Uncontrolled */
+    public function ordersPurchasedUncontrolled() 
+    { 
+        $user = Auth::user();
+
+        $Orders = Commande::where('groupe_id', $user->groupe->id)
+                    ->where('situation_id', '5')
+                    ->get();
+        
+        return $this->successResponse(OrdersRessource::collection($Orders), 'Successfully');
+    }
+
+    /** Orders Controlled Not Delivered */
+    public function ordersControlledNotDelivered() 
+    { 
+        $user = Auth::user();
+
+        $Orders = Commande::where('groupe_id', $user->groupe->id)
+                    ->where('situation_id', '6')
+                    ->get();
+        
+        return $this->successResponse(OrdersRessource::collection($Orders), 'Successfully');
+    }
+
+    /** Orders Delivered */
+    public function ordersDelivered() 
+    { 
+        $user = Auth::user();
+
+        $Orders = Commande::where('groupe_id', $user->groupe->id)
+                    ->where('situation_id', '7')
+                    ->get();
+        
+        return $this->successResponse(OrdersRessource::collection($Orders), 'Successfully');
+    }
+
+    /** Orders Situation Manipulation */
+    public function ordersUpdateSituation(Request $request) 
+    { 
+
+        $user = Auth::user();
+
+        $entray = json_decode($request->getContent(), true);
+
+
+        $detailCommande = array();
+        foreach($entray["orders"] as $key => $row)
+        {
+            $commande   = Commande::find($row['id']);
+
+            if($user->groupe->id !== $commande->groupe_id)
+            {
+                return $this->errorResponse('Forbidden', 403);
+            }
+
+        }
+
+        foreach($entray["orders"] as $key => $row)
+        {
+            $commande   = Commande::find($row['id']);
+
+            if($user->groupe->id !== $commande->groupe_id)
+            {
+                return $this->errorResponse('Forbidden', 403);
+            }
+
+            $commande->update(['situation_id' => $row['situationId']]);
+            
+        }
+
+return 'ok';
+
+
+
+    }
+    
     /*
     |-------------------------------------------------------------------------------
     | CLIENT        : Cancel Order

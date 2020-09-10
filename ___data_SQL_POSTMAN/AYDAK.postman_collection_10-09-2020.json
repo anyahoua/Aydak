@@ -1,0 +1,2641 @@
+{
+	"info": {
+		"_postman_id": "11a4b312-2e6a-40e0-85ba-09b63a7320e8",
+		"name": "AYDAK",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Clients",
+			"item": [
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "Searching Products",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/clients/searchProduct?q=bois&categorieId=1&page=2",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"clients",
+										"searchProduct"
+									],
+									"query": [
+										{
+											"key": "q",
+											"value": "bois"
+										},
+										{
+											"key": "categorieId",
+											"value": "1"
+										},
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "subcategorieId",
+											"value": "12",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Rechercher un produit par : \r\n- Un mot clé {q} + Sous catégorie {sous_categorie_id}\r\nOu\r\n- Un mot clé {q} + catégorie {categorie_id}\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": \"Successfully\",\r\n    \"data\": [\r\n        {\r\n            \"ProductId\": 10000054,\r\n            \"ProductName\": \"BOISSON GAZEUSE PET 1L\",\r\n            \"unitMeasure\": \"Unite\",\r\n            \"unitVal\": \"\",\r\n            \"comment\": \"PEPSI\",\r\n            \"unitPrice\": 65,\r\n            \"photo\": \"R41.jpg\",\r\n            \"familyId\": 100,\r\n            \"familyName\": \"BOISSONS\",\r\n            \"subCategoryId\": 10,\r\n            \"subCategoryName\": \"BOISSONS\",\r\n            \"categoryId\": 1,\r\n            \"categoryName\": \"Alimentaires\"\r\n        },\r\n        {\r\n            \"ProductId\": 10000337,\r\n            \"ProductName\": \"BOISSON GAZ ORANGE PET 1L\",\r\n            \"unitMeasure\": \"Unite\",\r\n            \"unitVal\": \"MIRINDA\",\r\n            \"comment\": \"MIRINDA\",\r\n            \"unitPrice\": 65,\r\n            \"photo\": \"R41.jpg\",\r\n            \"familyId\": 100,\r\n            \"familyName\": \"BOISSONS\",\r\n            \"subCategoryId\": 10,\r\n            \"subCategoryName\": \"BOISSONS\",\r\n            \"categoryId\": 1,\r\n            \"categoryName\": \"Alimentaires\"\r\n        },\r\n        {\r\n            \"ProductId\": 10000344,\r\n            \"ProductName\": \"BOISSON ORANGE 150CL PET\",\r\n            \"unitMeasure\": \"Unite\",\r\n            \"unitVal\": \"\",\r\n            \"comment\": \"JUFRE\",\r\n            \"unitPrice\": 67,\r\n            \"photo\": \"R41.jpg\",\r\n            \"familyId\": 100,\r\n            \"familyName\": \"BOISSONS\",\r\n            \"subCategoryId\": 10,\r\n            \"subCategoryName\": \"BOISSONS\",\r\n            \"categoryId\": 1,\r\n            \"categoryName\": \"Alimentaires\"\r\n        },\r\n        {\r\n            \"ProductId\": 10000345,\r\n            \"ProductName\": \"BOISSON GAZ ORANGE PET 1L\",\r\n            \"unitMeasure\": \"Unite\",\r\n            \"unitVal\": \"\",\r\n            \"comment\": \"MAMI\",\r\n            \"unitPrice\": 40,\r\n            \"photo\": \"R41.jpg\",\r\n            \"familyId\": 100,\r\n            \"familyName\": \"BOISSONS\",\r\n            \"subCategoryId\": 10,\r\n            \"subCategoryName\": \"BOISSONS\",\r\n            \"categoryId\": 1,\r\n            \"categoryName\": \"Alimentaires\"\r\n        },\r\n        {\r\n            \"ProductId\": 10000351,\r\n            \"ProductName\": \"BOISSON PECHE 150CL PET\",\r\n            \"unitMeasure\": \"Unite\",\r\n            \"unitVal\": \"\",\r\n            \"comment\": \"JUFRE\",\r\n            \"unitPrice\": 67,\r\n            \"photo\": \"R41.jpg\",\r\n            \"familyId\": 100,\r\n            \"familyName\": \"BOISSONS\",\r\n            \"subCategoryId\": 10,\r\n            \"subCategoryName\": \"BOISSONS\",\r\n            \"categoryId\": 1,\r\n            \"categoryName\": \"Alimentaires\"\r\n        }\r\n    ],\r\n    \"links\": {\r\n        \"first\": \"http://aydak.dev.com/api/v1/clients/searchProduct?q=bois&categorieId=1&page=1\",\r\n        \"last\": \"http://aydak.dev.com/api/v1/clients/searchProduct?q=bois&categorieId=1&page=7\",\r\n        \"prev\": \"http://aydak.dev.com/api/v1/clients/searchProduct?q=bois&categorieId=1&page=1\",\r\n        \"next\": \"http://aydak.dev.com/api/v1/clients/searchProduct?q=bois&categorieId=1&page=3\"\r\n    },\r\n    \"meta\": {\r\n        \"current_page\": 2,\r\n        \"from\": 6,\r\n        \"last_page\": 7,\r\n        \"path\": \"http://aydak.dev.com/api/v1/clients/searchProduct\",\r\n        \"per_page\": 5,\r\n        \"to\": 10,\r\n        \"total\": 35\r\n    }\r\n\r\n----------------------------------------------------------------------"
+							},
+							"response": []
+						},
+						{
+							"name": "Products Liste",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/clients/productsList",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"clients",
+										"productsList"
+									]
+								},
+								"description": "Affiche la liste de produits, page par page.\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": \"Successfully\",\r\n    \"data\": [\r\n        {\r\n            \"ProductId\": 10000050,\r\n            \"ProductName\": \"EAU GAZEIFIEE MOUZAIA 25CL X4\",\r\n            \"unitMeasure\": \"Unite\",\r\n            \"unitVal\": \"\",\r\n            \"comment\": \"\",\r\n            \"photo\": \"R41.jpg\",\r\n            \"familyName\": \"EAUX\",\r\n            \"subCategoryName\": \"BOISSONS\",\r\n            \"categoryName\": \"Alimentaires\",\r\n            \"unitPrice\": 97\r\n        },\r\n        {\r\n            \"ProductId\": 10000054,\r\n            \"ProductName\": \"BOISSON GAZEUSE PET 1L\",\r\n            \"unitMeasure\": \"Unite\",\r\n            \"unitVal\": \"\",\r\n            \"comment\": \"PEPSI\",\r\n            \"photo\": \"R41.jpg\",\r\n            \"familyName\": \"BOISSONS\",\r\n            \"subCategoryName\": \"BOISSONS\",\r\n            \"categoryName\": \"Alimentaires\",\r\n            \"unitPrice\": 65\r\n        },\r\n        {\r\n            \"ProductId\": 10000055,\r\n            \"ProductName\": \"SCHWEPPES MANDARINE 1L PET\",\r\n            \"unitMeasure\": \"Unite\",\r\n            \"unitVal\": \"\",\r\n            \"comment\": \"\",\r\n            \"photo\": \"R41.jpg\",\r\n            \"familyName\": \"BOISSONS\",\r\n            \"subCategoryName\": \"BOISSONS\",\r\n            \"categoryName\": \"Alimentaires\",\r\n            \"unitPrice\": \"\"\r\n        },\r\n        {\r\n            \"ProductId\": 10000063,\r\n            \"ProductName\": \"SODA PEPSI  PET 2L\",\r\n            \"unitMeasure\": \"Unite\",\r\n            \"unitVal\": \"\",\r\n            \"comment\": \"PEPSI\",\r\n            \"photo\": \"R41.jpg\",\r\n            \"familyName\": \"BOISSONS\",\r\n            \"subCategoryName\": \"BOISSONS\",\r\n            \"categoryName\": \"Alimentaires\",\r\n            \"unitPrice\": 100\r\n        },\r\n        {\r\n            \"ProductId\": 10000067,\r\n            \"ProductName\": \"SODA COCA COLA PET 2 L\",\r\n            \"unitMeasure\": \"Unite\",\r\n            \"unitVal\": \"\",\r\n            \"comment\": \"COCA COLA\",\r\n            \"photo\": \"R41.jpg\",\r\n            \"familyName\": \"BOISSONS\",\r\n            \"subCategoryName\": \"BOISSONS\",\r\n            \"categoryName\": \"Alimentaires\",\r\n            \"unitPrice\": 139\r\n        }\r\n    ],\r\n    \"links\": {\r\n        \"first\": \"http://aydak.dev.com/api/v1/clients/productsList?page=1\",\r\n        \"last\": \"http://aydak.dev.com/api/v1/clients/productsList?page=1004\",\r\n        \"prev\": null,\r\n        \"next\": \"http://aydak.dev.com/api/v1/clients/productsList?page=2\"\r\n    },\r\n    \"meta\": {\r\n        \"current_page\": 1,\r\n        \"from\": 1,\r\n        \"last_page\": 1004,\r\n        \"path\": \"http://aydak.dev.com/api/v1/clients/productsList\",\r\n        \"per_page\": 5,\r\n        \"to\": 5,\r\n        \"total\": 5020\r\n    }\r\n----------------------------------------------------------------------"
+							},
+							"response": []
+						},
+						{
+							"name": "Product Favorits Liste",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/clients/productFavoritsListe",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"clients",
+										"productFavoritsListe"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "3",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Le client actuellement connecter affiche sa liste de produits favoris.\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": \"Successfully\",\r\n    \"data\": [\r\n        {\r\n            \"id\": 2,\r\n            \"ProductId\": 10000042,\r\n            \"ProductName\": \"GUSTY JUS MANGUE 125CL PET\",\r\n            \"unitMeasure\": \"Unite\",\r\n            \"unitVal\": \"\",\r\n            \"comment\": \"\",\r\n            \"photo\": \"R41.jpg\",\r\n            \"familyName\": \"BOISSONS\",\r\n            \"subCategoryName\": \"BOISSONS\",\r\n            \"categoryName\": \"Alimentaires\",\r\n            \"unitPrice\": \"\"\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"ProductId\": 10000043,\r\n            \"ProductName\": \"GUSTY JUS PECHE 125CL PET\",\r\n            \"unitMeasure\": \"Unite\",\r\n            \"unitVal\": \"\",\r\n            \"comment\": \"\",\r\n            \"photo\": \"R41.jpg\",\r\n            \"familyName\": \"BOISSONS\",\r\n            \"subCategoryName\": \"BOISSONS\",\r\n            \"categoryName\": \"Alimentaires\",\r\n            \"unitPrice\": \"\"\r\n        },\r\n        {\r\n            \"id\": 4,\r\n            \"ProductId\": 10000044,\r\n            \"ProductName\": \"SODA POMME VERTE 200 CL\",\r\n            \"unitMeasure\": \"Unite\",\r\n            \"unitVal\": \"(PET)\",\r\n            \"comment\": \"IFRI\",\r\n            \"photo\": \"R41.jpg\",\r\n            \"familyName\": \"BOISSONS\",\r\n            \"subCategoryName\": \"BOISSONS\",\r\n            \"categoryName\": \"Alimentaires\",\r\n            \"unitPrice\": 80\r\n        }\r\n    ],\r\n    \"links\": {\r\n        \"first\": \"http://aydak.dev.com/api/v1/clients/productFavoritsListe?page=1\",\r\n        \"last\": \"http://aydak.dev.com/api/v1/clients/productFavoritsListe?page=3\",\r\n        \"prev\": null,\r\n        \"next\": \"http://aydak.dev.com/api/v1/clients/productFavoritsListe?page=2\"\r\n    },\r\n    \"meta\": {\r\n        \"current_page\": 1,\r\n        \"from\": 1,\r\n        \"last_page\": 3,\r\n        \"path\": \"http://aydak.dev.com/api/v1/clients/productFavoritsListe\",\r\n        \"per_page\": 3,\r\n        \"to\": 3,\r\n        \"total\": 9\r\n    }\r\n----------------------------------------------------------------------"
+							},
+							"response": []
+						},
+						{
+							"name": "Add Product Favorit",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "productId",
+											"value": "34000828",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/clients/addProductFavorit",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"clients",
+										"addProductFavorit"
+									]
+								},
+								"description": "Le client actuellement connecter ajoute sont produit favori.\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": \"Successfully\",\r\n    \"data\": {\r\n        \"id\": 14,\r\n        \"ProductId\": 34000828,\r\n        \"ProductName\": \"CHAISE LONGUE VERT ORANGE BLEU\",\r\n        \"unitMeasure\": \"Unite\",\r\n        \"unitVal\": \"\",\r\n        \"comment\": \"\",\r\n        \"photo\": \"R41.jpg\",\r\n        \"familyName\": \"MOBILIER DE JARDIN\",\r\n        \"subCategoryName\": \"JARDIN ET ANIMALERIE\",\r\n        \"categoryName\": \"BEBE\",\r\n        \"unitPrice\": \"\"\r\n    }\r\n----------------------------------------------------------------------"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product Favorit",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/clients/deleteProductFavorit/1",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"clients",
+										"deleteProductFavorit",
+										"1"
+									]
+								},
+								"description": "Le client actuellement connecter supprime sont produit favori.\r\n\r\nhttp://aydak.dev.com/api/v1/clients/deleteProductFavorit/{id}\r\n\r\n@ int id : id favori\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": \"Successfully\",\r\n    \"data\": {\r\n        \"id\": 1,\r\n        \"quantite_produit\": 3,\r\n        \"etat\": 1,\r\n        \"client_id\": 1,\r\n        \"produit_id\": 30001125,\r\n        \"created_at\": null,\r\n        \"updated_at\": \"2020-09-02T09:32:23.000000Z\",\r\n        \"deleted_at\": \"2020-09-02T09:32:23.000000Z\"\r\n    }\r\n----------------------------------------------------------------------"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Ordes",
+					"item": [
+						{
+							"name": "Add Order",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"expectedDeliveryDate\" : \"27-08-2020\",\r\n    \"order\": [\r\n        {\r\n            \"quantity\": \"3\",\r\n            \"productId\": \"10003161\"\r\n        },\r\n        {\r\n            \"quantity\": \"2\",\r\n            \"productId\": \"43002198\"\r\n        }\r\n    ]\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/clients/order",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"clients",
+										"order"
+									]
+								},
+								"description": "Le client actuellement connecter ajoute une commande\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"code\": \"201\",\r\n    \"message\": \"Commande envoyé avec success.\",\r\n    \"data\": {\r\n        \"date_livraison_prevu\": \"2020-07-01\",\r\n        \"situation_id\": \"1\",\r\n        \"client_id\": 1,\r\n        \"groupe_id\": 2,\r\n        \"updated_at\": \"2020-06-23T11:22:41.000000Z\",\r\n        \"created_at\": \"2020-06-23T11:22:41.000000Z\",\r\n        \"id\": 2,\r\n        \"situation\": {\r\n            \"id\": 1,\r\n            \"libely\": \"Non traitée\",\r\n            \"description\": \"Corporis sint nihil odit. Consequatur aspernatur ut nostrum. Cupiditate debitis asperiores laudantium velit minima laudantium illum iure.\"\r\n        }\r\n    }\r\n----------------------------------------------------------------------"
+							},
+							"response": []
+						},
+						{
+							"name": "Add Comment Order",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "commandeId",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "comment",
+											"value": "This is a comment ;)  3 This is a comment ;)  3 This is a comment ;)  3 This is a comment ;)  3 This is a comment ;)  3.\n\nThis is a comment ;)  3 This is a comment ;)  3 This is a comment ;)  3 This is a comment ;)  3 This is a comment ;)  3 This is a comment ;)  3 .",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/clients/addCommentCommande",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"clients",
+										"addCommentCommande"
+									]
+								},
+								"description": "Le client actuellement connecter ajoute un commentaire à ca commande\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 201,\r\n    \"message\": \"Commentaire ajouté avec success.\",\r\n    \"data\": {\r\n        \"commentaire\": \"This is a comment ;) 2\",\r\n        \"etat\": 1,\r\n        \"user_id\": 1,\r\n        \"groupe_id\": 1,\r\n        \"commande_id\": 1,\r\n        \"profil_id\": 3,\r\n        \"updated_at\": \"2020-09-02T15:43:36.000000Z\",\r\n        \"created_at\": \"2020-09-02T15:43:36.000000Z\",\r\n        \"id\": 2,\r\n        \"profil\": {\r\n            \"id\": 3,\r\n            \"nom\": \"Client\",\r\n            \"etat\": 1,\r\n            \"created_at\": \"2020-06-22T13:47:20.000000Z\",\r\n            \"updated_at\": \"2020-06-22T13:47:20.000000Z\"\r\n        },\r\n        \"groupe\": {\r\n            \"id\": 1,\r\n            \"nom\": \"Mohamed Zekkal\",\r\n            \"photo\": \"eaec93f6-99eb-3e83-8340-69ef6e4ff1ed.png\",\r\n            \"daira\": \"Sidi M'Hamed\",\r\n            \"latitude\": \"36.755535\",\r\n            \"longitude\": \"3.055553\",\r\n            \"deg2rad_longitude\": null,\r\n            \"deg2rad_latitude\": null,\r\n            \"etat\": 1,\r\n            \"created_at\": \"2020-06-22T13:47:21.000000Z\",\r\n            \"updated_at\": \"2020-06-22T13:47:21.000000Z\"\r\n        },\r\n        \"commande\": {\r\n            \"id\": 1,\r\n            \"date_livraison\": null,\r\n            \"date_livraison_prevu\": \"2020-06-30 00:00:00\",\r\n            \"situation_id\": 7,\r\n            \"client_id\": 1,\r\n            \"groupe_id\": 1,\r\n            \"created_at\": \"2020-06-23T11:16:57.000000Z\",\r\n            \"updated_at\": \"2020-09-02T13:56:49.000000Z\"\r\n        }\r\n    }\r\n----------------------------------------------------------------------"
+							},
+							"response": []
+						},
+						{
+							"name": "Validate Receipt Order",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "montant",
+											"value": "100",
+											"type": "text"
+										},
+										{
+											"key": "solde",
+											"value": "1000",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/clients/validateReceiptOrder/1",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"clients",
+										"validateReceiptOrder",
+										"1"
+									]
+								},
+								"description": "-----------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": \"Commande annulé avec success.\",\r\n    \"data\": {\r\n        \"id\": 1,\r\n        \"date_livraison\": null,\r\n        \"date_livraison_prevu\": \"2020-06-30 00:00:00\",\r\n        \"situation_id\": 6,\r\n        \"client_id\": 1,\r\n        \"groupe_id\": 1,\r\n        \"created_at\": \"2020-06-23T11:16:57.000000Z\",\r\n        \"updated_at\": \"2020-09-02T16:09:31.000000Z\"\r\n    }\r\n-----------------------"
+							},
+							"response": []
+						},
+						{
+							"name": "Current Orders",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/clients/currentOrders",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"clients",
+										"currentOrders"
+									]
+								},
+								"description": "Liste des commandes encours du client actuellement connecter.\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": \"Successfully\",\r\n    \"data\": [\r\n        {\r\n            \"orderId\": 1,\r\n            \"customerId\": 1,\r\n            \"createdAtFr\": \"23-06-2020\",\r\n            \"createdAtEn\": \"2020-06-23\",\r\n            \"stateId\": 1,\r\n            \"stateName\": \"Non traitée\",\r\n            \"total\": null,\r\n            \"cartItems\": [\r\n                {\r\n                    \"quantityOrdered\": 3,\r\n                    \"quantityPurchased\": 0,\r\n                    \"pricePurchased\": null,\r\n                    \"amount\": 45,\r\n                    \"purchasedOrNo\": 0,\r\n                    \"product\": {\r\n                        \"productId\": 30001125,\r\n                        \"price\": 220,\r\n                        \"productTitle\": \"PILE 1222\",\r\n                        \"comment\": \"\",\r\n                        \"unit\": 1\r\n                    }\r\n                },\r\n                {\r\n                    \"quantityOrdered\": 2,\r\n                    \"quantityPurchased\": 0,\r\n                    \"pricePurchased\": null,\r\n                    \"amount\": 200,\r\n                    \"purchasedOrNo\": 0,\r\n                    \"product\": {\r\n                        \"productId\": 12019597,\r\n                        \"price\": 385,\r\n                        \"productTitle\": \"NDEO SPRAY PROTECT F 200ML    \",\r\n                        \"comment\": \"NIVEA     \",\r\n                        \"unit\": 1\r\n                    }\r\n                },\r\n                {\r\n                    \"quantityOrdered\": 1,\r\n                    \"quantityPurchased\": 0,\r\n                    \"pricePurchased\": null,\r\n                    \"amount\": 1500.05,\r\n                    \"purchasedOrNo\": 0,\r\n                    \"product\": {\r\n                        \"productId\": 32000047,\r\n                        \"price\": 123,\r\n                        \"productTitle\": \"MY FIRST WORD                 \",\r\n                        \"comment\": \"\",\r\n                        \"unit\": 1\r\n                    }\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"orderId\": 3,\r\n            \"customerId\": 1,\r\n            \"createdAtFr\": \"23-06-2020\",\r\n            \"createdAtEn\": \"2020-06-23\",\r\n            \"stateId\": 4,\r\n            \"stateName\": \"Assignée non achetée\",\r\n            \"total\": null,\r\n            \"cartItems\": [\r\n                {\r\n                    \"quantityOrdered\": 1,\r\n                    \"quantityPurchased\": 0,\r\n                    \"pricePurchased\": null,\r\n                    \"amount\": 200.5,\r\n                    \"purchasedOrNo\": 0,\r\n                    \"product\": {\r\n                        \"productId\": 12019597,\r\n                        \"price\": 385,\r\n                        \"productTitle\": \"NDEO SPRAY PROTECT F 200ML    \",\r\n                        \"comment\": \"NIVEA     \",\r\n                        \"unit\": 1\r\n                    }\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"orderId\": 4,\r\n            \"customerId\": 1,\r\n            \"createdAtFr\": \"23-06-2020\",\r\n            \"createdAtEn\": \"2020-06-23\",\r\n            \"stateId\": 4,\r\n            \"stateName\": \"Assignée non achetée\",\r\n            \"total\": null,\r\n            \"cartItems\": [\r\n                {\r\n                    \"quantityOrdered\": 2,\r\n                    \"quantityPurchased\": 0,\r\n                    \"pricePurchased\": null,\r\n                    \"amount\": 400,\r\n                    \"purchasedOrNo\": 0,\r\n                    \"product\": {\r\n                        \"productId\": 12019597,\r\n                        \"price\": 385,\r\n                        \"productTitle\": \"NDEO SPRAY PROTECT F 200ML    \",\r\n                        \"comment\": \"NIVEA     \",\r\n                        \"unit\": 1\r\n                    }\r\n                },\r\n                {\r\n                    \"quantityOrdered\": 3,\r\n                    \"quantityPurchased\": 0,\r\n                    \"pricePurchased\": null,\r\n                    \"amount\": 900,\r\n                    \"purchasedOrNo\": 0,\r\n                    \"product\": {\r\n                        \"productId\": 32024048,\r\n                        \"price\": 85,\r\n                        \"productTitle\": \"CISEAU ECOLIER S/P NOVA       \",\r\n                        \"comment\": \"\",\r\n                        \"unit\": 1\r\n                    }\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"orderId\": 7,\r\n            \"customerId\": 1,\r\n            \"createdAtFr\": \"26-08-2020\",\r\n            \"createdAtEn\": \"2020-08-26\",\r\n            \"stateId\": 1,\r\n            \"stateName\": \"Non traitée\",\r\n            \"total\": null,\r\n            \"cartItems\": [\r\n                {\r\n                    \"quantityOrdered\": 3,\r\n                    \"quantityPurchased\": 0,\r\n                    \"pricePurchased\": null,\r\n                    \"amount\": 105,\r\n                    \"purchasedOrNo\": 0,\r\n                    \"product\": {\r\n                        \"productId\": 10003161,\r\n                        \"price\": 35,\r\n                        \"productTitle\": \"MIRINDA PECHE 33CL            \",\r\n                        \"comment\": \"PEPSI     \",\r\n                        \"unit\": 1\r\n                    }\r\n                },\r\n                {\r\n                    \"quantityOrdered\": 2,\r\n                    \"quantityPurchased\": 0,\r\n                    \"pricePurchased\": null,\r\n                    \"amount\": 115800,\r\n                    \"purchasedOrNo\": 0,\r\n                    \"product\": {\r\n                        \"productId\": 43002198,\r\n                        \"price\": 57900,\r\n                        \"productTitle\": \"TV LED IRIS 49 E200A          \",\r\n                        \"comment\": \"IRIS      \",\r\n                        \"unit\": 1\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n----------------------------------------------------------------------"
+							},
+							"response": []
+						},
+						{
+							"name": "Cancel Order",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/clients/cancelOrder/1",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"clients",
+										"cancelOrder",
+										"1"
+									]
+								},
+								"description": "Le client actuellement connecter annule ca commande\r\n\r\nhttp://aydak.dev.com/api/v1/clients/cancelOrder/{commande_id}\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": \"Commande annulé avec success.\",\r\n    \"data\": {\r\n        \"id\": 1,\r\n        \"date_livraison\": null,\r\n        \"date_livraison_prevu\": \"2020-06-30 00:00:00\",\r\n        \"situation_id\": 7,\r\n        \"client_id\": 1,\r\n        \"groupe_id\": 1,\r\n        \"created_at\": \"2020-06-23T11:16:57.000000Z\",\r\n        \"updated_at\": \"2020-09-02T13:56:49.000000Z\"\r\n    }\r\n----------------------------------------------------------------------"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Client register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "lastName",
+									"value": "Toto8",
+									"description": "Nom",
+									"type": "text"
+								},
+								{
+									"key": "firstName",
+									"value": "Reno8",
+									"description": "Prénom",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "0550445568",
+									"description": "Le tél. mobile est le username",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "c_password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "groupeId",
+									"value": "1",
+									"description": "Il fait le choix d'un groupe",
+									"type": "text"
+								},
+								{
+									"key": "wilaya",
+									"value": "Alger",
+									"description": "Wilaya en texte",
+									"type": "text"
+								},
+								{
+									"key": "daira",
+									"value": "Sidi M'Hamed",
+									"type": "text"
+								},
+								{
+									"key": "commune",
+									"value": "Sidi M'Hamed",
+									"contentType": "",
+									"description": "commune en texte",
+									"type": "text"
+								},
+								{
+									"key": "district",
+									"value": "Rue des Frères Mansour",
+									"description": "Quartier en texte",
+									"type": "text"
+								},
+								{
+									"key": "latitude",
+									"value": "36.756100",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": "3.056001",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/clients/register",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clients",
+								"register"
+							]
+						},
+						"description": "Inscription des clients\r\n\r\nAjoute : Client - info - adresse de localisation - Compte vide\r\n\r\n- En cas de success status 201 Created :\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"code\": \"201\",\r\n    \"message\": \"Inscription réussie. Un Team-Leader va vous contacter bientot afin de recueillir votre prépaiement.\",\r\n    \"data\": {\r\n        \"clientId\": 7,\r\n        \"groupeId\": \"1\",\r\n        \"userType\": 3,\r\n        \"lastName\": \"CL5 Nom\",\r\n        \"firstName\": \"CL5 Prénom\",\r\n        \"mobile\": \"0660445568\",\r\n        \"avatar\": null,\r\n        \"actived\": 0,\r\n        \"createdAtFr\": \"28-06-2020\",\r\n        \"createdAtEn\": \"2020-06-28\",\r\n        \"locationAddress\": {\r\n            \"street\": \"Rue des Frères Mansour\",\r\n            \"locality\": \"Sidi M'Hamed\",\r\n            \"administrativeArea\": \"Sidi M'Hamed\",\r\n            \"state\": \"Alger\",\r\n            \"country\": \"ALGERIA  (DZA)\",\r\n            \"location\": {\r\n                \"latitude\": \"36.756100\",\r\n                \"longitude\": \"3.056001\"\r\n            },\r\n            \"timezone\": null,\r\n            \"fullAddress\": \"Rue des Frères Mansour, Sidi M'Hamed, Sidi M'Hamed, Alger, \"\r\n        },\r\n        \"wallet\": {\r\n            \"walletId\": 7,\r\n            \"clientId\": 7,\r\n            \"newBalance\": 0,\r\n            \"oldBalance\": 0,\r\n            \"createdAt\": \"28-06-2020 14:07:06\",\r\n            \"updatedAt\": \"28-06-2020 14:07:06\",\r\n            \"state\": 1\r\n        }\r\n    }\r\n-------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "Client login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d9ed6d5d-fbec-4967-b557-b7e760ae5d9d",
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.globals.set(\"refreshToken\", response.data.refreshToken);\r",
+									"pm.globals.set(\"token\", response.data.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "0719026380",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/clients/login",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clients",
+								"login"
+							]
+						},
+						"description": "client Login\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": \"200\",\r\n    \"message\": \"Authentification client réussie.\",\r\n    \"data\": {\r\n        \"clientId\": 1,\r\n        \"groupeId\": 2,\r\n        \"lastName\": \"Walter\",\r\n        \"firstName\": \"Georgianna\",\r\n        \"mobile\": \"0719026380\",\r\n        \"avatar\": null,\r\n        \"actived\": 1,\r\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZGZhMjdmZTI1MGI1NDZlYmUzMmE1YmJiNDgzNTY0NDQyNzYxZWMwMmFlODljNTViNGU4YzVlYWQwNmQ2ZDM3ODg1YTkxN2I3YTY3NTNhOGIiLCJpYXQiOjE1OTMwMDY5MzcsIm5iZiI6MTU5MzAwNjkzNywiZXhwIjoxNjI0NTQyOTM3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.qaB8pnfn-kZmetGYjCh8dQeN7ofclx7yDgxFI1AINsuUfJ8fRNE6PkIT1jELIZ3cLDy7EF-WatOj6ZCkXq53aB4WznDxCOT1o01aDlhCbnJSyeSWJBqXZ6DVduXgwIQi5iMQcWHzi_n8OEyhy94-n_tNjJVoEzfKqnanW5Thc-jEDFtwB_6dU7VVBGbPM8sFArSE8A3ArrF6YKooGfGw0KGlV7EvELAvrxWwkUhNtb4SEL4jC0n4aqy992t6Af69DxbINsimxPK5jKA-ApGb7GKj926tooMh3E1S5euGhFrtF7hvQCdvezkb-cVNca7WlVkS2VytYgu5ZJRvgQBbVzKRB9EysM7p1kjG_EpwMR9qTzfDEC9iwOEiYcSqpWlDlRKORUIrREtZZ9QYR2h0ViCzQVMAPDfNSruxpVnhOFybE2T_94BxRDX6EQh8oU1wwdYetogeDT9Dy1hK_ZOUMp8zdRH0H2XEh-kHK8rUxiQLaRXsnFtHyVHJNcONMyU1apT-qlK1DCL2-C_0RPIe18-vX4iwRaeFOctAMccGBAhU-_OxbG_W56wAPsVBf1U0pgFc16MElpEIuHbxNI8w6PooftiW9HviDlHWPS23sTEiTm5NZ1rxCI7iAmKV6QQfdBSuLS7TzKSNRz73_MIUQ6Gxz2mi-wafZtgpGR6dyAs\",\r\n        \"createdAtFr\": \"23-06-2020\",\r\n        \"createdAtEn\": \"2020-06-23\",\r\n        \"billingAddress\": null,\r\n        \"locationAddress\": {\r\n            \"street\": \"quartier1\",\r\n            \"locality\": \"commune\",\r\n            \"administrativeArea\": \"daira\",\r\n            \"state\": \"wilaya\",\r\n            \"country\": \"ALGERIA  (DZA)\",\r\n            \"location\": {\r\n                \"latitude\": \"1.1\",\r\n                \"longitude\": \"2.2\"\r\n            },\r\n            \"timezone\": null,\r\n            \"fullAddress\": \"quartier1, commune, daira, wilaya, \"\r\n        },\r\n        \"wallet\": {\r\n            \"walletId\": 1,\r\n            \"clientId\": 1,\r\n            \"newBalance\": 0,\r\n            \"oldBalance\": 0,\r\n            \"createdAt\": \"23-06-2020 07:42:57\",\r\n            \"updatedAt\": \"23-06-2020 07:42:57\",\r\n            \"state\": 1\r\n        }\r\n    }\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/clients/logout",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clients",
+								"logout"
+							]
+						},
+						"description": "Deconnexion.\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": \"Successfully logged out\",\r\n    \"data\": null\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "Connected Client Details",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/clients/myDetails",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clients",
+								"myDetails"
+							]
+						},
+						"description": "Détail du client actuellement connecter.\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"code\": \"200\",\r\n    \"message\": \"Success.\",\r\n    \"data\": {\r\n        \"clientId\": 1,\r\n        \"groupeId\": 1,\r\n        \"lastName\": \"Walter\",\r\n        \"firstName\": \"Georgianna\",\r\n        \"mobile\": \"0719026380\",\r\n        \"avatar\": null,\r\n        \"actived\": 1,\r\n        \"token\": null,\r\n        \"createdAtFr\": \"23-06-2020\",\r\n        \"createdAtEn\": \"2020-06-23\",\r\n        \"locationAddress\": {\r\n            \"street\": \"quartier1\",\r\n            \"locality\": \"commune\",\r\n            \"administrativeArea\": \"daira\",\r\n            \"state\": \"wilaya\",\r\n            \"country\": \"ALGERIA  (DZA)\",\r\n            \"location\": {\r\n                \"latitude\": \"1.1\",\r\n                \"longitude\": \"2.2\"\r\n            },\r\n            \"timezone\": null,\r\n            \"fullAddress\": \"quartier1, commune, daira, wilaya, \"\r\n        },\r\n        \"wallet\": {\r\n            \"walletId\": 1,\r\n            \"clientId\": 1,\r\n            \"newBalance\": 0,\r\n            \"oldBalance\": 0,\r\n            \"createdAt\": \"23-06-2020 07:42:57\",\r\n            \"updatedAt\": \"23-06-2020 07:42:57\",\r\n            \"state\": 1\r\n        },\r\n        \"Orders\": [\r\n            {\r\n                \"orderId\": 1,\r\n                \"customerId\": 1,\r\n                \"createdAtFr\": \"23-06-2020\",\r\n                \"createdAtEn\": \"2020-06-23\",\r\n                \"state\": 1,\r\n                \"state_texte\": \"Non traitée\",\r\n                \"total\": null,\r\n                \"cartItems\": [\r\n                    {\r\n                        \"quantity_ordered\": 3,\r\n                        \"quantity_purchased\": null,\r\n                        \"price_purchased\": null,\r\n                        \"purchasedOrNo\": 0,\r\n                        \"product\": {\r\n                            \"productId\": 30001125,\r\n                            \"price\": \"100.00\",\r\n                            \"productTitle\": \"PILE 1222\",\r\n                            \"comment\": \"\",\r\n                            \"unit\": 1\r\n                        }\r\n                    },\r\n                    {\r\n                        \"quantity_ordered\": 2,\r\n                        \"quantity_purchased\": null,\r\n                        \"price_purchased\": null,\r\n                        \"purchasedOrNo\": 0,\r\n                        \"product\": {\r\n                            \"productId\": 12019597,\r\n                            \"price\": \"200.00\",\r\n                            \"productTitle\": \"NDEO SPRAY PROTECT F 200ML    \",\r\n                            \"comment\": \"NIVEA     \",\r\n                            \"unit\": 1\r\n                        }\r\n                    },\r\n                    {\r\n                        \"quantity_ordered\": 1,\r\n                        \"quantity_purchased\": null,\r\n                        \"price_purchased\": null,\r\n                        \"purchasedOrNo\": 0,\r\n                        \"product\": {\r\n                            \"productId\": 32000047,\r\n                            \"price\": \"300.00\",\r\n                            \"productTitle\": \"MY FIRST WORD                 \",\r\n                            \"comment\": \"\",\r\n                            \"unit\": 1\r\n                        }\r\n                    }\r\n                ]\r\n            }\r\n        ],\r\n        \"buyingPreference\": [\r\n            {\r\n                \"productId\": 30001125,\r\n                \"quantity\": 3,\r\n                \"state\": 1\r\n            }\r\n        ]\r\n    }\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "My Account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/clients/myAccount",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clients",
+								"myAccount"
+							]
+						},
+						"description": "Détail du compte client actuellement connecter.\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": \"200\",\r\n    \"message\": \"Success.\",\r\n    \"data\": {\r\n        \"walletId\": 1,\r\n        \"clientId\": 1,\r\n        \"debit\": 0,\r\n        \"credit\": 5000,\r\n        \"newBalance\": 0,\r\n        \"oldBalance\": 0,\r\n        \"createdAt\": \"23-06-2020 07:42:57\",\r\n        \"updatedAt\": \"23-06-2020 07:42:57\",\r\n        \"state\": 1\r\n    }\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "Connected Client Account History",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/clients/accountHistory",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clients",
+								"accountHistory"
+							]
+						},
+						"description": "Historique du compte client actuellement connecter.\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": \"200\",\r\n    \"message\": \"Success.\",\r\n    \"data\": [\r\n        {\r\n            \"id\": 1,\r\n            \"debit\": 0,\r\n            \"credit\": 5000,\r\n            \"ancien_solde\": 0,\r\n            \"nouveau_solde\": 0,\r\n            \"etat\": 1,\r\n            \"client_id\": 1,\r\n            \"groupe_id\": 1,\r\n            \"created_at\": \"2020-06-23T07:42:57.000000Z\",\r\n            \"updated_at\": \"2020-06-23T07:42:57.000000Z\"\r\n        }\r\n    ]\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "WalletId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "newSolde",
+									"value": "900",
+									"type": "text"
+								},
+								{
+									"key": "oldSolde",
+									"value": "1000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/clients/validatePayment",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clients",
+								"validatePayment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Solde Client (balance)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/clients/balance",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clients",
+								"balance"
+							]
+						},
+						"description": "Affiche le nouveau solde du client actuellement connecter.\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": \"Successfully\",\r\n    \"data\": {\r\n        \"newBalance\": 0\r\n    }\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "Teamleader informations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/clients/myTeamleader",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clients",
+								"myTeamleader"
+							]
+						},
+						"description": "Informations team leader du client actuellement connecter.\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"code\": \"200\",\r\n    \"message\": \"Success.\",\r\n    \"data\": {\r\n        \"id\": 1,\r\n        \"nom\": \"Pollich\",\r\n        \"prenom\": \"Emie\",\r\n        \"email\": null,\r\n        \"username\": \"0793258085\",\r\n        \"email_verified_at\": null,\r\n        \"created_at\": \"2020-06-22T13:47:22.000000Z\",\r\n        \"updated_at\": \"2020-06-22T13:47:22.000000Z\",\r\n        \"laravel_through_key\": 1,\r\n        \"user_info\": {\r\n            \"id\": 1,\r\n            \"mobile\": \"0793258085\",\r\n            \"adresse_residence\": \"5046 Burnice Mountains\\nWilmerville, TN 48031-0110\",\r\n            \"user_id\": 1,\r\n            \"profil_id\": 1,\r\n            \"avatar\": null,\r\n            \"etat\": 1,\r\n            \"etape\": 2,\r\n            \"created_at\": null,\r\n            \"updated_at\": null,\r\n            \"profil\": {\r\n                \"id\": 1,\r\n                \"nom\": \"Teamleader\",\r\n                \"etat\": 1,\r\n                \"created_at\": \"2020-06-22T13:47:20.000000Z\",\r\n                \"updated_at\": \"2020-06-22T13:47:20.000000Z\"\r\n            }\r\n        }\r\n    }\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "Show all categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/clients/categories",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clients",
+								"categories"
+							]
+						},
+						"description": "Affiche toutes les catégories de produits.\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": \"200\",\r\n    \"message\": \"Success.\",\r\n    \"data\": [\r\n        {\r\n            \"id\": 1,\r\n            \"libely\": \"Alimentaires\",\r\n            \"etat\": 1,\r\n            \"icon\": \"snow-outline\"\r\n        },\r\n        {\r\n            \"id\": 2,\r\n            \"libely\": \"Netoyages\",\r\n            \"etat\": 1,\r\n            \"icon\": \"train-outline\"\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"libely\": \"BEBE\",\r\n            \"etat\": 1,\r\n            \"icon\": \"umbrella-outline\"\r\n        },\r\n        {\r\n            \"id\": 4,\r\n            \"libely\": \"Bricolage\",\r\n            \"etat\": 1,\r\n            \"icon\": \"thunderstorm-outline\"\r\n        },\r\n        {\r\n            \"id\": 5,\r\n            \"libely\": \"Frais\",\r\n            \"etat\": 1,\r\n            \"icon\": \"watch-outline\"\r\n        },\r\n        {\r\n            \"id\": 6,\r\n            \"libely\": \"Textile\",\r\n            \"etat\": 1,\r\n            \"icon\": \"server-outline\"\r\n        }\r\n    ]\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "Show sub Category by categorie_id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/clients/subcategories/5",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clients",
+								"subcategories",
+								"5"
+							]
+						},
+						"description": "Affiche toutes les sous catégories d'une catégoriee de produits.\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": \"200\",\r\n    \"message\": \"Success.\",\r\n    \"data\": [\r\n        {\r\n            \"id\": 60,\r\n            \"libely\": \"CHAUSSURE                     \",\r\n            \"categorie_id\": 5,\r\n            \"etat\": 1,\r\n            \"icon\": null\r\n        },\r\n        {\r\n            \"id\": 61,\r\n            \"libely\": \"BEBE                          \",\r\n            \"categorie_id\": 5,\r\n            \"etat\": 1,\r\n            \"icon\": null\r\n        },\r\n        {\r\n            \"id\": 62,\r\n            \"libely\": \"ENFANT                        \",\r\n            \"categorie_id\": 5,\r\n            \"etat\": 1,\r\n            \"icon\": null\r\n        },\r\n        {\r\n            \"id\": 63,\r\n            \"libely\": \"FEMME                         \",\r\n            \"categorie_id\": 5,\r\n            \"etat\": 1,\r\n            \"icon\": null\r\n        },\r\n        {\r\n            \"id\": 64,\r\n            \"libely\": \"HOMME                         \",\r\n            \"categorie_id\": 5,\r\n            \"etat\": 1,\r\n            \"icon\": null\r\n        },\r\n        {\r\n            \"id\": 65,\r\n            \"libely\": \"LINGE DE MAISON               \",\r\n            \"categorie_id\": 5,\r\n            \"etat\": 1,\r\n            \"icon\": null\r\n        },\r\n        {\r\n            \"id\": 66,\r\n            \"libely\": \"ACCESSOIRE                    \",\r\n            \"categorie_id\": 5,\r\n            \"etat\": 1,\r\n            \"icon\": null\r\n        }\r\n    ]\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "Groupe Liste",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/clients/groupesList",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clients",
+								"groupesList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Nearest Groupes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/clients/findnearest?latitude=36.753574&longitude=3.053983&radius=2.5",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clients",
+								"findnearest"
+							],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "36.753574"
+								},
+								{
+									"key": "longitude",
+									"value": "3.053983"
+								},
+								{
+									"key": "radius",
+									"value": "2.5",
+									"description": "Rayon en Kilomètre"
+								}
+							]
+						},
+						"description": "----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"code\": \"200\",\r\n    \"message\": \"Successfully.\",\r\n    \"total\": 2,\r\n    \"data\": [\r\n        {\r\n            \"id\": 1,\r\n            \"nom\": \"Mohamed Zekkal\",\r\n            \"photo\": \"eaec93f6-99eb-3e83-8340-69ef6e4ff1ed.png\",\r\n            \"latitude\": \"36.755535\",\r\n            \"longitude\": \"3.055553\",\r\n            \"etat\": 1,\r\n            \"distance\": 0.2590583375623052,\r\n            \"coursiers_in_groupe_count\": 3,\r\n            \"teamleader_in_groupe\": {\r\n                \"id\": 1,\r\n                \"nom\": \"Pollich\",\r\n                \"prenom\": \"Emie\",\r\n                \"email\": null,\r\n                \"username\": \"0793258085\",\r\n                \"email_verified_at\": null,\r\n                \"created_at\": \"2020-06-22T13:47:22.000000Z\",\r\n                \"updated_at\": \"2020-06-22T13:47:22.000000Z\",\r\n                \"laravel_through_key\": 1,\r\n                \"user_info\": {\r\n                    \"id\": 1,\r\n                    \"mobile\": \"0793258085\",\r\n                    \"adresse_residence\": \"5046 Burnice Mountains\\nWilmerville, TN 48031-0110\",\r\n                    \"user_id\": 1,\r\n                    \"profil_id\": 1,\r\n                    \"avatar\": null,\r\n                    \"etat\": 1,\r\n                    \"etape\": 2,\r\n                    \"created_at\": null,\r\n                    \"updated_at\": null,\r\n                    \"profil\": {\r\n                        \"id\": 1,\r\n                        \"nom\": \"Teamleader\",\r\n                        \"etat\": 1,\r\n                        \"created_at\": \"2020-06-22T13:47:20.000000Z\",\r\n                        \"updated_at\": \"2020-06-22T13:47:20.000000Z\"\r\n                    }\r\n                }\r\n            }\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"nom\": \"Ferhat BOUSSAD\",\r\n            \"photo\": \"8fce8329-d164-37e1-8fa1-fdb61c00486d.png\",\r\n            \"latitude\": \"36.765726\",\r\n            \"longitude\": \"3.051843\",\r\n            \"etat\": 1,\r\n            \"distance\": 1.3646227350201725,\r\n            \"coursiers_in_groupe_count\": 3,\r\n            \"teamleader_in_groupe\": {\r\n                \"id\": 9,\r\n                \"nom\": \"Hilpert\",\r\n                \"prenom\": \"Iva\",\r\n                \"email\": null,\r\n                \"username\": \"0687347461\",\r\n                \"email_verified_at\": null,\r\n                \"created_at\": \"2020-06-22T13:47:22.000000Z\",\r\n                \"updated_at\": \"2020-06-22T13:47:22.000000Z\",\r\n                \"laravel_through_key\": 3,\r\n                \"user_info\": {\r\n                    \"id\": 9,\r\n                    \"mobile\": \"0687347461\",\r\n                    \"adresse_residence\": \"489 Bechtelar Tunnel\\nOsborneside, MS 31518-9590\",\r\n                    \"user_id\": 9,\r\n                    \"profil_id\": 1,\r\n                    \"avatar\": null,\r\n                    \"etat\": 1,\r\n                    \"etape\": 2,\r\n                    \"created_at\": null,\r\n                    \"updated_at\": null,\r\n                    \"profil\": {\r\n                        \"id\": 1,\r\n                        \"nom\": \"Teamleader\",\r\n                        \"etat\": 1,\r\n                        \"created_at\": \"2020-06-22T13:47:20.000000Z\",\r\n                        \"updated_at\": \"2020-06-22T13:47:20.000000Z\"\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    ]\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "Payment To Teamleader",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "amountPaid",
+									"value": "500",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/clients/paymentToTeamleader",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clients",
+								"paymentToTeamleader"
+							]
+						},
+						"description": "Versement du client actuellement connecter vers teamleader\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": \"Successfully\",\r\n    \"data\": {\r\n        \"debit\": 0,\r\n        \"credit\": \"500\",\r\n        \"ancien_solde\": 3500,\r\n        \"nouveau_solde\": 4000,\r\n        \"etat\": 1,\r\n        \"user_id\": 1,\r\n        \"profil_id\": 1,\r\n        \"groupe_id\": 1,\r\n        \"type\": \"versement\",\r\n        \"commande_id\": 0,\r\n        \"updated_at\": \"2020-09-07T14:20:41.000000Z\",\r\n        \"created_at\": \"2020-09-07T14:20:41.000000Z\",\r\n        \"id\": 11\r\n    }\r\n\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Teamleader",
+					"item": [
+						{
+							"name": "TM :: Register Step 2",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "multipart/form-data"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "groupeName",
+											"value": "Bamako Bis2",
+											"type": "text"
+										},
+										{
+											"key": "userId",
+											"value": "17",
+											"description": "Id Teamleader",
+											"type": "text"
+										},
+										{
+											"key": "cardId",
+											"type": "file",
+											"src": "/C:/Users/salim3/Pictures/Screenpresso/Thumbnails/2017-07-20_16h37_45.png"
+										},
+										{
+											"key": "rapSheet",
+											"type": "file",
+											"src": "/C:/Users/salim3/Pictures/Screenpresso/2017-07-16_15h53_16.png"
+										},
+										{
+											"key": "district",
+											"value": "Rue Mohamed Benzineb",
+											"description": "Quartier",
+											"type": "text"
+										},
+										{
+											"key": "commune",
+											"value": "Sidi M'Hamed",
+											"type": "text"
+										},
+										{
+											"key": "daira",
+											"value": "Sidi M'Hamed",
+											"type": "text"
+										},
+										{
+											"key": "wilaya",
+											"value": "Alger",
+											"type": "text"
+										},
+										{
+											"key": "latitude",
+											"value": "36.754655",
+											"type": "text"
+										},
+										{
+											"key": "longitude",
+											"value": "3.056532",
+											"type": "text"
+										},
+										{
+											"key": "isLeader",
+											"value": "1",
+											"type": "text"
+										}
+									],
+									"options": {
+										"formdata": {}
+									}
+								},
+								"url": {
+									"raw": "http://aydak.cooffa.shop//api/v1/users/tm/nextregister",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"cooffa",
+										"shop"
+									],
+									"path": [
+										"",
+										"api",
+										"v1",
+										"users",
+										"tm",
+										"nextregister"
+									]
+								},
+								"description": "Inscription Teamleader étape 02\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n\r\n    \"code\": \"201\",\r\n    \"message\": \"Inscription (etape 2) réussie.\",\r\n    \"data\": {\r\n        \"id\": 8,\r\n        \"mobile\": \"0670114477\",\r\n        \"latitude\": \"36.754655\",\r\n        \"longitude\": \"3.056532\",\r\n        \"deg2rad_longitude\": null,\r\n        \"deg2rad_latitude\": null,\r\n        \"quartier_livraison\": null,\r\n        \"ville_livraison\": null,\r\n        \"daira_livraison\": null,\r\n        \"wilaya_livraison\": null,\r\n        \"pays_livraison\": null,\r\n        \"adresse_residence\": \"habite chez lui 02\",\r\n        \"quartier_residence\": \"Rue Mohamed Benzineb\",\r\n        \"ville_residence\": \"Sidi M'Hamed\",\r\n        \"daira_residence\": \"Sidi M'Hamed\",\r\n        \"wilaya_residence\": \"Alger\",\r\n        \"pays_residence\": \"Algérie\",\r\n        \"user_id\": 18,\r\n        \"profil_id\": 1,\r\n        \"etat\": 1,\r\n        \"etape\": 1,\r\n        \"created_at\": null,\r\n        \"updated_at\": null\r\n    }\r\n\r\n----------------------------------------------------------------------"
+							},
+							"response": []
+						},
+						{
+							"name": "Invitation Shopper",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "61c0a5b0-3e68-4872-8df0-849db2ce698c",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "7b8ae87f-1e5a-45ae-86a3-db468ee5918d",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "mobile",
+											"value": "0550123488",
+											"type": "text"
+										}
+									],
+									"options": {
+										"formdata": {}
+									}
+								},
+								"url": {
+									"raw": "http://aydak.cooffa.shop/api/v1/users/tm/invitation",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"cooffa",
+										"shop"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"tm",
+										"invitation"
+									]
+								},
+								"description": "Teamleader invite un coursier à sont groupe.\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": \"Invitation à bien été envoyée.\",\r\n    \"data\": {\r\n        \"mobile\": \"0550123456\",\r\n        \"code\": \"417133\",\r\n        \"etat\": \"0\",\r\n        \"user_id\": 1,\r\n        \"groupe_id\": 1,\r\n        \"updated_at\": \"2020-08-18T08:11:05.000000Z\",\r\n        \"created_at\": \"2020-08-18T08:11:05.000000Z\",\r\n        \"id\": 5\r\n    }\r\n----------------------------------------------------------------------"
+							},
+							"response": []
+						},
+						{
+							"name": "UsersOrders for team",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/users/tm/orders",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"tm",
+										"orders"
+									]
+								},
+								"description": "Affiche tous les courssiers du teamleader avec toutes leurs commandes.\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"code\": \"200\",\r\n    \"message\": \"Success.\",\r\n    \"data\": [\r\n        {\r\n            \"userId\": 2,\r\n            \"groupeId\": 2,\r\n            \"userType\": 2,\r\n            \"type\": \"Coursier\",\r\n            \"lastName\": \"Gerlach\",\r\n            \"firstName\": \"Otilia\",\r\n            \"mobile\": \"0555705655\",\r\n            \"avatar\": null,\r\n            \"actived\": 1,\r\n            \"createdAtFr\": \"22-06-2020\",\r\n            \"createdAtEn\": \"2020-06-22\",\r\n            \"billingAddress\": \"688 Precious Key\\nChayafort, UT 57974-5606\",\r\n            \"locationAddress\": {\r\n                \"street\": \"quartier\",\r\n                \"locality\": \"commune\",\r\n                \"administrativeArea\": \"daira\",\r\n                \"state\": \"wilaya\",\r\n                \"country\": \"ALGERIA  (DZA)\",\r\n                \"location\": {\r\n                    \"latitude\": \"1\",\r\n                    \"longitude\": \"2\"\r\n                },\r\n                \"timezone\": null,\r\n                \"fullAddress\": \"quartier, commune, daira, wilaya, \"\r\n            },\r\n            \"wallet\": {\r\n                \"walletId\": 2,\r\n                \"userId\": 2,\r\n                \"newBalance\": 500,\r\n                \"oldBalance\": 0,\r\n                \"createdAt\": \"24-06-2020 14:03:46\",\r\n                \"updatedAt\": \"24-06-2020 14:03:47\",\r\n                \"state\": 1\r\n            },\r\n            \"Orders\": [\r\n                {\r\n                    \"orderId\": 1,\r\n                    \"customerId\": 1,\r\n                    \"createdAtFr\": \"23-06-2020\",\r\n                    \"createdAtEn\": \"2020-06-23\",\r\n                    \"state\": 1,\r\n                    \"state_texte\": \"Non traitée\",\r\n                    \"total\": null,\r\n                    \"cartItems\": [\r\n                        {\r\n                            \"quantity_ordered\": 3,\r\n                            \"quantity_purchased\": null,\r\n                            \"price_purchased\": null,\r\n                            \"purchasedOrNo\": 0,\r\n                            \"product\": {\r\n                                \"productId\": 30001125,\r\n                                \"price\": \"100.00\",\r\n                                \"productTitle\": \"PILE 1222\",\r\n                                \"comment\": \"\",\r\n                                \"unit\": 1\r\n                            }\r\n                        },\r\n                        {\r\n                            \"quantity_ordered\": 2,\r\n                            \"quantity_purchased\": null,\r\n                            \"price_purchased\": null,\r\n                            \"purchasedOrNo\": 0,\r\n                            \"product\": {\r\n                                \"productId\": 12019597,\r\n                                \"price\": \"200.00\",\r\n                                \"productTitle\": \"NDEO SPRAY PROTECT F 200ML    \",\r\n                                \"comment\": \"NIVEA     \",\r\n                                \"unit\": 1\r\n                            }\r\n                        },\r\n                        {\r\n                            \"quantity_ordered\": 1,\r\n                            \"quantity_purchased\": null,\r\n                            \"price_purchased\": null,\r\n                            \"purchasedOrNo\": 0,\r\n                            \"product\": {\r\n                                \"productId\": 32000047,\r\n                                \"price\": \"300.00\",\r\n                                \"productTitle\": \"MY FIRST WORD                 \",\r\n                                \"comment\": \"\",\r\n                                \"unit\": 1\r\n                            }\r\n                        }\r\n                    ],\r\n                    \"customerData\": {\r\n                        \"userId\": 1,\r\n                        \"groupeId\": 2,\r\n                        \"userType\": 3,\r\n                        \"lastName\": \"Walter\",\r\n                        \"firstName\": \"Georgianna\",\r\n                        \"mobile\": \"0719026380\",\r\n                        \"avatar\": null,\r\n                        \"createdAtFr\": \"23-06-2020\",\r\n                        \"createdAtEn\": \"2020-06-23\",\r\n                        \"locationAddress\": {\r\n                            \"street\": \"quartier1\",\r\n                            \"locality\": \"commune\",\r\n                            \"administrativeArea\": \"daira\",\r\n                            \"state\": \"wilaya\",\r\n                            \"country\": \"ALGERIA  (DZA)\",\r\n                            \"location\": {\r\n                                \"latitude\": \"1.1\",\r\n                                \"longitude\": \"2.2\"\r\n                            },\r\n                            \"timezone\": null,\r\n                            \"fullAddress\": \"quartier1, commune, daira, wilaya, \"\r\n                        },\r\n                        \"wallet\": {\r\n                            \"walletId\": 1,\r\n                            \"clientId\": 1,\r\n                            \"newBalance\": 0,\r\n                            \"oldBalance\": 0,\r\n                            \"createdAt\": \"23-06-2020 07:42:57\",\r\n                            \"updatedAt\": \"23-06-2020 07:42:57\",\r\n                            \"state\": 1\r\n                        }\r\n                    }\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"userId\": 3,\r\n            \"groupeId\": 3,\r\n            \"userType\": 2,\r\n            \"type\": \"Coursier\",\r\n            \"lastName\": \"Russel\",\r\n            \"firstName\": \"Cristal\",\r\n            \"mobile\": \"0546680603\",\r\n            \"avatar\": null,\r\n            \"actived\": 1,\r\n            \"createdAtFr\": \"22-06-2020\",\r\n            \"createdAtEn\": \"2020-06-22\",\r\n            \"billingAddress\": \"66575 Smith Road\\nEast Aleneland, MT 34284-6576\",\r\n            \"locationAddress\": {\r\n                \"street\": \"quartier\",\r\n                \"locality\": \"commune\",\r\n                \"administrativeArea\": \"daira\",\r\n                \"state\": \"wilaya\",\r\n                \"country\": \"ALGERIA  (DZA)\",\r\n                \"location\": {\r\n                    \"latitude\": \"1\",\r\n                    \"longitude\": \"2\"\r\n                },\r\n                \"timezone\": null,\r\n                \"fullAddress\": \"quartier, commune, daira, wilaya, \"\r\n            },\r\n            \"wallet\": null,\r\n            \"Orders\": [\r\n                {\r\n                    \"orderId\": 2,\r\n                    \"customerId\": 2,\r\n                    \"createdAtFr\": \"23-06-2020\",\r\n                    \"createdAtEn\": \"2020-06-23\",\r\n                    \"state\": 1,\r\n                    \"state_texte\": \"Non traitée\",\r\n                    \"total\": null,\r\n                    \"cartItems\": [\r\n                        {\r\n                            \"quantity_ordered\": 4,\r\n                            \"quantity_purchased\": null,\r\n                            \"price_purchased\": null,\r\n                            \"purchasedOrNo\": 0,\r\n                            \"product\": {\r\n                                \"productId\": 32024048,\r\n                                \"price\": \"400.00\",\r\n                                \"productTitle\": \"CISEAU ECOLIER S/P NOVA       \",\r\n                                \"comment\": \"\",\r\n                                \"unit\": 1\r\n                            }\r\n                        },\r\n                        {\r\n                            \"quantity_ordered\": 2,\r\n                            \"quantity_purchased\": null,\r\n                            \"price_purchased\": null,\r\n                            \"purchasedOrNo\": 0,\r\n                            \"product\": {\r\n                                \"productId\": 33012834,\r\n                                \"price\": \"500.00\",\r\n                                \"productTitle\": \"PEL PONEY 24CM                \",\r\n                                \"comment\": \"\",\r\n                                \"unit\": 1\r\n                            }\r\n                        },\r\n                        {\r\n                            \"quantity_ordered\": 1,\r\n                            \"quantity_purchased\": null,\r\n                            \"price_purchased\": null,\r\n                            \"purchasedOrNo\": 0,\r\n                            \"product\": {\r\n                                \"productId\": 33014713,\r\n                                \"price\": \"600.00\",\r\n                                \"productTitle\": \"ACCESSOIRE DE CUISINE         \",\r\n                                \"comment\": \"\",\r\n                                \"unit\": 1\r\n                            }\r\n                        }\r\n                    ],\r\n                    \"customerData\": {\r\n                        \"userId\": 2,\r\n                        \"groupeId\": 3,\r\n                        \"userType\": 3,\r\n                        \"lastName\": \"Green\",\r\n                        \"firstName\": \"Mac\",\r\n                        \"mobile\": \"0659274962\",\r\n                        \"avatar\": null,\r\n                        \"createdAtFr\": \"23-06-2020\",\r\n                        \"createdAtEn\": \"2020-06-23\",\r\n                        \"locationAddress\": {\r\n                            \"street\": \"quartier2\",\r\n                            \"locality\": \"commune\",\r\n                            \"administrativeArea\": \"daira\",\r\n                            \"state\": \"wilaya\",\r\n                            \"country\": \"ALGERIA  (DZA)\",\r\n                            \"location\": {\r\n                                \"latitude\": \"3\",\r\n                                \"longitude\": \"4\"\r\n                            },\r\n                            \"timezone\": null,\r\n                            \"fullAddress\": \"quartier2, commune, daira, wilaya, \"\r\n                        },\r\n                        \"wallet\": {\r\n                            \"walletId\": 2,\r\n                            \"clientId\": 2,\r\n                            \"newBalance\": 0,\r\n                            \"oldBalance\": 0,\r\n                            \"createdAt\": \"23-06-2020 07:42:57\",\r\n                            \"updatedAt\": \"23-06-2020 07:42:57\",\r\n                            \"state\": 1\r\n                        }\r\n                    }\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"userId\": 4,\r\n            \"groupeId\": 4,\r\n            \"userType\": 2,\r\n            \"type\": \"Coursier\",\r\n            \"lastName\": \"Von\",\r\n            \"firstName\": \"Makayla\",\r\n            \"mobile\": \"0542664304\",\r\n            \"avatar\": null,\r\n            \"actived\": 1,\r\n            \"createdAtFr\": \"22-06-2020\",\r\n            \"createdAtEn\": \"2020-06-22\",\r\n            \"billingAddress\": \"550 Dortha Haven\\nPort Gastonmouth, NV 53271-0780\",\r\n            \"locationAddress\": null,\r\n            \"wallet\": null,\r\n            \"Orders\": []\r\n        }\r\n    ]\r\n----------------------------------------------------------------------"
+							},
+							"response": []
+						},
+						{
+							"name": "Orders Not Traited (Type=1)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/users/tm/ordersnottraited",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"tm",
+										"ordersnottraited"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Orders Traited Not assigned (Type=3)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/users/tm/orderstraitednotassigned",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"tm",
+										"orderstraitednotassigned"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Orders Assigned Not Purchased",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/users/tm/ordersassignednotpurchased",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"tm",
+										"ordersassignednotpurchased"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Orders Purchased Uncontrolled",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/users/tm/orderspurchaseduncontrolled",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"tm",
+										"orderspurchaseduncontrolled"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Orders Controlled Not Delivered",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/users/tm/orderscontrollednotdelivered",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"tm",
+										"orderscontrollednotdelivered"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Orders Delivered",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/users/tm/ordersdelivered",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"tm",
+										"ordersdelivered"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Switch Login",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/users/tm/switchlogin",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"tm",
+										"switchlogin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Payment To Shopper",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "amountPaid",
+											"value": "250",
+											"type": "text"
+										},
+										{
+											"key": "shopperId",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/users/tm/paymentToShopper",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"tm",
+										"paymentToShopper"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Orders Update Situation",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"orders\": [\r\n        {\r\n            \"id\": \"8\",\r\n            \"situationId\": \"2\"\r\n        },\r\n        {\r\n            \"id\": \"9\",\r\n            \"situationId\": \"3\"\r\n        }\r\n    ]\r\n\r\n}"
+								},
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/users/tm/ordersupdatesituation",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"tm",
+										"ordersupdatesituation"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Shopper",
+					"item": [
+						{
+							"name": "SH :: Register Step 2",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "multipart/form-data",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "groupeId",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "userId",
+											"value": "10",
+											"description": "Id Shopper",
+											"type": "text"
+										},
+										{
+											"key": "cardId",
+											"type": "file",
+											"src": "/C:/Users/salim3/Pictures/Screenpresso/Thumbnails/2017-04-05_14h57_10.png"
+										},
+										{
+											"key": "rapSheet",
+											"type": "file",
+											"src": "/C:/Users/salim3/Pictures/Screenpresso/Thumbnails/2017-07-16_15h53_16.png"
+										},
+										{
+											"key": "district",
+											"value": "El Houma",
+											"type": "text"
+										},
+										{
+											"key": "commune",
+											"value": "Birkhadem",
+											"type": "text"
+										},
+										{
+											"key": "daira",
+											"value": "Bir Mourad Rais",
+											"type": "text"
+										},
+										{
+											"key": "wilaya",
+											"value": "Alger",
+											"type": "text"
+										},
+										{
+											"key": "latitude",
+											"value": "36.714093",
+											"type": "text"
+										},
+										{
+											"key": "longitude",
+											"value": "3.045781",
+											"type": "text"
+										}
+									],
+									"options": {
+										"formdata": {}
+									}
+								},
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/users/shopper/nextregister",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"shopper",
+										"nextregister"
+									]
+								},
+								"description": "Inscription coursier étape 02\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"code\": \"201\",\r\n    \"message\": \"Inscription (etape 2) réussie.\",\r\n    \"data\": {\r\n        \"id\": 3,\r\n        \"mobile\": \"0670556666\",\r\n        \"latitude\": \"36.714093\",\r\n        \"longitude\": \"3.045781\",\r\n        \"deg2rad_longitude\": null,\r\n        \"deg2rad_latitude\": null,\r\n        \"quartier_livraison\": null,\r\n        \"ville_livraison\": null,\r\n        \"daira_livraison\": null,\r\n        \"wilaya_livraison\": null,\r\n        \"pays_livraison\": null,\r\n        \"adresse_residence\": \"habite chez lui\",\r\n        \"quartier_residence\": \"El Houma\",\r\n        \"ville_residence\": \"Birkhadem\",\r\n        \"daira_residence\": \"Bir Mourad Rais\",\r\n        \"wilaya_residence\": \"Alger\",\r\n        \"pays_residence\": null,\r\n        \"user_id\": 10,\r\n        \"profil_id\": 2,\r\n        \"etat\": 1,\r\n        \"etape\": 1,\r\n        \"created_at\": \"2020-06-03 11:17:10\",\r\n        \"updated_at\": \"2020-06-03 11:17:11\"\r\n    }\r\n----------------------------------------------------------------------"
+							},
+							"response": []
+						},
+						{
+							"name": "Validate Shopper Code",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "mobile",
+											"value": "0550123456",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "320114",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/users/shopper/code",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"shopper",
+										"code"
+									]
+								},
+								"description": "----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": \"Le coursier à bien été invité.\",\r\n    \"data\": {\r\n        \"id\": 24,\r\n        \"mobile\": \"0550123456\",\r\n        \"code\": \"320114\",\r\n        \"date_activation\": null,\r\n        \"etat\": 0,\r\n        \"user_id\": 1,\r\n        \"groupe_id\": 1,\r\n        \"created_at\": \"2020-08-18T09:55:00.000000Z\",\r\n        \"updated_at\": \"2020-08-18T09:55:00.000000Z\",\r\n        \"user\": {\r\n            \"id\": 1,\r\n            \"nom\": \"Pollich\",\r\n            \"prenom\": \"Emie\",\r\n            \"email\": null,\r\n            \"username\": \"0793258085\",\r\n            \"email_verified_at\": null,\r\n            \"created_at\": \"2020-06-22T13:47:22.000000Z\",\r\n            \"updated_at\": \"2020-06-22T13:47:22.000000Z\"\r\n        },\r\n        \"groupe\": {\r\n            \"id\": 1,\r\n            \"nom\": \"Mohamed Zekkal\",\r\n            \"photo\": \"eaec93f6-99eb-3e83-8340-69ef6e4ff1ed.png\",\r\n            \"daira\": \"Sidi M'Hamed\",\r\n            \"latitude\": \"36.755535\",\r\n            \"longitude\": \"3.055553\",\r\n            \"deg2rad_longitude\": null,\r\n            \"deg2rad_latitude\": null,\r\n            \"etat\": 1,\r\n            \"created_at\": \"2020-06-22T13:47:21.000000Z\",\r\n            \"updated_at\": \"2020-06-22T13:47:21.000000Z\"\r\n        }\r\n    }\r\n----------------------------------------------------------------------"
+							},
+							"response": []
+						},
+						{
+							"name": "Show groupe",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/groupes/show/2",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"groupes",
+										"show",
+										"2"
+									]
+								},
+								"description": "----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"id\": 2,\r\n    \"nom\": \"Boulevard BASTA\",\r\n    \"photo\": \"84e1a848-b51f-3869-b3a5-ec13a516991a.png\",\r\n    \"daira\": \"Bab El Oued\",\r\n    \"latitude\": \"36.792271\",\r\n    \"longitude\": \"3.053523\",\r\n    \"deg2rad_longitude\": null,\r\n    \"deg2rad_latitude\": null,\r\n    \"etat\": 1,\r\n    \"created_at\": \"2020-06-22T13:47:21.000000Z\",\r\n    \"updated_at\": \"2020-06-22T13:47:21.000000Z\",\r\n    \"users_in_groupe\": [\r\n        {\r\n            \"id\": 5,\r\n            \"nom\": \"Considine\",\r\n            \"prenom\": \"Pedro\",\r\n            \"email\": null,\r\n            \"username\": \"0690713821\",\r\n            \"email_verified_at\": null,\r\n            \"created_at\": \"2020-06-22T13:47:22.000000Z\",\r\n            \"updated_at\": \"2020-06-22T13:47:22.000000Z\",\r\n            \"laravel_through_key\": 2,\r\n            \"user_info\": {\r\n                \"id\": 5,\r\n                \"mobile\": \"0690713821\",\r\n                \"adresse_residence\": \"67885 Breana Vista\\nLake Elian, WY 73544-6499\",\r\n                \"user_id\": 5,\r\n                \"profil_id\": 1,\r\n                \"avatar\": null,\r\n                \"etat\": 1,\r\n                \"etape\": 2,\r\n                \"created_at\": null,\r\n                \"updated_at\": null,\r\n                \"profil\": {\r\n                    \"id\": 1,\r\n                    \"nom\": \"Teamleader\",\r\n                    \"etat\": 1,\r\n                    \"created_at\": \"2020-06-22T13:47:20.000000Z\",\r\n                    \"updated_at\": \"2020-06-22T13:47:20.000000Z\"\r\n                }\r\n            }\r\n        },\r\n        {\r\n            \"id\": 6,\r\n            \"nom\": \"Kautzer\",\r\n            \"prenom\": \"Annalise\",\r\n            \"email\": null,\r\n            \"username\": \"0525840318\",\r\n            \"email_verified_at\": null,\r\n            \"created_at\": \"2020-06-22T13:47:22.000000Z\",\r\n            \"updated_at\": \"2020-06-22T13:47:22.000000Z\",\r\n            \"laravel_through_key\": 2,\r\n            \"user_info\": {\r\n                \"id\": 6,\r\n                \"mobile\": \"0525840318\",\r\n                \"adresse_residence\": \"41668 Dooley Keys\\nEast Alia, SC 10902\",\r\n                \"user_id\": 6,\r\n                \"profil_id\": 2,\r\n                \"avatar\": null,\r\n                \"etat\": 1,\r\n                \"etape\": 2,\r\n                \"created_at\": null,\r\n                \"updated_at\": null,\r\n                \"profil\": {\r\n                    \"id\": 2,\r\n                    \"nom\": \"Coursier\",\r\n                    \"etat\": 1,\r\n                    \"created_at\": \"2020-06-22T13:47:20.000000Z\",\r\n                    \"updated_at\": \"2020-06-22T13:47:20.000000Z\"\r\n                }\r\n            }\r\n        },\r\n        {\r\n            \"id\": 7,\r\n            \"nom\": \"Conn\",\r\n            \"prenom\": \"Darryl\",\r\n            \"email\": null,\r\n            \"username\": \"0725454886\",\r\n            \"email_verified_at\": null,\r\n            \"created_at\": \"2020-06-22T13:47:22.000000Z\",\r\n            \"updated_at\": \"2020-06-22T13:47:22.000000Z\",\r\n            \"laravel_through_key\": 2,\r\n            \"user_info\": {\r\n                \"id\": 7,\r\n                \"mobile\": \"0725454886\",\r\n                \"adresse_residence\": \"6944 Boyle Circle\\nLake Catherinechester, NE 00234\",\r\n                \"user_id\": 7,\r\n                \"profil_id\": 2,\r\n                \"avatar\": null,\r\n                \"etat\": 1,\r\n                \"etape\": 2,\r\n                \"created_at\": null,\r\n                \"updated_at\": null,\r\n                \"profil\": {\r\n                    \"id\": 2,\r\n                    \"nom\": \"Coursier\",\r\n                    \"etat\": 1,\r\n                    \"created_at\": \"2020-06-22T13:47:20.000000Z\",\r\n                    \"updated_at\": \"2020-06-22T13:47:20.000000Z\"\r\n                }\r\n            }\r\n        },\r\n        {\r\n            \"id\": 8,\r\n            \"nom\": \"Gusikowski\",\r\n            \"prenom\": \"Arch\",\r\n            \"email\": null,\r\n            \"username\": \"0670029782\",\r\n            \"email_verified_at\": null,\r\n            \"created_at\": \"2020-06-22T13:47:22.000000Z\",\r\n            \"updated_at\": \"2020-06-22T13:47:22.000000Z\",\r\n            \"laravel_through_key\": 2,\r\n            \"user_info\": {\r\n                \"id\": 8,\r\n                \"mobile\": \"0670029782\",\r\n                \"adresse_residence\": \"1548 DuBuque Forest\\nEast Haskell, WI 71800-9368\",\r\n                \"user_id\": 8,\r\n                \"profil_id\": 2,\r\n                \"avatar\": null,\r\n                \"etat\": 1,\r\n                \"etape\": 2,\r\n                \"created_at\": null,\r\n                \"updated_at\": null,\r\n                \"profil\": {\r\n                    \"id\": 2,\r\n                    \"nom\": \"Coursier\",\r\n                    \"etat\": 1,\r\n                    \"created_at\": \"2020-06-22T13:47:20.000000Z\",\r\n                    \"updated_at\": \"2020-06-22T13:47:20.000000Z\"\r\n                }\r\n            }\r\n        }\r\n    ]\r\n----------------------------------------------------------------------"
+							},
+							"response": []
+						},
+						{
+							"name": "Purchase",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "amountPaid",
+											"value": "500",
+											"type": "text"
+										},
+										{
+											"key": "orderId",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/users/shopper/purchase",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"shopper",
+										"purchase"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Payment To Teamleader",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "amountPaid",
+											"value": "300",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://aydak.dev.com/api/v1/users/shopper/paymentToTeamleader",
+									"protocol": "http",
+									"host": [
+										"aydak",
+										"dev",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"shopper",
+										"paymentToTeamleader"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Register Step 1 (Teamleader/Shopper)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "lastName",
+									"value": "Mamadou",
+									"description": "Nom",
+									"type": "text"
+								},
+								{
+									"key": "firstName",
+									"value": "Kaita",
+									"description": "Prénom",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "0660112233",
+									"description": "Mobile",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "c_password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Bamako Mali",
+									"type": "text"
+								},
+								{
+									"key": "profil",
+									"value": "1",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "http://aydak.cooffa.shop/api/v1/users/register",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"cooffa",
+								"shop"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"register"
+							]
+						},
+						"description": "Inscription Teamleader/Coursier étape 01\r\n\r\n- En cas de success status 201 Created :\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n\r\n    \"code\": \"201\",\r\n    \"message\": \"Inscription (etape 1) réussie.\",\r\n    \"data\": {\r\n        \"nom\": \"Nom teamleader\",\r\n        \"prenom\": \"Prénom teamleader\",\r\n        \"username\": \"0670114477\",\r\n        \"updated_at\": \"2020-06-21T10:44:03.000000Z\",\r\n        \"created_at\": \"2020-06-21T10:44:03.000000Z\",\r\n        \"id\": 18,\r\n        \"apitoken\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZjAxNjUzMTU3ZGM1YjdmNzNlYzExYmY3MjUwMDhiZmI2Yzc1MTJlMDc3YjRiZTMwMWRkZGJjYzM0Mzg2ZjQ5NDFmNGYyMDUwOTBmNTA2YTUiLCJpYXQiOjE1OTI3MzYyNDMsIm5iZiI6MTU5MjczNjI0MywiZXhwIjoxNjI0MjcyMjQzLCJzdWIiOiIxOCIsInNjb3BlcyI6W119.O0fz96lLCWo8IiUtdgFyjtN-YvXqtnkmVFL7D_bxQyR1xXbRM9kFZPC6J23g4adoBNfXkfebqgeV9yGlB3EbHXgQu9W4dWRbFjO9he1gNMJA5EYSZ8nXuE7lNy5FOu_lgF1UyeE-m4a09ROy_RtNA1v-W-ioj_4hyZwUfvcFlUddfpS15tsgewDtNQvy-Pw78yaCOOt38vaM-3bZVRbVjY3GDPlPoLpz9RsOkOsXVGe1HJz6x7Cd35lvYHE8Lk9JYjok_LxAkc4DLgUX564dKfPZPI0dfKW9e6GK8ZZYCE8QkrZT9_-galhxkBDRsU--RTfX99YBqLPrwCPWEGYcGNeuM2Qk4ZSaezu534239pcvUEg89ZZ4ZKWYNzBFkdg34dRykjBx9-jiHW96xBCAxIETTOl4b1OeVEAtXlj-BFabrO0iBDD9XbSK68x1fuMNk7pnGvNdnoumtRyTyrFRhowyYjC0dv5S0m_hhxyzmK3sx_bbtb2n18CCmXoHyYPD61TSoz-jI2WWgOYl2bXJwXEh5H2glJTGKf2Uh6qPaHNE5kLigbg9seLQ-3pqGc8f2r0pRxGb2e1qiagISmcrk1Gu_wKjC6hePnhGhixN5dQGK16oCCMJJaf4WpVU7VXpZNOLu42g2TGpg9J_-noLWIC9JFv2xbAUV5b5zpW3L04\",\r\n        \"user_info\": {\r\n            \"id\": 8,\r\n            \"mobile\": \"0670114477\",\r\n            \"latitude\": null,\r\n            \"longitude\": null,\r\n            \"deg2rad_longitude\": null,\r\n            \"deg2rad_latitude\": null,\r\n            \"quartier_livraison\": null,\r\n            \"ville_livraison\": null,\r\n            \"daira_livraison\": null,\r\n            \"wilaya_livraison\": null,\r\n            \"pays_livraison\": null,\r\n            \"adresse_residence\": \"habite chez lui 02\",\r\n            \"quartier_residence\": null,\r\n            \"ville_residence\": null,\r\n            \"daira_residence\": null,\r\n            \"wilaya_residence\": null,\r\n            \"pays_residence\": \"Algérie\",\r\n            \"user_id\": 18,\r\n            \"profil_id\": 1,\r\n            \"etat\": 1,\r\n            \"etape\": 1,\r\n            \"created_at\": null,\r\n            \"updated_at\": null,\r\n            \"profil\": {\r\n                \"id\": 1,\r\n                \"nom\": \"Teamleader\",\r\n                \"etat\": 1,\r\n                \"created_at\": \"2020-05-07 14:18:52\",\r\n                \"updated_at\": \"2020-05-07 14:18:52\"\r\n            }\r\n        }\r\n    }\r\n\r\n-------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "User login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c52a2ad-fd89-45ed-89bc-e351b5fbb225",
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.globals.set(\"refreshToken\", response.data.refreshToken);\r",
+									"pm.globals.set(\"token\", response.data.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "0793258085",
+									"description": "0555705655",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/users/login",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						},
+						"description": "Login Teamleader/Coursier\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": null,\r\n    \"data\": {\r\n        \"userId\": 1,\r\n        \"groupeId\": 1,\r\n        \"groupeName\": \"Mohamed Zekkal\",\r\n        \"userType\": 1,\r\n        \"isLeader\": \"1\",\r\n        \"type\": \"Teamleader\",\r\n        \"lastName\": \"Pollich\",\r\n        \"firstName\": \"Emie\",\r\n        \"mobile\": \"0793258085\",\r\n        \"avatar\": null,\r\n        \"actived\": 1,\r\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiYjkxNzc1NjYzNTE0ZjNjMzA3MDAyN2Y0NWJlZDJjZTNlZDI4ODg1M2ZlMjMwZmVhNjQ3NDdiNDQ2ZWQ4M2U4MjcyYzcxMmJlYmVkMTUxYjIiLCJpYXQiOjE1OTc4MjM0MzEsIm5iZiI6MTU5NzgyMzQzMSwiZXhwIjoxNTk5MTE5NDMwLCJzdWIiOiIxIiwic2NvcGVzIjpbIioiXX0.c2s6PlxsExfN1nuO0-0z3-ooFCFd29PovXMXCFqRd3MWCA_ItmauW2f0tI8D_rENqKTRupxKzHuVXtGgd6_M0E8Rhqx5XcmJngUpDBOI2rU_jABuQnOoFwAJ6r0jZYFPyWZS9xERE3ORhYWieKvD50eVUSccrfr9K-HMQmZk-x_E40cHrg77jB-QSqV8IZNu5-m6yogG6CluiFppVLQZciFQ6VCU3lIG_U-Ehh3gurdyZTtYxFj00-LPbMcKCz9kMTMjB22zUODT6vJ97emIZNU5D_9HYJHdxrjUgxSbJ1xarHMVjEkaPE4ylLB7ZxjNwnXMOHx49H7NqKGB2yqkxKePaCWJWXMTHP0P_pNW8g3-QywHwA5u-HWx-WQuOMQr0X6ZoXcbdisjn_6f7gcoY4vB42ptQpEtbno_r00HruvgOEIEbwjXtOkldYS8xjv0JL9Q26ICPCFR8N-MK0sLXbnAlMneBEdrCgFhzY_3vW8ngqS7rARm23hba9W3CpWc7U6HTmjOPskjNFsz7EJWXT_DJW1lriatZlKyqy3L6YLmiimFa2n8ajZyWs9ZJ7b1w9q3YxzDLSNTzf6277h4roeqYeGETwk8p55k59fz68EOU3uxq2poU5YavRcG4G3tobflFGy8nZSsrnqEL0vwUw2nHUIgxucpSqocrzX6qT8\",\r\n        \"tokenExpireAt\": 1295999,\r\n        \"refreshToken\": \"def502005375834f9215b036a54193322a36a327a777ff6e018aeae6cd38dac3eba1c7380b3b56e9f3660744dee95a6120fcff937b8a32537fb8dbe4c988916186ee918644890f8dc73810afa807c4a21aa414878af29638610198e779c4d804092f85754ddbd7e5e692b6f49d689f82771f00379e9a278508e669062f9d1a3c0d753c89f9c8a64b8d21fa0772127028666b146918d86b7c2db04563575c5f9575f85923b6df6d109266761e9b7fe78e5ade9e2533df77fd52fed36b38f3a333be0c8daa7c73bad750a39e617cb16050f777ef3ba29d0924483d32d8dc0b7c610bdb5f93145f56d77d8c5fafe742b03c9d76ea85db8852ecf024200f506b7de8c472d276f8f821b9962a185e2866f565f2ca1286238417e87e514696c6177d7cc21ef62a06d8f6d5c2a7e84017d809b064e506fee067a3823147f69269f081f3048be0cccecdfa04ee6e22b3e50284c004689b1b0c177c01a40959a5907e7a7b8643a14b\",\r\n        \"createdAtFr\": \"22-06-2020\",\r\n        \"createdAtEn\": \"2020-06-22\",\r\n        \"rating\": null,\r\n        \"totalReviews\": null,\r\n        \"billingAddress\": \"5046 Burnice Mountains\\nWilmerville, TN 48031-0110\",\r\n        \"locationAddress\": {\r\n            \"street\": \"quartier\",\r\n            \"locality\": \"commune\",\r\n            \"administrativeArea\": \"daira\",\r\n            \"state\": \"wilaya\",\r\n            \"country\": \"ALGERIA  (DZA)\",\r\n            \"location\": {\r\n                \"latitude\": \"1\",\r\n                \"longitude\": \"2\"\r\n            },\r\n            \"timezone\": null,\r\n            \"fullAddress\": \"quartier, commune, daira, wilaya, \"\r\n        },\r\n        \"wallet\": {\r\n            \"walletId\": 1,\r\n            \"userId\": 1,\r\n            \"newBalance\": 500,\r\n            \"oldBalance\": 0,\r\n            \"createdAt\": \"24-06-2020 14:03:46\",\r\n            \"updatedAt\": \"24-06-2020 14:03:47\",\r\n            \"state\": 1\r\n        },\r\n        \"ordersState\": {\r\n            \"totalOrders\": 6,\r\n            \"orderState\": [\r\n                {\r\n                    \"stateName\": \"Non traitée\",\r\n                    \"type\": 1,\r\n                    \"ratio\": \"0.000\",\r\n                    \"orderCount\": 0\r\n                },\r\n                {\r\n                    \"stateName\": \"Refusée\",\r\n                    \"type\": 2,\r\n                    \"ratio\": \"0.000\",\r\n                    \"orderCount\": 0\r\n                },\r\n                {\r\n                    \"stateName\": \"Acceptée non assignée\",\r\n                    \"type\": 3,\r\n                    \"ratio\": \"0.000\",\r\n                    \"orderCount\": 0\r\n                },\r\n                {\r\n                    \"stateName\": \"Assignée non achetée\",\r\n                    \"type\": 4,\r\n                    \"ratio\": \"0.333\",\r\n                    \"orderCount\": 2\r\n                },\r\n                {\r\n                    \"stateName\": \"Acheté non contrôlée\",\r\n                    \"type\": 5,\r\n                    \"ratio\": \"0.000\",\r\n                    \"orderCount\": 0\r\n                },\r\n                {\r\n                    \"stateName\": \"Contrôlé non livré\",\r\n                    \"type\": 6,\r\n                    \"ratio\": \"0.000\",\r\n                    \"orderCount\": 0\r\n                },\r\n                {\r\n                    \"stateName\": \"Livré\",\r\n                    \"type\": 7,\r\n                    \"ratio\": \"0.000\",\r\n                    \"orderCount\": 0\r\n                }\r\n            ]\r\n        }\r\n    }\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh the token when it is expired",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "67ef4769-335e-4918-8253-da890af13a5a",
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.globals.set(\"refreshToken\", response.data.refresh_token);\r",
+									"pm.globals.set(\"token\", response.data.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "refresh_token",
+									"value": "{{refreshToken}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/users/refresh",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"refresh"
+							]
+						},
+						"description": "Login Teamleader/Coursier\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": null,\r\n    \"data\": {\r\n        \"token_type\": \"Bearer\",\r\n        \"expires_in\": 1296000,\r\n        \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiZDllMDlmZTVjM2NkMjJiNDE3Zjk4NzcyMzZiNWM4NDUzZTg5ZjRlZDQ2YTVjMDFmNGNlMWQwYmYwZjM0NDc5YWQ4NGZlMzM0MDFlYjY3NjQiLCJpYXQiOjE1OTc2NzY2MjcsIm5iZiI6MTU5NzY3NjYyNywiZXhwIjoxNTk4OTcyNjI3LCJzdWIiOiIxIiwic2NvcGVzIjpbIioiXX0.gFj04xxGVL2zYaCRE--PPJoXSgDCenNnhqJjcOM-I8hNTPAqNEEGvrrDIcCz85fVZMOfAStkAuCwKzVDLee4qyHSpx_pzsdU9E0-ml6K-gEyJzVVRS4ZGYjPmAhbZ9ao1LsU8cP2jqDMsoeou-rGu9aGF6WPkJuoYmUmapl_OAV6yiSP9JpJjSWz0POCOsqOVEE9su4wgeMnRz3A5xmPdgtpGQolo8zjUCP9f_fQRvhRRA05EROJcl0QCR7C3YnANED7I6lnIaqFCJ_wPLvNgSHdVWDUCjutmVz8mfipOA8cjgm7doxUB7XD0NUK_zIFoQbCVhK_XAlvzJ66oUlS5OJLoYSzy7Zq6kTHxdqRNhpb4s6CuHnUFuq-lHHqZ5GLYRwZDm53BO0RjvQp1dogZN8Xc_8Z7OLIFBG5ayBH8PxRdT49kQcgoKG-lR2sjzydNxuJo2628GJTq_4Hu5797EbBcP2a66ptiCAIZDLPAjty-xXKK_AqI5aq3JekipIlgWcFfRTGz3oq_-Jv-CFdRowsUB9NmGPGAW6m5q0v2pOY0KG4mmT3MEzJLjb-ReKBElbzqVJooCQQxNMLAunzHkyV94Xy113KAh2uyYKOMV7ro-P3e2x1ZhfUqEWRgnqinb__6eq9rsrF06jZ08f_L0dJB17BdlHFsAabuRSgs_4\",\r\n        \"refresh_token\": \"def5020030514453fd52a6d70cec58783309a193602b05fc7022c2a03041cb274ad0a11d015d818d9a1065fd38912e7bd51760546c18b1e18c225de5d8270305addf425c01615a2a7901ce942c2e28c2e11dfd904f4040dd0da651fb2be979a7e90e21dd636d20f812dd0c1259ffc5f9d977aaafcab06d8fc302c3b3bf4f4fb7891815a8a85ae33a6712548f3c7d8a3b2aa3fd16d8472afe1d2752e709e8174e7e0dafb52e57840f2e3faeade4d6c5f163422d6a1b1c5b9802e525e6d5b95147085b53946d147f778b3235bc294b69ae4089538fd26eb9879046e008179ae84ff836e2b245a05602e66ac0589b3d06dc62c3ea4d0f2375a8d60853d4d818a0f72547df59d4a2d51657dd4400073f0cd023cba56945f0bb351fc4aa252926fb338a44bcebee12da2aca7ad0e2e40a4131849c8f39b7e6b48559fe261273af7e95ec880e61f84aac3eff3d61d9aa7d756885edcadf50ac2cc3a44818436d3b23196e8fc76a\"\r\n    }\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "User details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/users/userdetails",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"userdetails"
+							]
+						},
+						"description": "Currently connected user (Teamleader/Coursier)\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": \"User Détails\",\r\n    \"data\": {\r\n        \"user\": {\r\n            \"userId\": 1,\r\n            \"groupeId\": 1,\r\n            \"groupeName\": \"Mohamed Zekkal\",\r\n            \"userType\": 1,\r\n            \"isLeader\": \"1\",\r\n            \"type\": \"Teamleader\",\r\n            \"lastName\": \"Pollich\",\r\n            \"firstName\": \"Emie\",\r\n            \"mobile\": \"0793258085\",\r\n            \"avatar\": null,\r\n            \"actived\": 1,\r\n            \"createdAtFr\": \"22-06-2020\",\r\n            \"createdAtEn\": \"2020-06-22\",\r\n            \"rating\": 0,\r\n            \"totalReviews\": 0,\r\n            \"billingAddress\": \"5046 Burnice Mountains\\nWilmerville, TN 48031-0110\",\r\n            \"locationAddress\": {\r\n                \"street\": \"quartier\",\r\n                \"locality\": \"commune\",\r\n                \"administrativeArea\": \"daira\",\r\n                \"state\": \"wilaya\",\r\n                \"country\": \"ALGERIA  (DZA)\",\r\n                \"location\": {\r\n                    \"latitude\": \"1\",\r\n                    \"longitude\": \"2\"\r\n                },\r\n                \"timezone\": null,\r\n                \"fullAddress\": \"quartier, commune, daira, wilaya, \"\r\n            }\r\n        },\r\n        \"wallet\": {\r\n            \"walletId\": 1,\r\n            \"userId\": 1,\r\n            \"newBalance\": 500,\r\n            \"oldBalance\": 0,\r\n            \"createdAt\": \"24-06-2020 14:03:46\",\r\n            \"updatedAt\": \"24-06-2020 14:03:47\",\r\n            \"state\": 1\r\n        },\r\n        \"orders\": [],\r\n        \"ordersState\": {\r\n            \"totalOrders\": 0,\r\n            \"orderState\": [\r\n                {\r\n                    \"stateName\": \"Assignée non achetée\",\r\n                    \"type\": 4,\r\n                    \"ratio\": 0,\r\n                    \"orderCount\": 0\r\n                },\r\n                {\r\n                    \"stateName\": \"Acheté non contrôlée\",\r\n                    \"type\": 5,\r\n                    \"ratio\": 0,\r\n                    \"orderCount\": 0\r\n                },\r\n                {\r\n                    \"stateName\": \"Contrôlé non livré\",\r\n                    \"type\": 6,\r\n                    \"ratio\": 0,\r\n                    \"orderCount\": 0\r\n                },\r\n                {\r\n                    \"stateName\": \"Livré\",\r\n                    \"type\": 7,\r\n                    \"ratio\": 0,\r\n                    \"orderCount\": 0\r\n                }\r\n            ]\r\n        }\r\n    }\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Teamleader/Shopper Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "lastName",
+									"value": "Pollich2",
+									"type": "text"
+								},
+								{
+									"key": "firstName",
+									"value": "Emie2",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "5046 Burnice Mountains\nWilmerville, TN 48031-0110",
+									"type": "text"
+								},
+								{
+									"key": "isLeader",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "commune",
+									"value": "commune2",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/salim3/Pictures/Screenpresso/Thumbnails/2017-07-20_16h37_45.png"
+								},
+								{
+									"key": "district",
+									"value": "quartier2",
+									"type": "text"
+								},
+								{
+									"key": "daira",
+									"value": "daira2",
+									"type": "text"
+								},
+								{
+									"key": "wilaya",
+									"value": "wilaya2",
+									"type": "text"
+								},
+								{
+									"key": "latitude",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": "22",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"value": "",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/users/profile",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"profile"
+							]
+						},
+						"description": "Update User (Teamleader/Shopper) Profile\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": null,\r\n    \"data\": {\r\n        \"userId\": 1,\r\n        \"groupeId\": 1,\r\n        \"groupeName\": \"Mohamed Zekkal\",\r\n        \"userType\": 1,\r\n        \"isLeader\": 1,\r\n        \"type\": \"Teamleader\",\r\n        \"lastName\": \"Pollich2\",\r\n        \"firstName\": \"Emie2\",\r\n        \"mobile\": \"0793258085\",\r\n        \"avatar\": \"40073368145206259108716942547025.png\",\r\n        \"actived\": 1,\r\n        \"createdAtFr\": \"22-06-2020\",\r\n        \"createdAtEn\": \"2020-06-22\",\r\n        \"billingAddress\": \"5046 Burnice Mountains\\nWilmerville, TN 48031-0110\",\r\n        \"locationAddress\": {\r\n            \"street\": \"quartier2\",\r\n            \"locality\": \"commune2\",\r\n            \"administrativeArea\": \"daira2\",\r\n            \"state\": \"wilaya2\",\r\n            \"country\": \"ALGERIA  (DZA)\",\r\n            \"location\": {\r\n                \"latitude\": \"12\",\r\n                \"longitude\": \"22\"\r\n            },\r\n            \"timezone\": null,\r\n            \"fullAddress\": \"quartier2, commune2, daira2, wilaya2, \"\r\n        }\r\n    }\r\n\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6b4b9201-6362-4c4d-9bd3-583ea632a741",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://aydak.dev.com/api/v1/users/logout",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"logout"
+							]
+						},
+						"description": "Déconnexion du compte\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"status\": \"Success\",\r\n    \"code\": 200,\r\n    \"message\": \"Successfully logged out\",\r\n    \"data\": null\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Token & Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "XWkrEX1fao8p4rdBAxiOvBUFZStGWWFCnWLAXSnE",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "0660112233",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "secret12345678",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "*",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://aydak.dev.com/oauth/token",
+							"protocol": "http",
+							"host": [
+								"aydak",
+								"dev",
+								"com"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						},
+						"description": "Teamleader/Coursier\r\n\r\n----------------------------------------------------------------------\r\nResponse\r\n----------------------------------------------------------------------\r\n    \"token_type\": \"Bearer\",\r\n    \"expires_in\": 1296000,\r\n    \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiYWU1NTI3ZjkwOTc0MmM1ZmIwYmY0OGQ2YjNlYTQwMGJiNzMxY2IwOWFmZDBhNzg3Yzg1ZThhMjJmNzIwZTY1NGQ1MTMwYzY5MTI4MTM4ZGYiLCJpYXQiOjE1OTc2NTAwMzksIm5iZiI6MTU5NzY1MDAzOSwiZXhwIjoxNTk4OTQ2MDM5LCJzdWIiOiIxNiIsInNjb3BlcyI6W119.JeG5fBQmZhvFUfeg5r1BfE1W_Yv_17cOM46f588G2xk3DbVXV_SOQLkb8kuoaYR8CXq2Z5-o4w-InY_rD_dxTxC2AlO3dN_rmcgxjosYmPg7Lqrj5J7dkBlUJVxr4wjeJ8ZHrUJXJmF-OHR60HDT2WyX-E3qDNUpqM2FTTdObYI9Np82J8kxpj1z6stDSQNlaAF3AtuR5128zWr4RaTNOZUEy56SaKiVR-G-WCXamGcR7MVliECSy5e1JOcF7f7Lu3zQwdhTTcP70yst9zSbFV_8o0dBhtzVvzHxJJrXgc9aUyIz_F1B3U3dXvIzAPD_hudzrhBlL_fHPfPfpX7a1Tild02ZKCjZ26E8OIJ37yO5SH2NL2cnebMabLyh5hb7RWhitsQAhgvKWi0AkcND50fuHeKgxp0WQWGgFN2U7aG1QIsToTb04waBVq60syOgMXYCN3y-IGg90Mw7MWpoGolx51r-dFNAfj3mCEIWI3rgMYJWDOzUZiLuck9jEp4DkH00TdyyYk3wpl8HZdLegVmGxMloBvRUkIKlye7k20CE7C3eupfU0zLXN2LNw_X0naiaNf3oB0Oi-XWsGO5IVJ_H-nlsDBAIP-7b12qo7ZgWfP6dCpw-KMjdE0170NyK3xeRmz_8m5Hmvq1dhVubkrpTCESlREk0rkVqbC5ukdE\",\r\n    \"refresh_token\": \"def502006a3d333e89c64ab5fc54287cbf2a8c9d120f897487c21b8f60c4e47f5ddd787ade970bee848a248503c1077e6e7eda0846851a52cdfc3ae271f09abc4bd46dca439ae3095b78f9ec4a7cd2754fa48c1436cb24a60c437413296aa07f5c1c82468eddd0b9603a7758208501de5472b27d99a0cde0688b62d2e9a9bf5eb37a7e4884dc621dbae8c796c1e2b822b74e2ae05bec1cf951ebd561173ee73148d34dfb8dc80e1a5c13250cece236c3b4d605b8eefad616122dc8c45324c2f0fd1d85d7c454cf50a144cd5561abcf54f5f2b99332262529a760488c96efb66b08424729d7d494866938dc48abf61b6b941fc5e3671f9eb70418cd975553c7fd0bc91b11c211e3f6cdc0d593f07027b4f238cf098240d239035db84af909ba10ada0f479d0977d01e97d51859c99f9e6778e92a3ef4ea3058eba4df754a7b58785cee2b89183d2df5eba0a51d8c345f8823c1d486e9372a757a1ab96087c9ff5376a\"\r\n----------------------------------------------------------------------"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Pays list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://aydak.dev.com/api/v1/payslist",
+					"protocol": "http",
+					"host": [
+						"aydak",
+						"dev",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"payslist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Wilayas list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://aydak.dev.com/api/v1/wilayas/3",
+					"protocol": "http",
+					"host": [
+						"aydak",
+						"dev",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"wilayas",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -62,6 +62,12 @@ Route::prefix('v1')->group(function(){
         Route::middleware('auth:api')->get('tm/ordersnottraited', 'Api\CommandeController@ordersNotTraited');
         Route::middleware('auth:api')->get('tm/orderstraitednotassigned', 'Api\CommandeController@ordersTraitedNotAssigned');
         Route::middleware('auth:api')->get('tm/ordersassignednotpurchased', 'Api\CommandeController@ordersAssignedNotPurchased');
+        Route::middleware('auth:api')->get('tm/orderspurchaseduncontrolled', 'Api\CommandeController@ordersPurchasedUncontrolled');
+        Route::middleware('auth:api')->get('tm/orderscontrollednotdelivered', 'Api\CommandeController@ordersControlledNotDelivered');
+        Route::middleware('auth:api')->get('tm/ordersdelivered', 'Api\CommandeController@ordersDelivered');
+        
+        Route::middleware('auth:api')->post('tm/ordersupdatesituation', 'Api\CommandeController@ordersUpdateSituation');
+        
 
         /* SHOPPER :    */
         /* ------------ */

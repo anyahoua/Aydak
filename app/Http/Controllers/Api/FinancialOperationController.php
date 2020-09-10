@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 use App\Traits\ApiWallet;
 
@@ -218,6 +219,7 @@ class FinancialOperationController extends ApiController
 
         $newShopperWallet    = $this->AddUserWallet($data);
 
+        return $newShopperWallet;
     }
 
     /*
@@ -236,33 +238,72 @@ class FinancialOperationController extends ApiController
     */
     public function purchase(Request $request) 
     {
-        //$rate = Commission::where
 
-        /** SHOPPER */
+        $users = User::whereHas('coursiers')->get();
+        return $users;
+        
+
+        foreach($users as $user)
+        {
+            $t[] = $user->compte;
+        }
+
+        return $t;
+
+//----------------------------------------------------------------------------
+/*
+$comptes_shoppers       = UserCompte::where('profil_id', 2)
+                            ->where('debit', '>', 0)
+                            ->where('commande_id', '>', 0)
+                            //->groupeBy('user_id')
+                            ->get();
+//$comptes_teamleaders    = UserCompte::where('profil_id', 1)->get();
+
+return $comptes_shoppers->user;
+*/
+//----------------------------------------------------------------------------
+/*
+        $pourcentageTotal       = Commission::sum('valeur');
+
+
+        //-------------------------------------------------------
+        // SHOPPER CONDTITION :
+        //-------------------------------------------------------
         $shopper                = Auth::user();
-
-        $commissionAydak        = Commission::find(1);
-
         $oldShopperWallet       = $shopper->ShopperWallet;
- 
-        //--
 
-        $trueAmount = $oldShopperWallet->nouveau_solde - ($commissionAydak->valeur/100)*$oldShopperWallet->nouveau_solde;
-        //return $trueAmount;
+        // Condition pour le shopper
+        if($request->amountPaid > $oldShopperWallet->nouveau_solde)
+        {
+            return $this->errorResponse('Votre solde est inférieur au montant de cette transaction', 401);
+        }
+        //-------------------------------------------------------
 
+        //-------------------------------------------------------
+        // CLIENT CONDTITION :
+        //-------------------------------------------------------
+        $order                  = Commande::findOrFail($request->orderId);
+        $client                 = $order->client;
+
+        $oldClientWallet        = $client->lastClientWallet;
+        $trueAmount             = $oldClientWallet->nouveau_solde - ($pourcentageTotal/100)*$oldClientWallet->nouveau_solde;
         
         if($request->amountPaid > $trueAmount)
         {
-            return $this->errorResponse('Your balance does not allow this transaction : '.$trueAmount, 401);
+            return $this->errorResponse('Le solde du client ne permet pas cette transaction : '.$trueAmount, 401);
         }
-        //--
+        //-------------------------------------------------------
 
 
+
+
+
+        //-------------------------------------------------------
+        // SHOPPER :
+        //-------------------------------------------------------
         $oldSolde               = $oldShopperWallet->nouveau_solde;
         $newSolde               = $oldShopperWallet->nouveau_solde - $request->amountPaid;
-
-return 'new balance : '.$newSolde;
-
+        //return 'new balance : '.$newSolde;
 
         $oldShopperWallet->update(['etat' => '0']);
 
@@ -278,9 +319,11 @@ return 'new balance : '.$newSolde;
         $data['commande_id']    = $request->orderId;
 
         $newShopperWallet       = $this->AddUserWallet($data);
+        //-------------------------------------------------------
 
-
-        /** CLIENT */
+        //-------------------------------------------------------
+        // CLIENT :
+        //-------------------------------------------------------
         $order                  = Commande::findOrFail($request->orderId);
         $client                 = $order->client;
 
@@ -288,7 +331,6 @@ return 'new balance : '.$newSolde;
         
         $oldClientWallet->update(['etat' => '0']);
 
-        //---
         $data['debit']          = $request->amountPaid;
         $data['credit']         = 0;
         $data['ancien_solde']   = $oldClientWallet->nouveau_solde;
@@ -300,9 +342,11 @@ return 'new balance : '.$newSolde;
         $data['commande_id']    = $order->id;
 
         $newClientWallet        = $this->AddClientWallet($data);
-        
+        //-------------------------------------------------------
+
 
         return $newClientWallet;
+*/
     }
 
     /*
@@ -373,6 +417,69 @@ return 'new balance : '.$newSolde;
         return $newTeamleaderWallet;
     }
 
+    /*
+    |-------------------------------------------------------------------------------
+    | TEAMLEADER    : Commission from teamleader to the shopper
+    |-------------------------------------------------------------------------------
+    | URL           : /api/v1/users/shopper/paymentToTeamleader
+    | Method        : POST
+    | Description   : Commission to the shopper by current connected teamleader.
+    |-------------------------------------------------------------------------------
+    |
+    | @amountPaid   : Double 
+    |
+    |-------------------------------------------------------------------------------|
+    */
+    public function commissionFromTeamleaderToShopper(Request $request) 
+    {
+        $pourcentageShopper     = Commission::find(3);
 
+/*
+        // TEAMLEADER 
+        $teamleader             = Auth::user();
+        
+        $oldTeamleaderWallet    = $teamleader->userWallet;
+
+        $oldTeamleaderWallet->update(['etat' => '0']);
+
+        $data['debit']          = $request->amountPaid;
+        $data['credit']         = 0;
+        $data['ancien_solde']   = $oldTeamleaderWallet->nouveau_solde;
+        $data['nouveau_solde']  = $oldTeamleaderWallet->nouveau_solde - $request->amountPaid;
+        $data['etat']           = 1;
+        $data['user_id']        = $teamleader->id;
+        $data['profil_id']      = 1;
+        $data['groupe_id']      = $teamleader->groupe->id;
+        $data['type']           = 'versement';
+        $data['commande_id']    = 0;
+
+        $newTeamleaderWallet    = $this->AddUserWallet($data);
+        //---
+
+
+        // SHOPPER 
+        $shopper             = User::findOrFail($request->shopperId);
+        
+        $oldShopperWallet    = $shopper->ShopperWallet;
+
+        $oldShopperWallet->update(['etat' => '0']);
+
+        $data['debit']          = 0;
+        $data['credit']         = $request->amountPaid;
+        $data['ancien_solde']   = $oldShopperWallet->nouveau_solde;
+        $data['nouveau_solde']  = $oldShopperWallet->nouveau_solde + $request->amountPaid;
+        $data['etat']           = 1;
+        $data['user_id']        = $shopper->id;
+        $data['profil_id']      = 2;
+        $data['groupe_id']      = $shopper->groupe->id;
+        $data['type']           = 'versement';
+        $data['commande_id']    = 0;
+
+        $newShopperWallet    = $this->AddUserWallet($data);
+
+
+        return $newShopperWallet;
+*/
+    }
 
 }
