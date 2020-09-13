@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\User;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -34,6 +35,12 @@ class UserCompte extends Model
     {
         return $this->belongsTo(Profil::class);
     }
+
+    public function groupe()
+    {
+        return $this->belongsTo(Groupe::class);
+    }
+
     
 
 }

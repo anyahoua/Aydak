@@ -9,6 +9,10 @@ use App\Models\UserCompte;
 use App\Models\Commande;
 use App\Models\Commission;
 
+//--
+use App\Models\ClotureCoursier;
+//--
+
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
@@ -239,29 +243,64 @@ class FinancialOperationController extends ApiController
     public function purchase(Request $request) 
     {
 
-        $users = User::whereHas('coursiers')->get();
-        return $users;
-        
-
-        foreach($users as $user)
-        {
-            $t[] = $user->compte;
-        }
-
-        return $t;
-
+//----------------------------------------------------------------------------
+// Shoppers Shopping By Day
 //----------------------------------------------------------------------------
 /*
-$comptes_shoppers       = UserCompte::where('profil_id', 2)
-                            ->where('debit', '>', 0)
-                            ->where('commande_id', '>', 0)
-                            //->groupeBy('user_id')
-                            ->get();
-//$comptes_teamleaders    = UserCompte::where('profil_id', 1)->get();
+$pourcentageShopper     = Commission::find(3);
 
-return $comptes_shoppers->user;
+$shoppers = User::select('id', 'nom', 'prenom')
+            ->with('shoppersTotalPracing')
+            ->with(['groupe' => function($q) {
+                $q->select('groupes.id','groupes.nom', 'groupes.photo', 'groupes.daira', 'groupes.latitude', 'groupes.longitude');
+            }])
+            ->get();
+
+foreach($shoppers as $key => $shopper )
+{
+    $montant_achat = $shopper->shoppersTotalPracing['total_shopping_by_day'] ? $shopper->shoppersTotalPracing['total_shopping_by_day'] : 0;
+
+    $data[$key]['montant_achat']  = $montant_achat;
+    $data[$key]['pourcentage']    = $pourcentageShopper->valeur;
+    $data[$key]{'commission'}     = $montant_achat*($pourcentageShopper->valeur/100);
+    $data[$key]['nom_groupe']     = $shopper->groupe['nom'];
+    $data[$key]['groupe_id']      = $shopper->groupe['id'];
+    $data[$key]['user_id']        = $shopper->id;
+    $data[$key]['nom']            = $shopper->nom;
+    $data[$key]['prenom']         = $shopper->prenom;
+    $data[$key]['created_at']     = Carbon::now();
+    $data[$key]['updated_at']     = Carbon::now();
+}
+
+//return $data;
+return ClotureCoursier::insert($data);
+
+return $shoppers;
 */
 //----------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------
+// Teamleader Shopping By Day
+//----------------------------------------------------------------------------
+$pourcentageTeamleader     = Commission::find(2);
+
+$teamleader = User::select('id', 'nom', 'prenom')
+            // ->with(['userInformation' => function ($q) {
+            //     $q->where('profil_id', 1);
+            // }])
+            ->whereHas('teamleaders')
+            ->with('teamleaderTotalPracing')
+            // ->with(['groupe' => function($q) {
+            //     $q->select('groupes.id','groupes.nom', 'groupes.photo', 'groupes.daira', 'groupes.latitude', 'groupes.longitude');
+            // }])
+            ->get();
+
+return $teamleader;
+//----------------------------------------------------------------------------
+
+
+
+
 /*
         $pourcentageTotal       = Commission::sum('valeur');
 

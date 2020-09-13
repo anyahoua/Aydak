@@ -21,6 +21,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Carbon;
 
 class User extends Authenticatable
 {
@@ -270,6 +271,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserInfo::class)->where('profil_id', '2');
     }
+    
+    public function teamleaders()
+    {
+        return $this->hasMany(UserInfo::class)->where('profil_id', '1');
+    }
 
     // User Compte
     public function userCompte()
@@ -350,6 +356,53 @@ class User extends Authenticatable
         return $this->hasOne(UserCompte::class)->where('etat', '1')->where('profil_id', 1);
     }
 
+    // public function shoppersShoppingByDay()
+    // {
+    //     return $this->hasOne(UserCompte::class)
+    //     ->selectRaw('user_comptes.user_id, user_comptes.profil_id, user_comptes.groupe_id, sum(debit) as total_shopping_by_day')
+    //     ->where('debit', '>', 0)
+    //     ->where('commande_id', '!=', 0)
+    //     ->where('profil_id', 2)
+    //     //->whereDate('created_at', Carbon::yesterday()) // Carbon::today(), Carbon::yesterday()
+    //     ;
+    // }
 
+    public function shoppersTotalPracing()
+    {
+        $total = $this->hasOne(UserCompte::class)
+                ->selectRaw('user_comptes.user_id, sum(debit) as total_shopping_by_day')
+                ->where('debit', '>', 0)
+                ->where('commande_id', '!=', 0)
+                ->where('profil_id', 2)
+                ->groupBy('user_id')
+                ->whereDate('created_at', Carbon::yesterday()); // Carbon::today(), Carbon::yesterday()
+
+        return $total;
+    }
+
+    public function teamleaderTotalPracing()
+    {
+        return $this->hasOne(UserCompte::class)
+        ->selectRaw('user_comptes.user_id, user_comptes.groupe_id, sum(debit) as total_shopping_by_day')
+        ->where('debit', '>', 0)
+        ->where('commande_id', '!=', 0)
+        ->where('groupe_id', 1)
+        ->groupBy('user_id')
+        //->whereDate('created_at', Carbon::yesterday()) // Carbon::today(), Carbon::yesterday()
+        ;
+    }
+
+
+
+    public function teamleadersShoppingByDay000000()
+    {
+        return $this->hasOne(UserCompte::class)
+        ->selectRaw('user_comptes.user_id, user_comptes.groupe_id, sum(debit) as total_shopping_by_day')
+        ->where('debit', '>', 0)
+        ->where('commande_id', '>', 0)
+        ->where('profil_id', 2)
+        ->whereDate('created_at', Carbon::yesterday()) // Carbon::today(), Carbon::yesterday()
+        ;
+    }
  
 }

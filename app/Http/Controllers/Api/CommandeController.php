@@ -140,7 +140,7 @@ class CommandeController extends ApiController
 
             if($user->groupe->id !== $commande->groupe_id)
             {
-                return $this->errorResponse('Forbidden', 403);
+                return $this->errorResponse('Forbidden : ', 403);
             }
 
         }
