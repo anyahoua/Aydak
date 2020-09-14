@@ -375,21 +375,31 @@ class User extends Authenticatable
                 ->where('commande_id', '!=', 0)
                 ->where('profil_id', 2)
                 ->groupBy('user_id')
-                ->whereDate('created_at', Carbon::yesterday()); // Carbon::today(), Carbon::yesterday()
+                
+                //->whereDate('created_at', Carbon::yesterday()) // Carbon::today(), Carbon::yesterday()
+                ->whereDate('created_at', Carbon::today())
+
+                ;
 
         return $total;
     }
 
     public function teamleaderTotalPracing()
     {
-        return $this->hasOne(UserCompte::class)
-        ->selectRaw('user_comptes.user_id, user_comptes.groupe_id, sum(debit) as total_shopping_by_day')
-        ->where('debit', '>', 0)
-        ->where('commande_id', '!=', 0)
-        ->where('groupe_id', 1)
-        ->groupBy('user_id')
-        //->whereDate('created_at', Carbon::yesterday()) // Carbon::today(), Carbon::yesterday()
-        ;
+        // return $this->hasMany(UserCompte::class);
+        // ->selectRaw('user_comptes.user_id, sum(debit) as total_shopping_by_day')
+        // ->where('debit', '>', 0)
+        // ->where('commande_id', '!=', 0)
+        // ->groupBy('groupe_id');
+
+        //$dataCommandes = Commande::select('situation_id', DB::raw('COUNT(id) as amount'))->where('situation_id', $situation->id)->get();
+
+        // $total = UserCompte::select('user_id', DB::raw(' sum(debit) as total_shopping_by_day'))
+        //         ->where('debit', '>', 0)
+        //         ->groupBy('groupe_id')
+        //         ->get();
+
+
     }
 
 

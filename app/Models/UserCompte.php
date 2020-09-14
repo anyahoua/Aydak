@@ -41,6 +41,5 @@ class UserCompte extends Model
         return $this->belongsTo(Groupe::class);
     }
 
-    
 
 }

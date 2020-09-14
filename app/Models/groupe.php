@@ -105,29 +105,18 @@ class Groupe extends Model
         }]);
     }
 
-/*
-    public function countCoursiersInGroupe()
+
+    public function TeamleaderInGroupeSimple()
     {
-        return $this->hasManyThrough(
+        return $this->hasOneThrough(
             User::class, 
             GroupeUser::class,
             'groupe_id',
             'id',
             'id',
             'user_id'
-        )
-        //->with(['UserInfo' => function ($query) {
-        //    $query->where('profil_id', '2');
-        //}])
-
-        ->withCount(['UserInfo' => function ($query) {
-            $query->where('profil_id', '2');
-        }]);
-
-
+        );
     }
-*/
-
 
 
 
