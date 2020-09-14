@@ -12,6 +12,7 @@ use App\Models\Commission;
 //--
 use App\Models\ClotureCoursier;
 use App\Models\ClotureTeamleader;
+use App\Models\ClotureGenerale;
 use App\Models\Groupe;
 //--
 
@@ -386,13 +387,21 @@ $montant_achat = $aydak;
 
 $data['montant_achat']  = $montant_achat;
 $data['pourcentage']    = $pourcentageAydak->valeur;
-$data{'commission'}     = $montant_achat*($pourcentageAydak->valeur/100);
-$data['created_at']     = Carbon::now();
-$data['updated_at']     = Carbon::now();
+$data['commission']     = $montant_achat*($pourcentageAydak->valeur/100);
+// $data['created_at']     = Carbon::now();
+// $data['updated_at']     = Carbon::now();
 
-return $data;
+//return $data;
 
-return $aydak;
+$clotureGenerale = new ClotureGenerale;
+
+$clotureGenerale->montant_achat = $data['montant_achat'];
+$clotureGenerale->pourcentage   = $data['pourcentage'];
+$clotureGenerale->commission    = $data['commission'];
+
+return $clotureGenerale->save();
+
+//return $aydak;
 
 
 
