@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function(){
 
     // Pays :
-    // Route::get('payslist', 'Api\PaysController@index');
+    Route::get('payslist', 'Api\PaysController@index');
     // Route::get('wilayas/{pays_id}', 'Api\WilayaController@index');
 
 
