@@ -112,9 +112,8 @@ class UserController extends ApiController
                 //-------------------
                 // Connexion History
                 //-------------------
-                $data = ['userId' => $user->id, 'action' => 'Connexion', 'profil_id' => '1'];
-
-                $this->userConnexion($data);
+                // $data = ['userId' => $user->id, 'action' => 'Connexion', 'profil_id' => '1'];
+                // $this->userConnexion($data);
                 //-------------------
                 
                 return $this->successResponse(new UserLoginRessource($user));
@@ -616,6 +615,7 @@ public function refreshToken(Request $request)
             'firstName'     => ['required', 'string', 'max:255'],
             'address'       => ['required', 'string', 'max:255'],
             'profil'        => ['required', 'integer'],
+            'currentProfil' => ['required', 'integer'],
             'username'      => ['required', 'regex:/^(05|06|07)[0-9]{8}$/', 'unique:users'], // Mobile
             //'password'      => ['required', 'string', 'min:8', 'confirmed'], //---> password_confirmation = 'le mot de passe'
             'password'      => ['required', 'string', 'min:8'],
@@ -644,6 +644,13 @@ public function refreshToken(Request $request)
 
         //      config('global.country_id')
 
+        if($request->profil==1)
+        {
+            $CurrentProfil = 1;
+        } else {
+            $CurrentProfil = 0;
+        }
+
         // Add User infos :
         //------------------
         $userInfos                      = new UserInfo;
@@ -652,6 +659,7 @@ public function refreshToken(Request $request)
         $userInfos->adresse_residence   = $request->address;
         $userInfos->user_id             = $user->id;
         $userInfos->profil_id           = $request->profil;
+        $userInfos->current_profil_id   = $CurrentProfil;
         $userInfos->etat                = '0';
         $userInfos->etape               = '1';
 
