@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\User;
 use App\Client;
 use App\Models\ClientAdresse;
 use App\Models\Groupe;
@@ -11,6 +12,7 @@ use App\Models\ClientPreferenceAchat;
 use App\Models\Commande;
 use App\Models\CommandeDetail;
 use App\Models\CommandeCommentaire;
+use App\Models\UserVote;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ApiController;
@@ -292,8 +294,80 @@ class ClientController extends ApiController
         return $this->successResponse(ClientOrdersRessource::collection($client->commandes), 'Successfully');
     }
 
+    /*
+    |-------------------------------------------------------------------------------
+    | CLIENT        : Rating Shopper
+    |-------------------------------------------------------------------------------
+    | URL           : /api/v1/clients/rating/user/{user_id}
+    | Method        : GET
+    | Description   : Rating user (shopper) by current connected Client.
+    |-------------------------------------------------------------------------------
+    */
+    public function ratingUser(Request $request, User $user) 
+    { 
+        $client = Auth::user();
+        //return $client;
+
+        $validator = Validator::make($request->all(), [
+            'vote' => 'required|numeric|unique:user_votes,user_id,NULL,id,client_id,'.$client->id.'',
+        ]);
+
+        if($validator->fails()){
+            return $this->errorResponse($validator->messages(), 422);
+        }
+        
+        //return $user;
+
+        $rating             = new UserVote;
+
+        $rating->vote       = $request->vote;
+        $rating->client_id  = $client->id;
+        $rating->user_id    = $user->id;
+        $rating->groupe_id  = $user->groupe->id;
+
+        $rating->save();
+
+        return $rating;
+        //return new ProduitsFavoritsListeRessource($Favoris);
+        //return $this->successResponse(new ProduitsFavoritsListeRessource($rating), 'Successfully');
+        //return $this->successResponse(ClientOrdersRessource::collection($client->commandes), 'Successfully');
+    }
+
+    /*
+    |-------------------------------------------------------------------------------
+    | CLIENT        : Show Rating Shoppers
+    |-------------------------------------------------------------------------------
+    | URL           : /api/v1/clients/rating/users
+    | Method        : GET
+    | Description   : show rating users (shoppers) by current connected Client.
+    |-------------------------------------------------------------------------------
+    */
+    public function showRatingUsers(Request $request) 
+    {
+        $client = Auth::user();
+
+        $users = $client->groupe->CoursiersInGroupe;
+
+        foreach($users as $key => $user)
+        {
+            // "id": 2,
+            // "nom": "Gerlach",
+            // "prenom": "Otilia",
+            // "email": null,
+            // "username": "0555705655",
+
+            $data[$key]['id']       = $user->id;
+            $data[$key]['rating']   = UserVote::where('user_id', $user->id)->avg('vote');
+            $data[$key]['nom']      = $user->nom;
+            $data[$key]['prenom']   = $user->prenom;
+            
+        }
+
+        return $data;
 
 
 
+        
+    }
 
 }

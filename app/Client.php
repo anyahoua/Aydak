@@ -119,5 +119,10 @@ class Client extends Authenticatable
     {
         return $this->belongsTo(Groupe::class);
     }
+
+    public function votes()
+    {
+        return $this->hasMany(UserVote::class);
+    }
     
 }

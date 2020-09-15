@@ -130,6 +130,11 @@ Route::prefix('v1')->group(function(){
         Route::middleware('auth:client-api')->put('cancelOrder/{commande}', 'Api\CommandeController@cancelOrder');
         Route::middleware('auth:client-api')->post('addCommentCommande', 'Api\CommandeController@addCommentCommande');
         Route::middleware('auth:client-api')->put('validateReceiptOrder/{commande}', 'Api\CommandeController@validateReceiptOrder');
+
+        // Rating :
+        Route::middleware('auth:client-api')->post('rating/user/{user}', 'Api\ClientController@ratingUser');
+        Route::middleware('auth:client-api')->get('rating/users', 'Api\ClientController@showRatingUsers');
+
     });
 
 

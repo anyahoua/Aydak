@@ -415,4 +415,10 @@ class User extends Authenticatable
         ;
     }
  
+    public function userVote()
+    {
+        return $this->hasMany(userVote::class);
+    }
+
+
 }
