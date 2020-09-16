@@ -18,10 +18,11 @@ class CommandeItemRessource extends JsonResource
         //return parent::toArray($request);
 
         return [
-            'quantityOrdered'       => $this->quantite_commande ? $this->quantite_commande : 0,
-            'quantityPurchased'     => $this->quantite_achat ? $this->quantite_achat : 0,
-            'pricePurchased'        => $this->prix_u_achat,
-            'amount'                => $this->prix_u_commande*$this->quantite_commande,
+            'quantityOrdered'       => $this->quantite_commande ? (string) $this->quantite_commande : '0',
+            'quantityPurchased'     => $this->quantite_achat ? (string) $this->quantite_achat : '0',
+            'pricePurchased'        => (string) $this->prix_u_achat,
+            //'amount'                => $this->prix_u_commande * $this->quantite_commande,
+            'amount'                => (string) $this->amount(),
             'purchasedOrNo'         => $this->etat,
             'product'               => new ProduitItemRessource($this->produit),
         ];

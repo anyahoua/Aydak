@@ -28,6 +28,8 @@ class UserCompteRessource extends JsonResource
         return [
             'walletId'      => $this->id,
             'userId'        => $this->user_id,
+            'debit'         => $this->debit,
+            'credit'        => $this->credit,
             'newBalance'    => $this->nouveau_solde,
             'oldBalance'    => $this->ancien_solde,
             'createdAt'     => Carbon::parse($this->created_at)->format('d-m-Y H:i:s'),

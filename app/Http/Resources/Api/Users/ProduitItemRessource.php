@@ -18,9 +18,9 @@ class ProduitItemRessource extends JsonResource
 
         return [
             'productId'     => $this->id,
-            'price'         => $this->prix->prix,
+            'price'         => (string) $this->prix->prix,
             //'historyPrice'         => $this->historyPrice,
-            'productTitle'  => $this->libely,
+            'productTitle'  => trim($this->libely),
             'comment'       => $this->commentaire,
             'unit'          => $this->unite_mesure_id,
         ];

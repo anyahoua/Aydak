@@ -345,28 +345,22 @@ class ClientController extends ApiController
     public function showRatingUsers(Request $request) 
     {
         $client = Auth::user();
-
+/*
         $users = $client->groupe->CoursiersInGroupe;
-
         foreach($users as $key => $user)
         {
-            // "id": 2,
-            // "nom": "Gerlach",
-            // "prenom": "Otilia",
-            // "email": null,
-            // "username": "0555705655",
-
             $data[$key]['id']       = $user->id;
             $data[$key]['rating']   = UserVote::where('user_id', $user->id)->avg('vote');
             $data[$key]['nom']      = $user->nom;
             $data[$key]['prenom']   = $user->prenom;
-            
         }
 
         return $data;
+*/
 
+        $rating = $client->groupe->avgRating;
 
-
+        return $rating;
         
     }
 

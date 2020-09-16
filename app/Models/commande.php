@@ -30,6 +30,8 @@ class Commande extends Model
     ];
 
     
+
+    
     /** 
      * Relationship : 
      * 
@@ -54,5 +56,16 @@ class Commande extends Model
     {
         return $this->hasMany(UserCommande::class);
     }
+
+
+    public function prixTotalCommande()
+    {
+        return $this->detailCommande->sum(function($query) {
+            return ($query->quantite_commande * $query->prix_u_commande);
+        });
+        
+    }
+
+
 
 }

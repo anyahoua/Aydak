@@ -142,6 +142,38 @@ class Groupe extends Model
 
     }
 
+    public function avgRating()
+    {
+        return $this->usersVotes()
+                ->select('nom', 'prenom')
+                ->selectRaw('avg(vote) as rating, user_id')
+                ->groupBy('user_id');
+    }
+
+    public function votesInGroupe()
+    {
+        return $this->hasMany(UserVote::class);
+    }
+
+    public function usersVotes()
+    {
+        return $this->hasManyThrough(
+            User::class, 
+            UserVote::class,
+            'groupe_id',
+            'id',
+            'id',
+            'user_id'
+        )
+        ->whereHas('UserInfo', function ($query) {
+             $query->where('profil_id', '=','2');
+        });
+        //->with('userInformation');
+    }
+
+
+
+
 
 /*
 

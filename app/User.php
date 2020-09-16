@@ -14,6 +14,7 @@ use App\Models\InvitationShopper;
 use App\Models\DocUser;
 use App\Models\Situation;
 use App\Models\UserConnexion;
+use App\Models\UserVote;
 
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -420,5 +421,9 @@ class User extends Authenticatable
         return $this->hasMany(userVote::class);
     }
 
+    // public function userVoteAvg()
+    // {
+    //     return $this->hasMany(userVote::class)->avg('vote');
+    // }
 
 }

@@ -25,5 +25,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //JsonResource::withoutWrapping();
+        
+        //ini_set('precision', 17);
+
     }
 }

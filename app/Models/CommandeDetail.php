@@ -32,8 +32,8 @@ class CommandeDetail extends Model
      * @var array
      */
     protected $casts = [
-        'quantite_commande' => 'integer',
-        'quantite_achat'    => 'integer',
+        'quantite_commande' => 'double',
+        'quantite_achat'    => 'double',
         'prix_u_commande'   => 'double',
         'prix_u_achat'      => 'double',
     ];
@@ -53,5 +53,8 @@ class CommandeDetail extends Model
         return $this->belongsTo(Produit::class);
     }
 
+    public function amount() {
+        return $this->prix_u_commande * $this->quantite_commande;
+    }
 
 }

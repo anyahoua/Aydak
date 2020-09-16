@@ -25,7 +25,8 @@ class OrdersRessource extends JsonResource
             'createdAtEn'       => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
             'state'             => $this->situation_id,
             'stateName'         => $this->situation->libely,
-            'total'             => $this->detailCommande->count(),
+            'totalCartItems'    => $this->detailCommande->count(),
+            'total'             => (string) $this->prixTotalCommande(),
 
             'cartItems'         => CommandeItemRessource::collection($this->detailCommande),
             

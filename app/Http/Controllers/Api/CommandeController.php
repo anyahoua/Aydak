@@ -46,8 +46,9 @@ class CommandeController extends ApiController
 
         $Orders = Commande::where('groupe_id', $user->groupe->id)
                     ->where('situation_id', '1')
+        //            ->with('detailCommande')
                     ->get();
-        
+        //return $Orders;
         return $this->successResponse(OrdersRessource::collection($Orders), 'Successfully');
     }
     
