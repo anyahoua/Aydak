@@ -1265,7 +1265,23 @@ public function refreshToken(Request $request)
         return $this->successResponse(UserRessource::collection($shoppers), 'Orders details');
     }
 
+    /** 
+     * Connected Teamleader Rating Details
+     * 
+     * @return \Illuminate\Http\Response 
+     */
+    public function rating()
+    {
+        $user = Auth::user();
+        //$user->userInfo;
+        //$user->groupe;
+        //$user->documents;
 
+        $votes = $user->userVote;
+        
+        return $votes; 
+        //return $this->successResponse(UserRessource::collection($shoppers), 'Orders details');
+    }
 
 
 //------------------------------------------------------------------------------------------------//

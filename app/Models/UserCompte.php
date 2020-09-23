@@ -34,10 +34,10 @@ class UserCompte extends Model
      */
     
     protected $casts = [
-        'debit'         => 'decimal:2',
-        'credit'        => 'decimal:2',
-        'ancien_solde'  => 'decimal:2',
-        'nouveau_solde' => 'decimal:2'
+        'debit'         => 'double',
+        'credit'        => 'double',
+        'ancien_solde'  => 'double',
+        'nouveau_solde' => 'double'
     ];
     
 

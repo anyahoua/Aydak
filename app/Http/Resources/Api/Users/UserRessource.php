@@ -38,8 +38,11 @@ class UserRessource extends JsonResource
                 'createdAtFr'       => Carbon::parse($this->created_at)->format('d-m-Y'),
                 'createdAtEn'       => Carbon::parse($this->created_at)->format('Y-m-d'),
                 //---------------------------
-                'rating'            => 0,    // 4.5, 2, 3.6 ----> x/5
-                'totalReviews'      => 0,    // 2, 8, 10 votes (nbr de votes)
+                //'rating'            => 0,    // 4.5, 2, 3.6 ----> x/5
+                //'totalReviews'      => 0,    // 2, 8, 10 votes (nbr de votes)
+
+                'rating'            => $this->avgUserVote() ? number_format($this->avgUserVote(), 2, '.', '') : '0',
+                'totalReviews'      => $this->totalUserVote() ? $this->totalUserVote() : 0,
                 //---------------------------
                 'billingAddress'    => $this->userInfo->adresse_residence,
                 'locationAddress'   => new locationAddressRessource($this->userLocationAddress),

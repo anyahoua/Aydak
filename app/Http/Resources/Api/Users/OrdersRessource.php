@@ -26,7 +26,8 @@ class OrdersRessource extends JsonResource
             'state'             => $this->situation_id,
             'stateName'         => $this->situation->libely,
             'totalCartItems'    => $this->detailCommande->count(),
-            'total'             => (string) $this->prixTotalCommande(),
+            //'total'             => (string) $this->prixTotalCommande(),
+            'total'             => number_format($this->prixTotalCommande(), 2, '.', ''),
 
             'cartItems'         => CommandeItemRessource::collection($this->detailCommande),
             

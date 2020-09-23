@@ -166,14 +166,14 @@ class User extends Authenticatable
                 {
                     $data[$key][$i]['stateName'] = $situation->libely;
                     $data[$key][$i]['type'] = $situation->id;
-                    $data[$key][$i]['ratio'] = $totalCommandes ? number_format($dataCommande->amount/$totalCommandes, 3) : 0;
+                    $data[$key][$i]['ratio'] = $totalCommandes ? number_format($dataCommande->amount/$totalCommandes, 2, '.', '') : '0';
                     $data[$key][$i]['orderCount'] = 0;
                     
                 } else {
 
                     $data[$key][$i]['stateName'] = $situation->libely;
                     $data[$key][$i]['type'] = $dataCommande->situation_id;
-                    $data[$key][$i]['ratio'] = $totalCommandes ? number_format($dataCommande->amount/$totalCommandes, 3) : 0;
+                    $data[$key][$i]['ratio'] = $totalCommandes ? number_format($dataCommande->amount/$totalCommandes, 2, '.', '') : '0';
                     $data[$key][$i]['orderCount'] = $dataCommande->amount;
                     
                 }
@@ -217,14 +217,14 @@ class User extends Authenticatable
                 {
                     $data[$key][$i]['stateName'] = $situation->libely;
                     $data[$key][$i]['type'] = $situation->id;
-                    $data[$key][$i]['ratio'] = $totalCommandes ? number_format($dataCommande->amount/$totalCommandes, 3) : 0;
+                    $data[$key][$i]['ratio'] = $totalCommandes ? number_format($dataCommande->amount/$totalCommandes, 2, '.', '') : '0';
                     $data[$key][$i]['orderCount'] = 0;
                     
                 } else {
 
                     $data[$key][$i]['stateName'] = $situation->libely;
                     $data[$key][$i]['type'] = $dataCommande->situation_id;
-                    $data[$key][$i]['ratio'] = $totalCommandes ? number_format($dataCommande->amount/$totalCommandes, 3) : 0;
+                    $data[$key][$i]['ratio'] = $totalCommandes ? number_format($dataCommande->amount/$totalCommandes, 2, '.', '') : '0';
                     $data[$key][$i]['orderCount'] = $dataCommande->amount;
                     
                 }
@@ -419,6 +419,16 @@ class User extends Authenticatable
     public function userVote()
     {
         return $this->hasMany(userVote::class);
+    }
+
+    public function avgUserVote()
+    {
+        return $this->hasMany(userVote::class)->avg('vote');
+    }
+
+    public function totalUserVote()
+    {
+        return $this->hasMany(userVote::class)->count('vote');
     }
 
     // public function userVoteAvg()

@@ -61,6 +61,7 @@ class Commande extends Model
     public function prixTotalCommande()
     {
         return $this->detailCommande->sum(function($query) {
+            // return number_format($query->quantite_commande * $query->prix_u_commande, 2, '.', '');
             return ($query->quantite_commande * $query->prix_u_commande);
         });
         
